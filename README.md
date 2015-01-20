@@ -1,6 +1,6 @@
 #Poly Belongs To
 
-Is an ActiveRecord library which will let you check you DB Objects polymorphism in a more across-the-board
+Is an ActiveRecord library which will let you check your DB Objects polymorphism in a more across-the-board
 meta-programatically friendly way.
 
     # Is Polymorphic?
