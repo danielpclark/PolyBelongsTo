@@ -1,3 +1,7 @@
+# Poly Belongs To
+# The MIT License (MIT)
+# Copyright (C) 2015 by Daniel P. Clark
+
 module PolyBelongsTo
   extend ActiveSupport::Concern
 
