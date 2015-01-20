@@ -1,4 +1,5 @@
 #Poly Belongs To
+[![Code Climate](https://codeclimate.com/github/danielpclark/PolyBelongsTo/badges/gpa.svg)](https://codeclimate.com/github/danielpclark/PolyBelongsTo)
 
 Is an ActiveRecord library which will let you check your DB Objects polymorphism in a more across-the-board
 meta-programatically friendly way.
