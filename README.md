@@ -23,6 +23,17 @@ MyObject.new.pbt_type
 
 And that's that!
 
+#Installation
+
+Be in your Rails project directory.  Make sure you git is up to date with all your latest changes.  Then:
+
+```shell
+git fetch git@github.com:danielpclark/PolyBelongsTo.git install:pbt
+git merge pbt
+```
+
+And then enter a description for this merge into your project.  Save the message, exit, and you're done!
+
 #License
 
 The MIT License (MIT)
