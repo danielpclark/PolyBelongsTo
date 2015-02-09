@@ -8,9 +8,13 @@ meta-programatically friendly way.
 # Is Polymorphic?
 MyObject.new.poly?
 # => true
+MyOjectt.poly?
+# => true
     
 # Polymorphic Belongs To Relation Table
 MyObject.new.pbt
+# => :my_objectable
+MyObject.pbt
 # => :my_objectable
     
 # Polymorphic Belongs To Relations ID
