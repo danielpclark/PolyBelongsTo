@@ -24,7 +24,7 @@ git merge pbt
 
 And then enter a description for this merge into your project.  Save the message, exit, and you're done!
 
-#Example Usage
+##Example Usage
 
 ```ruby
 # Is Polymorphic?
@@ -58,7 +58,7 @@ MyObject.first.pbt_type
 
 And that's that!
 
-#TODO
+##TODO
 
 Basic specs
 
