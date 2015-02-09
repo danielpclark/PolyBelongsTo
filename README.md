@@ -18,11 +18,11 @@ MyObject.pbt
 # => :my_objectable
     
 # Polymorphic Belongs To Relations ID
-MyObject.new.pbt_id
+MyObject.first.pbt_id
 # => 123
     
 # Polymorphic Belongs To Relations Type
-MyObject.new.pbt_type
+MyObject.first.pbt_type
 "User"
 ```    
 
