@@ -8,7 +8,7 @@ meta-programatically friendly way.
 # Is Polymorphic?
 MyObject.new.poly?
 # => true
-MyOjectt.poly?
+MyOject.poly?
 # => true
     
 # Polymorphic Belongs To Relation Table
