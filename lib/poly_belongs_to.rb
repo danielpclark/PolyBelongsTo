@@ -2,23 +2,37 @@
 # The MIT License (MIT)
 # Copyright (C) 2015 by Daniel P. Clark
 
+require 'active_support/concern'
+
 module PolyBelongsTo
   extend ActiveSupport::Concern
 
+  included do
+    def self.pbt
+      reflect_on_all_associations(:belongs_to).first.try(:name)
+    end
+    
+    def self.poly?
+      !!reflect_on_all_associations(:belongs_to).first.try {|i| i.options[:polymorphic] }
+    end
+  end
+  
   def pbt
-    self.class.reflect_on_all_associations(:belongs_to).first.name
+    self.class.pbt
   end
 
   def poly?
-    !!self.class.reflect_on_all_associations(:belongs_to).first.try {|i| i.options[:polymorphic] }
+    self.class.poly?
   end
 
   def pbt_id
-    eval "self.#{pbt}_id"
+    val = pbt
+    val ? eval("self.#{val}_id") : nil
   end
 
   def pbt_type
-    eval "self.#{pbt}_type"
+    val = pbt
+    val ? eval("self.#{val}_type") : nil
   end
 
 end
