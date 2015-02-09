@@ -1,7 +1,8 @@
 # Poly Belongs To
 # The MIT License (MIT)
 # Copyright (C) 2015 by Daniel P. Clark
-
+$: << File.join(File.dirname(__FILE__), "/poly_belongs_to")
+require 'poly_belongs_to/version'
 require 'active_support/concern'
 
 module PolyBelongsTo
@@ -36,3 +37,5 @@ module PolyBelongsTo
   end
 
 end
+
+ActiveRecord::Base.send(:include, PolyBelongsTo)

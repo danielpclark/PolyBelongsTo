@@ -1,4 +1,5 @@
 #Poly Belongs To
+[![Gem Version](https://badge.fury.io/rb/poly_belongs_to.svg)](http://badge.fury.io/rb/poly_belongs_to)
 [![Code Climate](https://codeclimate.com/github/danielpclark/PolyBelongsTo/badges/gpa.svg)](https://codeclimate.com/github/danielpclark/PolyBelongsTo)
 
 Is an ActiveRecord library which will let you check your DB Objects polymorphism in a more across-the-board
@@ -30,6 +31,18 @@ And that's that!
 
 #Installation
 
+### Gem
+Install the gem via your command line:
+```shell
+gem install poly_belongs_to
+```
+
+Or just include it in your Gemfile and then run bundle:
+```ruby
+gem 'poly_belongs_to'
+```
+
+###Merge via git
 Be in your Rails project directory.  Make sure you git is up to date with all your latest changes.  Then:
 
 ```shell
@@ -38,6 +51,10 @@ git merge pbt
 ```
 
 And then enter a description for this merge into your project.  Save the message, exit, and you're done!
+
+#TODO
+
+Basic specs
 
 #License
 
