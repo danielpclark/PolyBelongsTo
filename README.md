@@ -32,12 +32,20 @@ MyObject.new.poly?
 # => true
 MyOject.poly?
 # => true
+User.first.poly?
+# => false
+User.poly?
+# => false
     
 # Polymorphic Belongs To Relation Table
 MyObject.new.pbt
 # => :my_objectable
 MyObject.pbt
 # => :my_objectable
+User.first.pbt
+# => nil
+User.pbt
+# => nil
     
 # Polymorphic Belongs To Relations ID
 MyObject.first.pbt_id
