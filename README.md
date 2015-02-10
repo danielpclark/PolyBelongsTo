@@ -64,7 +64,7 @@ MyObject.first.pbt_type
 
 # Get Parent Object (Works on all belongs_to Objects)
 MyObject.first.pbt_parent
-# => #<User id: 1 ... >
+# => #<User id: 123 ... >
 ```
 
 ##Also Availabe
