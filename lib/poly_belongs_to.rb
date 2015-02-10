@@ -16,6 +16,24 @@ module PolyBelongsTo
     def self.poly?
       !!reflect_on_all_associations(:belongs_to).first.try {|i| i.options[:polymorphic] }
     end
+
+    def self.pbt_params_name
+      if poly?
+        "#{table_name}_attributes".to_sym
+      else
+        name.downcase.to_sym
+      end
+    end
+
+    def self.pbt_id_sym
+      val = pbt
+      val ? "#{pbt}_id".to_sym : nil
+    end
+
+    def self.pbt_type_sym
+      val = pbt
+      val ? "#{pbt}_type".to_sym : nil
+    end
   end
   
   def pbt
@@ -36,6 +54,17 @@ module PolyBelongsTo
     val ? eval("self.#{val}_type") : nil
   end
 
+  def pbt_id_sym
+    self.class.pbt_id_sym
+  end
+
+  def pbt_type_sym
+    self.class.pbt_type_sym
+  end
+
+  def pbt_params_name
+    self.class.pbt_params_name
+  end
 end
 
 ActiveRecord::Base.send(:include, PolyBelongsTo)
