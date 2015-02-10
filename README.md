@@ -57,7 +57,7 @@ MyObject.pbt_type_sym
 
 # Polymorphic Belongs To Relations ID
 MyObject.first.pbt_id
-# => 123                        # nil for non polymorphic Objects
+# => 123
     
 # Polymorphic Belongs To Relations Type
 MyObject.first.pbt_type
@@ -92,7 +92,7 @@ User.first.pbt_params_name
 # => :user
 
 # Polymorphic DB field names
-MyObject.new.pbt_id_sym         # nil for non polymorphic Objects
+MyObject.new.pbt_id_sym
 # => :my_objectable_id
 MyObject.new.pbt_type_sym       # nil for non polymorphic Objects
 # => :my_objectable_type
