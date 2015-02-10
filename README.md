@@ -24,60 +24,76 @@ git merge pbt
 
 And then enter a description for this merge into your project.  Save the message, exit, and you're done!
 
-##Example Usage
+##Recommended Usage
 
 ```ruby
+# --- On Model Class ---
+
 # Is Polymorphic?
-MyObject.new.poly?
+MyOject.poly?
 # => true
-MyOject.poly?                   # Recommended usage on class name
-# => true
-User.first.poly?
-# => false
-User.poly?                      # Recommended usage on class name
+User.poly?
 # => false
     
 # Polymorphic Belongs To Relation Table
-MyObject.new.pbt
+MyObject.pbt
 # => :my_objectable
-MyObject.pbt                    # Recommended usage on class name 
+User.pbt
+# => nil 
+
+# Params name
+MyObject.pbt_params_name
+# => :my_objectable_attributes
+User.pbt_params_name
+# => :user
+
+# Polymorphic DB field names
+MyObject.pbt_id_sym             
+# => :my_objectable_id
+MyObject.pbt_type_sym           
+# => :my_objectable_type
+
+# --- On Model Instances ---
+
+# Polymorphic Belongs To Relations ID
+MyObject.first.pbt_id
+# => 123                        # nil for non polymorphic Objects
+    
+# Polymorphic Belongs To Relations Type
+MyObject.first.pbt_type
+"User"                          # nil for non polymorphic Objects
+```
+
+##Also Availabe
+```ruby
+# --- Model Instances ---
+# NOTE: touches db if object isn't already instantiated
+
+# Is Polymorphic?
+MyObject.new.poly?
+# => true
+User.first.poly?
+# => false
+
+# Polymorphic Belongs To Relation Table
+MyObject.new.pbt
 # => :my_objectable
 User.first.pbt
 # => nil
-User.pbt                        # Recommended usage on class name
-# => nil 
 
 # Params name
 MyObject.new.pbt_params_name
 # => :my_objectable_attributes
-MyObject.pbt_params_name        # Recommended usage on class name
-# => :my_objectable_attributes
 User.first.pbt_params_name
-# => :user
-User.pbt_params_name            # Recommended usage on class name
 # => :user
 
 # Polymorphic DB field names
-MyObject.new.pbt_id_sym
+MyObject.new.pbt_id_sym         # nil for non polymorphic Objects
 # => :my_objectable_id
-MyObject.pbt_id_sym             # Recommended usage on class name
-# => :my_objectable_id
-MyObject.new.pbt_type_sym
+MyObject.new.pbt_type_sym       # nil for non polymorphic Objects
 # => :my_objectable_type
-MyObject.pbt_type_sym           # Recommended usage on class name
-# => :my_objectable_type
-# The above methods return nil for non polymorphic Objects
+```
 
-# Polymorphic Belongs To Relations ID
-MyObject.first.pbt_id           # Retrieve instance value
-# => 123
-# The above method returns nil for non polymorphic Objects
-    
-# Polymorphic Belongs To Relations Type
-MyObject.first.pbt_type         # Retrieve instance value
-"User"
-# The above method returns nil for non polymorphic Objects
-```    
 
 And that's that!
 
