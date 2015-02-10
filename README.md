@@ -26,9 +26,8 @@ And then enter a description for this merge into your project.  Save the message
 
 ##Recommended Usage
 
+#####On model class
 ```ruby
-# --- On Model Class ---
-
 # Is Polymorphic?
 MyOject.poly?
 # => true
@@ -52,9 +51,9 @@ MyObject.pbt_id_sym
 # => :my_objectable_id
 MyObject.pbt_type_sym           
 # => :my_objectable_type
-
-# --- On Model Instances ---
-
+```
+#####On model instances
+```ruby
 # Polymorphic Belongs To Relations ID
 MyObject.first.pbt_id
 # => 123
