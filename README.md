@@ -62,6 +62,10 @@ MyObject.first.pbt_id
 # Polymorphic Belongs To Relations Type
 MyObject.first.pbt_type
 "User"                          # nil for non polymorphic Objects
+
+# Get Parent Object (Works on all belongs_to Objects)
+MyObject.first.pbt_parent
+# => #<User id: 1 ... >
 ```
 
 ##Also Availabe

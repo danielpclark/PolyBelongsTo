@@ -27,12 +27,11 @@ module PolyBelongsTo
 
     def self.pbt_id_sym
       val = pbt
-      val ? "#{pbt}_id".to_sym : nil
+      val ? "#{val}_id".to_sym : nil
     end
 
     def self.pbt_type_sym
-      val = pbt
-      val ? "#{pbt}_type".to_sym : nil
+      poly? ? "#{pbt}_type".to_sym : nil
     end
   end
   
@@ -50,8 +49,20 @@ module PolyBelongsTo
   end
 
   def pbt_type
+    poly? ? eval("self.#{pbt}_type") : nil
+  end
+
+  def pbt_parent
     val = pbt
-    val ? eval("self.#{val}_type") : nil
+    if pbt
+      if poly?
+        eval "#{pbt_type}.find(#{pbt_id})"
+      else
+        eval "#{val.capitalize.to_s}.find(#{pbt_id})"
+      end
+    else
+      nil
+    end
   end
 
   def pbt_id_sym
