@@ -54,7 +54,7 @@ module PolyBelongsTo
 
   def pbt_parent
     val = pbt
-    if pbt
+    if val
       if poly?
         eval "#{pbt_type}.find(#{pbt_id})"
       else
