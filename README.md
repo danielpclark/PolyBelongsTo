@@ -3,8 +3,7 @@
 [![Code Climate](https://codeclimate.com/github/danielpclark/PolyBelongsTo/badges/gpa.svg)](https://codeclimate.com/github/danielpclark/PolyBelongsTo)
 [![Build Status](https://travis-ci.org/danielpclark/PolyBelongsTo.svg)](https://travis-ci.org/danielpclark/PolyBelongsTo)
 
-Is an ActiveRecord library which will let you check your DB Objects polymorphism in a more across-the-board
-meta-programatically friendly way.
+A standard way to check belongs_to relations on any belongs_to Object and will let you check your DB Objects polymorphism in a more across-the-board meta-programatically friendly way.
 
 #Installation
 
