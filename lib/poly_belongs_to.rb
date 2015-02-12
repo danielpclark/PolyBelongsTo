@@ -17,9 +17,9 @@ module PolyBelongsTo
       !!reflect_on_all_associations(:belongs_to).first.try {|i| i.options[:polymorphic] }
     end
 
-    def self.pbt_params_name
+    def self.pbt_params_name(allow_as_nested = true)
       if poly?
-        "#{table_name}_attributes".to_sym
+        allow_as_nested ? "#{table_name}_attributes".to_sym : name.downcase.to_sym
       else
         name.downcase.to_sym
       end
@@ -73,8 +73,8 @@ module PolyBelongsTo
     self.class.pbt_type_sym
   end
 
-  def pbt_params_name
-    self.class.pbt_params_name
+  def pbt_params_name(allow_as_nested = true)
+    self.class.pbt_params_name(allow_as_nested)
   end
 end
 

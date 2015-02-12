@@ -1,6 +1,7 @@
 #PolyBelongsTo
 [![Gem Version](https://badge.fury.io/rb/poly_belongs_to.svg)](http://badge.fury.io/rb/poly_belongs_to)
 [![Code Climate](https://codeclimate.com/github/danielpclark/PolyBelongsTo/badges/gpa.svg)](https://codeclimate.com/github/danielpclark/PolyBelongsTo)
+[![Build Status](https://travis-ci.org/danielpclark/PolyBelongsTo.svg)](https://travis-ci.org/danielpclark/PolyBelongsTo)
 
 Is an ActiveRecord library which will let you check your DB Objects polymorphism in a more across-the-board
 meta-programatically friendly way.
@@ -43,6 +44,9 @@ User.pbt
 # Params name
 MyObject.pbt_params_name
 # => :my_objectable_attributes
+MyObject.pbt_params_name(false)
+# => :my_object
+User.pbt_params_name
 User.pbt_params_name
 # => :user
 
@@ -99,10 +103,6 @@ MyObject.new.pbt_type_sym       # nil for non polymorphic Objects
 
 
 And that's that!
-
-##TODO
-
-Basic specs
 
 #License
 
