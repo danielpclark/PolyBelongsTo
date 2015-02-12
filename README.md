@@ -8,22 +8,10 @@ meta-programatically friendly way.
 
 #Installation
 
-### Gem
-
 Just include it in your Gemfile and then run bundle:
 ```ruby
 gem 'poly_belongs_to'
 ```
-
-###Merge via git
-Be in your Rails project directory.  Make sure you git is up to date with all your latest changes.  Then:
-
-```shell
-git fetch git@github.com:danielpclark/PolyBelongsTo.git install:pbt
-git merge pbt
-```
-
-And then enter a description for this merge into your project.  Save the message, exit, and you're done!
 
 ##Recommended Usage
 

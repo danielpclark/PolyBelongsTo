@@ -1,8 +1,4 @@
 language: ruby
-# blacklist
-branches:
-  except:
-    - install
 rvm:
   - 2.0.0
   - 2.2.0
