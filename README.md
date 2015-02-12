@@ -35,7 +35,6 @@ MyObject.pbt_params_name
 MyObject.pbt_params_name(false)
 # => :my_object
 User.pbt_params_name
-User.pbt_params_name
 # => :user
 
 # Polymorphic DB field names
