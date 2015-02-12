@@ -138,4 +138,21 @@ class PolyBelongsToTest < ActiveSupport::TestCase
     phone.pbt_type.must_equal "User"
   end
 
+  it "User parent request returns nil" do
+    user = users(:one)
+    user.pbt_parent.must_be_nil
+  end
+  
+  it "Tag parent request returns User instance" do
+    user = users(:one)
+    tag = user.tags.build
+    tag.pbt_parent.id.must_be_same_as user.id
+  end
+  
+  it "Phone parent request returns User instance" do
+    user = users(:one)
+    phone = user.phones.build
+    phone.pbt_parent.id.must_be_same_as user.id
+  end
+
 end
