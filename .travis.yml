@@ -3,4 +3,10 @@ rvm:
   - 2.0.0
   - 2.2.0
   - ruby-head
+env:
+  - "RAILS_VERSION=3.1.0"
+  - "RAILS_VERSION=3.2.0"
+  - "RAILS_VERSION=4.0.0"
+  - "RAILS_VERSION=4.2.0"
+  - "RAILS_VERSION=master"
 script: "bundle exec rake test"
