@@ -23,5 +23,4 @@ Gem::Specification.new do |s|
   s.add_development_dependency "minitest", "~> 5.5"
   s.add_development_dependency "minitest-reporters", "~> 1.0"
   s.add_development_dependency "minitest-rails", "~> 2.1"
-  s.add_development_dependency "minitest-spec-rails", "~> 5.2"
 end
