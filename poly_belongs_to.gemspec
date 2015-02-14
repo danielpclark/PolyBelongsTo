@@ -20,6 +20,6 @@ Gem::Specification.new do |s|
   s.add_dependency "rails", [">= 3.1", "< 6"]
 
   s.add_development_dependency "sqlite3", "~> 1.3"
-  s.add_development_dependency "minitest-rails", ">= 0.9.0"
+  s.add_development_dependency "minitest-rails", ">= 0.9"
   s.add_development_dependency "minitest-reporters", ">= 0.7.1"
 end
