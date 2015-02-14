@@ -26,3 +26,11 @@ module Dummy
   end
 end
 
+DummyApp = begin
+             if ::Rails.version.to_s =~ /^(?:(?:4\.[2-9])|[5-9])/
+               Rails.application
+             else
+               Dummy::Application
+             end
+           end
+
