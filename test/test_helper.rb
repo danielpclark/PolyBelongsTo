@@ -1,17 +1,14 @@
 ENV["RAILS_ENV"] = "test"
 
-if Rails.version =~ /4.[2-9]/
-  require File.expand_path("../../test/dummy/config/environment.rb",  __FILE__)
-else
-  require File.expand_path("../dummy/config/environment.rb",  __FILE__)
-end
+require File.expand_path("../../test/dummy/config/environment.rb",  __FILE__)
+# require File.expand_path("../dummy/config/environment.rb",  __FILE__)
 
 ActiveRecord::Migrator.migrations_paths = [File.expand_path("../../test/dummy/db/migrate", __FILE__)]
 require 'rails/test_help'
 require 'minitest/rails'
 require 'minitest/reporters'
 
-if Rails.version =~ /4.[2-9]/
+if Rails.version =~ /^4.[2-9]/
   Minitest.backtrace_filter = Minitest::BacktraceFilter.new
 else
   Rails.backtrace_cleaner.remove_silencers!

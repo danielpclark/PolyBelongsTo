@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(version: 20150211224225) do
     t.datetime "updated_at",     null: false
   end
 
-  add_index "phones", ["phoneable_type", "phoneable_id"], name: "index_phones_on_phoneable_type_and_phoneable_id"
+  add_index "phones", ["phoneable_id", "phoneable_type"], name: "index_phones_on_phoneable_id_and_phoneable_type"
 
   create_table "tags", force: true do |t|
     t.integer  "user_id"
