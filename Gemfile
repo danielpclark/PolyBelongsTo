@@ -4,9 +4,9 @@ gemspec
 
 group :development, :test do
   rails_version = ENV["RAILS_VERSION"] || "default"
-  if rails_version =~ /^3\./
-    gem 'test-unit', ">= 1.2.3"
-  end
+  # if rails_version =~ /^3\./
+  #   gem 'test-unit', ">= 1.2.3"
+  # end
   rails = case rails_version
           when "master"
             {github: "rails/rails"}
