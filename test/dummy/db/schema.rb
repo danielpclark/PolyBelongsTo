@@ -13,16 +13,16 @@
 
 ActiveRecord::Schema.define(version: 20150211224225) do
 
-  create_table "phones", force: :cascade do |t|
+  create_table "phones", force: true do |t|
     t.integer  "phoneable_id"
     t.string   "phoneable_type"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
   end
 
-  add_index "phones", ["phoneable_type", "phoneable_id"], name: "index_phones_on_phoneable_type_and_phoneable_id"
+  add_index "phones", ["phoneable_id", "phoneable_type"], name: "index_phones_on_phoneable_id_and_phoneable_type"
 
-  create_table "tags", force: :cascade do |t|
+  create_table "tags", force: true do |t|
     t.integer  "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 20150211224225) do
 
   add_index "tags", ["user_id"], name: "index_tags_on_user_id"
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", force: true do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
