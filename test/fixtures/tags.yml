@@ -1,4 +1,8 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  user_id: 1
+bob_tag:
+  user_id: <%= ActiveRecord::FixtureSet.identify(:bob) %>
+steve_tag:
+  user_id: <%= ActiveRecord::FixtureSet.identify(:steve) %>
+susan_tag:
+  user_id: <%= ActiveRecord::FixtureSet.identify(:susan) %>

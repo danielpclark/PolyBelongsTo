@@ -1,5 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  phoneable_id: 1
-  phoneable_type: User
+bob_phone:
+  phoneable_id: <%= ActiveRecord::FixtureSet.identify(:bob_prof) %>
+  phoneable_type: Profile
+steve_phone:
+  phoneable_id: <%= ActiveRecord::FixtureSet.identify(:steve_prof) %>
+  phoneable_type: Profile
+susan_phone:
+  phoneable_id: <%= ActiveRecord::FixtureSet.identify(:susan_prof) %>
+  phoneable_type: Profile

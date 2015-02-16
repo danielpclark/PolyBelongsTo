@@ -1,0 +1,15 @@
+# Read about fixtures at
+# http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+bob_address:
+  addressable_id:   <%= ActiveRecord::FixtureSet.identify(:bob_prof) %>
+  addressable_type: Profile
+
+steve_address:
+  addressable_id:   <%= ActiveRecord::FixtureSet.identify(:steve_prof) %>
+  addressable_type: Profile
+
+susan_address:
+  addressable_id:   <%= ActiveRecord::FixtureSet.identify(:susan_prof) %>
+  addressable_type: Profile
+

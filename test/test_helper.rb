@@ -8,11 +8,10 @@ require 'rails/test_help'
 require 'minitest/rails'
 require 'minitest/reporters'
 
-if Rails.version =~ /^4.[2-9]/
-  Minitest.backtrace_filter = Minitest::BacktraceFilter.new
-else
+unless Rails.version =~ /^4.[2-9]/
   Rails.backtrace_cleaner.remove_silencers!
 end
+Minitest.backtrace_filter = Minitest::BacktraceFilter.new
 
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 

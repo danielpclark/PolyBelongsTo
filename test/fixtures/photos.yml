@@ -1,0 +1,13 @@
+# Read about fixtures at
+# http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+
+bob_photo:
+  photoable_id: <%= ActiveRecord::FixtureSet.identify(:bob_prof) %>
+  photoable_type: Profile
+steve_photo:
+  photoable_id: <%= ActiveRecord::FixtureSet.identify(:steve_prof) %>
+  photoable_type: Profile
+susan_photo:
+  photoable_id: <%= ActiveRecord::FixtureSet.identify(:susan_prof) %>
+  photoable_type: Profile
