@@ -25,5 +25,5 @@ Minitest::Reporters.use! [Minitest::Reporters::SpecReporter.new]
 
 class ActiveSupport::TestCase
   ActiveRecord::Base.send(:include, PolyBelongsTo::Dup)
-  CleanAttrs = PolyBelongsTo::PbtAttrSanitizer  
+  CleanAttrs = PolyBelongsTo::Pbt::AttrSanitizer  
 end

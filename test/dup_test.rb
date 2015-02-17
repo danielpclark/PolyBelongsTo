@@ -25,7 +25,15 @@ class DupTest < ActiveSupport::TestCase
   
   it "builds deep copy of dup'd attributes" do
     skip "Prepping method. It's in the making."
-    #user1 = users(:bob)
-    #user2 = users(:steve)
+    user1 = users(:bob)
+    user2 = users(:steve)
+    contact = user1.contacts.new
+    contact.pbt_deep_dup_build(user2.profile)
+    CleanAttrs[contact.profile].must_equal                 CleanAttrs[user2.profile]
+    CleanAttrs[contact.profile.addresses.first].must_equal CleanAttrs[user2.profile.addresses.first]
+    CleanAttrs[contact.profile.addresses.last].must_equal  CleanAttrs[user2.profile.addresses.last]
+    CleanAttrs[contact.profile.phones.first].must_equal    CleanAttrs[user2.profile.phones.first]
+    CleanAttrs[contact.profile.phones.last].must_equal     CleanAttrs[user2.profile.phones.last]
+    CleanAttrs[contact.profile.photo].must_equal           CleanAttrs[user2.profile.photo]
   end
 end
