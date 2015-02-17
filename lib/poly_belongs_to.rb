@@ -5,6 +5,7 @@ $: << File.join(File.dirname(__FILE__), "/poly_belongs_to")
 require 'poly_belongs_to/version'
 require 'poly_belongs_to/dup'
 require 'poly_belongs_to/hierarchy'
+require 'poly_belongs_to/poly_belongs_to'
 require 'active_support/concern'
 
 module PolyBelongsTo
