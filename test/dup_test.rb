@@ -5,18 +5,18 @@ require 'minitest/autorun'
 class DupTest < ActiveSupport::TestCase
   fixtures :all
 
+  setup do
+    ActiveRecord::Base.send(:include, PolyBelongsTo::Dup)
+  end
+
   it "has method pbt_dup" do
-    skip "Feature is being designed"
-    user = users(:bob)
-    user.defined?(:pbt_dup).must_be_same_as true
-    user.class.defined?(:pbt_dup).must_be_same_as true
+    User.instance_methods.include?(:pbt_dup).must_be_same_as true
+    User.methods.include?(:pbt_dup).must_be_same_as true
   end
 
   it "has method pbt_deep_dup" do
-    skip "Feature is being designed"
-    user = users(:bob)
-    user.defined?(:pbt_deep_dup).must_be_same_as true
-    user.class.defined?(:pbt_deep_dup).must_be_same_as true
+    User.instance_methods.include?(:pbt_deep_dup).must_be_same_as true
+    User.methods.include?(:pbt_deep_dup).must_be_same_as true
   end
 
 end

@@ -1,11 +1,14 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 bob_phone:
-  phoneable_id: <%= ActiveRecord::FixtureSet.identify(:bob_prof) %>
+  phoneable_id:   <%= ActiveRecord::FixtureSet.identify(:bob_prof) %>
   phoneable_type: Profile
+  content:        <%= SecureRandom.hex %>
 steve_phone:
-  phoneable_id: <%= ActiveRecord::FixtureSet.identify(:steve_prof) %>
+  phoneable_id:   <%= ActiveRecord::FixtureSet.identify(:steve_prof) %>
   phoneable_type: Profile
+  content:        <%= SecureRandom.hex %>
 susan_phone:
-  phoneable_id: <%= ActiveRecord::FixtureSet.identify(:susan_prof) %>
+  phoneable_id:   <%= ActiveRecord::FixtureSet.identify(:susan_prof) %>
   phoneable_type: Profile
+  content:        <%= SecureRandom.hex %>

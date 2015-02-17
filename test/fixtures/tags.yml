@@ -2,7 +2,10 @@
 
 bob_tag:
   user_id: <%= ActiveRecord::FixtureSet.identify(:bob) %>
+  content: <%= SecureRandom.hex %>
 steve_tag:
   user_id: <%= ActiveRecord::FixtureSet.identify(:steve) %>
+  content: <%= SecureRandom.hex %>
 susan_tag:
   user_id: <%= ActiveRecord::FixtureSet.identify(:susan) %>
+  content: <%= SecureRandom.hex %>

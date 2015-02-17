@@ -3,11 +3,14 @@
 
 
 bob_photo:
-  photoable_id: <%= ActiveRecord::FixtureSet.identify(:bob_prof) %>
+  photoable_id:   <%= ActiveRecord::FixtureSet.identify(:bob_prof) %>
   photoable_type: Profile
+  content:        <%= SecureRandom.hex %>
 steve_photo:
-  photoable_id: <%= ActiveRecord::FixtureSet.identify(:steve_prof) %>
+  photoable_id:   <%= ActiveRecord::FixtureSet.identify(:steve_prof) %>
   photoable_type: Profile
+  content:        <%= SecureRandom.hex %>
 susan_photo:
-  photoable_id: <%= ActiveRecord::FixtureSet.identify(:susan_prof) %>
+  photoable_id:   <%= ActiveRecord::FixtureSet.identify(:susan_prof) %>
   photoable_type: Profile
+  content:        <%= SecureRandom.hex %>

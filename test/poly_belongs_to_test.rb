@@ -5,7 +5,7 @@ class PolyBelongsToTest < ActiveSupport::TestCase
   fixtures :all
 
   it "is a module" do
-    PolyBelongsTo.must_be_kind_of Module
+    PolyBelongsTo::Core.must_be_kind_of Module
   end
 
   it "reports User as not polymorphic" do

@@ -16,6 +16,7 @@ ActiveRecord::Schema.define(version: 20150216092519) do
   create_table "addresses", force: true do |t|
     t.integer  "addressable_id"
     t.string   "addressable_type"
+    t.string   "content"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -24,6 +25,7 @@ ActiveRecord::Schema.define(version: 20150216092519) do
 
   create_table "contacts", force: true do |t|
     t.integer  "user_id"
+    t.string   "content"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -33,6 +35,7 @@ ActiveRecord::Schema.define(version: 20150216092519) do
   create_table "phones", force: true do |t|
     t.integer  "phoneable_id"
     t.string   "phoneable_type"
+    t.string   "content"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
   end
@@ -42,6 +45,7 @@ ActiveRecord::Schema.define(version: 20150216092519) do
   create_table "photos", force: true do |t|
     t.integer  "photoable_id"
     t.string   "photoable_type"
+    t.string   "content"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -51,6 +55,7 @@ ActiveRecord::Schema.define(version: 20150216092519) do
   create_table "profiles", force: true do |t|
     t.integer  "profileable_id"
     t.string   "profileable_type"
+    t.string   "content"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -59,6 +64,7 @@ ActiveRecord::Schema.define(version: 20150216092519) do
 
   create_table "ssns", force: true do |t|
     t.integer  "user_id"
+    t.string   "content"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -67,6 +73,7 @@ ActiveRecord::Schema.define(version: 20150216092519) do
 
   create_table "tags", force: true do |t|
     t.integer  "user_id"
+    t.string   "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -74,6 +81,7 @@ ActiveRecord::Schema.define(version: 20150216092519) do
   add_index "tags", ["user_id"], name: "index_tags_on_user_id"
 
   create_table "users", force: true do |t|
+    t.string   "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
