@@ -16,13 +16,13 @@ module PolyBelongsTo
         pbt_dup_build(item_to_build_on, item_to_duplicate)
         PolyBelongsTo::Pbt::Reflects[item_to_duplicate].each do |ref|
           child = eval("item_to_duplicate.#{ref}")
-          function = "item_to_build_on.#{PolyBelongsTo::Pbt::CollectionProxy[item_to_build_on, item_to_duplicate]}"
+          core  = "item_to_build_on.#{PolyBelongsTo::Pbt::CollectionProxy[item_to_build_on, item_to_duplicate]}"
           if child.respond_to?(:build)
             child.each do |obj|
-              eval(function).pbt_deep_dup_build(obj)
+              eval(core).pbt_deep_dup_build(obj)
             end
           else
-            eval(function).pbt_deep_dup_build(child)
+            eval(core).pbt_deep_dup_build(child)
           end
         end
         item_to_build_on       
