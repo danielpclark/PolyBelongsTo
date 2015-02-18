@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 gemspec
-
+gem "codeclimate-test-reporter", group: :test, require: nil
 group :development, :test do
   rails_version = ENV["RAILS_VERSION"] || "default"
   # if rails_version =~ /^3\./

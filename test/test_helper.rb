@@ -1,5 +1,6 @@
 ENV["RAILS_ENV"] = "test"
-
+require "codeclimate-test-reporter"
+CodeClimate::TestReporter.start
 require File.expand_path("../../test/dummy/config/environment.rb",  __FILE__)
 # require File.expand_path("../dummy/config/environment.rb",  __FILE__)
 
