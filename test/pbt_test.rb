@@ -6,7 +6,7 @@ class PbtTest < ActiveSupport::TestCase
 
   it "AttrSanitizer removes conflicting attributes" do
     user = users(:bob)
-    PolyBelongsTo::Pbt::AttrSanitizer[user].must_equal Hash(id: nil, content: user.content).stringify_keys
+    PolyBelongsTo::Pbt::AttrSanitizer[user].must_equal Hash[id: nil, content: user.content].stringify_keys
   end
 
   it "BuildCmd returns build command" do
