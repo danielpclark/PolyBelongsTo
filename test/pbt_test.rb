@@ -20,6 +20,11 @@ class PbtTest < ActiveSupport::TestCase
     PolyBelongsTo::Pbt::Reflects[profile].sort.must_equal [:phones, :addresses, :photo].sort
   end
 
+  it "ReflectsAsClasses one and many relations as classes" do
+    profile = profiles(:bob_prof)
+    PolyBelongsTo::Pbt::ReflectsAsClasses[profile].map(&:hash).sort.must_equal [Phone, Address, Photo].map(&:hash).sort
+  end
+
   it "IsReflected gives boolean of child" do
     profile = profiles(:bob_prof)
     PolyBelongsTo::Pbt::IsReflected[profile,Phone].must_equal true

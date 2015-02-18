@@ -1,6 +1,7 @@
 module PolyBelongsTo
   module Pbt
     AttrSanitizer = lambda {|obj|
+      return {} unless obj
       obj.dup.attributes.delete_if {|ky,vl|
         [:created_at, :updated_at, :deleted_at, obj.pbt_id_sym, obj.pbt_type_sym].include? ky.to_sym
       } 
@@ -15,6 +16,12 @@ module PolyBelongsTo
       [:has_one, :has_many].map { |has|
         eval(obj.class.name).reflect_on_all_associations(has).map(&:name).map(&:to_sym)
       }.flatten
+    }
+
+    ReflectsAsClasses = lambda {|obj|
+      Reflects[obj].map {|ref|
+        eval (eval("obj.#{ref}").try(:klass) || eval("obj.#{ref}").class).name
+      }
     }
     
     IsReflected = lambda {|obj,child|
