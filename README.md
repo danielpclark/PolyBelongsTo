@@ -102,7 +102,7 @@ PolyBelongsTo::Pbt::Reflects[ obj ]
 # Returns Class Ojects for each has_one and has_many child associations
 PolyBelongsTo::Pbt::ReflectsAsClasses[ obj ]
 
-# Boolean of whether child object/class is a has relationship to obj
+# Boolean of whether child object/class is a has(one/many) relationship to obj
 PolyBelongsTo::Pbt::IsReflected[ obj, child ]
 
 # Returns :singular if obj->child is has_one and :plural if obj->child is has_many
@@ -120,28 +120,29 @@ PolyBelongsTo::Pbt::CollectionProxy[ obj, child ]
 ```
 ##Record Duplication
 
-This gives you the advantage of duplicating records regardless of polymorphic or otherwise.
-You can duplicate a record at one level, or use a self recursive command pbt_deep_dup_build
+**This gives you the advantage of duplicating records regardless of polymorphic associations or
+otherwise**.  You can duplicate a record, or use a self recursive command pbt_deep_dup_build
 to duplicate a record and all of it's has_one/has_many children records at once.  Afterwards
-be sure to use the save method!
+be sure to use the save method.
 
-NOTE: This will need to be included manually.  The reason for this is because you need to
+> NOTE: This will need to be included manually.  The reason for this is because you need to
 know what's involved when using this.  It's purpsefully done this way to lead to reading
 the documentation for PolyBelongsTo's duplication methods.
 
 ####Known Issues
- - Carrierwave records won't duplicate.  To allow you other records to save and prevent rollback use
-.save(validate: false) ... I'm considering possible options for this and other scenarios.
- - For deep duplication you need to be very aware for potential infinite loops if your records
-relationships can form any kind of loop.
+ - Carrierwave records won't duplicate.  To ensure other records to still save and prevent
+rollback use .save(validate: false) ... I'm considering possible options to remedy this and
+other scenarios.
+ - For deep duplication you need to be very aware of the potential for infinite loops with
+your records if there are any circular references.
 
 ###How To Use
 
-Include it into ActiveRecord::Base
+Include it into ActiveRecord::Base in an initializer /config/initializers/poly_belongs_to.rb
 ```ruby
 ActiveRecord::Base.send(:include, PolyBelongsTo::Dup)
 ```
-Then use the dup/build methods like as follows
+Then use the dup/build methods as follows
 
 ```ruby
 # If you were to create a new contact for example
