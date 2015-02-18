@@ -121,12 +121,12 @@ PolyBelongsTo::Pbt::CollectionProxy[ obj, child ]
 ##Record Duplication
 
 **This gives you the advantage of duplicating records regardless of polymorphic associations or
-otherwise**.  You can duplicate a record, or use a self recursive command pbt_deep_dup_build
+otherwise**.  You can duplicate a record, or use a self recursive command **pbt_deep_dup_build**
 to duplicate a record and all of it's has_one/has_many children records at once.  Afterwards
 be sure to use the save method.
 
 > NOTE: This will need to be included manually.  The reason for this is because you need to
-know what's involved when using this.  It's purpsefully done this way to lead to reading
+know what's involved when using this.  It's purposefully done this way to lead to reading
 the documentation for PolyBelongsTo's duplication methods.
 
 ####Known Issues
@@ -162,6 +162,16 @@ contact.pbt_deep_dup_build( User.last.profile )
 # Remeber to save!
 contact.save
 ```
+
+##Planning
+
+I'm in the process of planning mapping out record hierarchy.  Also with this
+it will add recognition for circular references.
+
+##Contributing
+
+Feel free to fork and make pull requests.  Please bring up an issue before a pull
+request if it's a non-fix change.  Thank you!
 
 
 #License
