@@ -1,11 +1,14 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# Read about fixtures at
+# http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
-bob_tag:
-  user_id: <%= ActiveRecord::FixtureSet.identify(:bob) %>
+bob_ssn:
+  user_id: <%= ActiveRecord::FixtureSet.identify(:bob) %> 
   content: <%= SecureRandom.hex %>
-steve_tag:
+
+steve_ssn:
   user_id: <%= ActiveRecord::FixtureSet.identify(:steve) %>
   content: <%= SecureRandom.hex %>
-susan_tag:
+
+susan_ssn:
   user_id: <%= ActiveRecord::FixtureSet.identify(:susan) %>
   content: <%= SecureRandom.hex %>

@@ -1,0 +1,15 @@
+# Read about fixtures at
+# http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+bob_prof:
+  profileable_id:   <%= ActiveRecord::FixtureSet.identify(:bob) %> 
+  profileable_type: "User"
+  content:          <%= SecureRandom.hex %>
+steve_prof:
+  profileable_id:   <%= ActiveRecord::FixtureSet.identify(:steve) %> 
+  profileable_type: "User"
+  content:          <%= SecureRandom.hex %>
+susan_prof:
+  profileable_id:   <%= ActiveRecord::FixtureSet.identify(:susan) %> 
+  profileable_type: "User"
+  content:          <%= SecureRandom.hex %>
