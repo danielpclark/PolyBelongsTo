@@ -29,7 +29,7 @@ class DupTest < ActiveSupport::TestCase
     bob_prof = profiles(:bob_prof)
     contact = user1.contacts.new
     contact.pbt_deep_dup_build(bob_prof)
-    CleanAttrs[contact.profile].must_equal                 CleanAttrs.call(bob_prof)
+    CleanAttrs[contact.profile].must_equal                 CleanAttrs[bob_prof]
     CleanAttrs[contact.profile.addresses.first].must_equal CleanAttrs[bob_prof.addresses.first]
     CleanAttrs[contact.profile.addresses.last].must_equal  CleanAttrs[bob_prof.addresses.last]
     CleanAttrs[contact.profile.phones.first].must_equal    CleanAttrs[bob_prof.phones.first]

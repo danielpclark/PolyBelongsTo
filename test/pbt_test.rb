@@ -40,7 +40,7 @@ class PbtTest < ActiveSupport::TestCase
     PolyBelongsTo::Pbt::SingularOrPlural[profile,User].must_equal  nil
   end
 
-  it "IsSingle tells child singleness" do
+  it "IsSingular tells child singleness" do
     profile = profiles(:steve_prof)
     PolyBelongsTo::Pbt::IsSingular[profile,Phone].must_be_same_as false
     PolyBelongsTo::Pbt::IsSingular[profile,Photo].must_be_same_as true
