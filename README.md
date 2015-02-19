@@ -90,7 +90,7 @@ MyObject.new.pbt_type_sym       # nil for non polymorphic Objects
 ##Internal Methods Available
 
 ```ruby
-# For cleaning attributs for use with build
+# For cleaning attributes for use with build
 PolyBelongsTo::Pbt::AttrSanitizer[ obj ]
 
 # Returns string of either 'child.build' or 'build_child'
