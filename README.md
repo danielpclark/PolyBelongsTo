@@ -57,7 +57,7 @@ MyObject.first.pbt_parent
 # => #<User id: 123 ... >
 ```
 
-##Also Availabe
+##Also Available
 ```ruby
 # --- Model Instances ---
 # NOTE: touches db if object isn't already instantiated
