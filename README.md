@@ -132,8 +132,9 @@ know what's involved when using this.  It's purposefully done this way to lead t
 the documentation for PolyBelongsTo's duplication methods.
 
 ####Known Issues
- - Carrierwave records won't duplicate.  To ensure other records to still save and prevent
-rollback use .save(validate: false) ... I'm considering possible options to remedy this and
+ - Carrierwave records won't duplicate.  To ensure that other records will still save and
+prevent any rollback issues use .save(validate: false) ... I'm considering possible options
+to remedy this and
 other scenarios.
  - For deep duplication you need to be very aware of the potential for infinite loops with
 your records if there are any circular references.
