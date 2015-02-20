@@ -1,0 +1,26 @@
+# Read about fixtures at
+# http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+bob_squishy_address:
+  content: Squishy
+  squishable: bob_address (Address)
+
+bob_squishy_geo_loc:
+  content: Squishy
+  squishable: bob_geo_loc (GeoLocation)
+
+steve_squishy_address:
+  content: Squishy
+  squishable: steve_address (Address)
+
+steve_squishy_geo_loc:
+  content: Squishy
+  squishable: steve_geo_loc (GeoLocation)
+
+susan_squishy_address:
+  content: Squishy
+  squishable: susan_address (Address)
+
+susan_squishy_geo_loc:
+  content: Squishy
+  squishable: susan_geo_loc (GeoLocation)

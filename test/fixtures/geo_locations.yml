@@ -1,0 +1,14 @@
+# Read about fixtures at
+# http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+bob_geo_loc:
+  address_id: <%= ActiveRecord::FixtureSet.identify(:bob_address) %>
+  content:    <%= SecureRandom.hex %>
+
+steve_geo_loc:
+  address_id: <%= ActiveRecord::FixtureSet.identify(:steve_address) %>
+  content:    <%= SecureRandom.hex %>
+
+susan_geo_loc:
+  address_id: <%= ActiveRecord::FixtureSet.identify(:susan_address) %>
+  content:    <%= SecureRandom.hex %>
