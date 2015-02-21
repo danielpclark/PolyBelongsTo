@@ -29,12 +29,18 @@ class DupTest < ActiveSupport::TestCase
     bob_prof = profiles(:bob_prof)
     contact = user1.contacts.new
     contact.pbt_deep_dup_build(bob_prof)
-    CleanAttrs[contact.profile].must_equal                              CleanAttrs[bob_prof]
-    CleanAttrs[contact.profile.addresses.first].must_equal              CleanAttrs[bob_prof.addresses.first]
-    CleanAttrs[contact.profile.addresses.first.geo_location].must_equal CleanAttrs[bob_prof.addresses.first.geo_location]
-    CleanAttrs[contact.profile.addresses.last].must_equal               CleanAttrs[bob_prof.addresses.last]
-    CleanAttrs[contact.profile.phones.first].must_equal                 CleanAttrs[bob_prof.phones.first]
-    CleanAttrs[contact.profile.phones.last].must_equal                  CleanAttrs[bob_prof.phones.last]
-    CleanAttrs[contact.profile.photo].must_equal                        CleanAttrs[bob_prof.photo]
+    cp = contact.profile
+    cpa = cp.addresses
+    cpaf = cpa.first
+    CleanAttrs[cp                               ].must_equal CleanAttrs[bob_prof]
+    CleanAttrs[cpaf                             ].must_equal CleanAttrs[bob_prof.addresses.first]
+    CleanAttrs[cpaf.squishies.first             ].must_equal CleanAttrs[bob_prof.addresses.first.squishies.first]
+    CleanAttrs[cpaf.geo_location                ].must_equal CleanAttrs[bob_prof.addresses.first.geo_location]
+    CleanAttrs[cpaf.geo_location.squishies.first].must_equal CleanAttrs[bob_prof.addresses.first.geo_location.squishies.first]
+    CleanAttrs[cp.addresses.last                ].must_equal CleanAttrs[bob_prof.addresses.last]
+    CleanAttrs[cp.phones.first                  ].must_equal CleanAttrs[bob_prof.phones.first]
+    CleanAttrs[cp.phones.first.squishy          ].must_equal CleanAttrs[bob_prof.phones.first.squishy]
+    CleanAttrs[cp.phones.last                   ].must_equal CleanAttrs[bob_prof.phones.last]
+    CleanAttrs[cp.photo                         ].must_equal CleanAttrs[bob_prof.photo]
   end
 end

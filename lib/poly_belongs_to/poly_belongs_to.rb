@@ -8,11 +8,13 @@ module PolyBelongsTo
     }
 
     BuildCmd = lambda {|obj, child|
+      return nil unless obj && child
       dup_name = "#{CollectionProxy[obj,child]}"
       IsSingular[obj, child] ? "build_#{dup_name}" : IsPlural[obj, child] ? "#{dup_name}.build" : nil
     }
 
     Reflects = lambda {|obj|
+      return [] unless obj
       [:has_one, :has_many].map { |has|
         eval(obj.class.name).reflect_on_all_associations(has).map(&:name).map(&:to_sym)
       }.flatten
@@ -29,6 +31,7 @@ module PolyBelongsTo
     }
 
     SingularOrPlural = lambda {|obj, child|
+      return nil unless obj && child
       reflects = Reflects[obj]
       if reflects.include?(ActiveModel::Naming.singular(child).to_sym)
         :singular
@@ -48,6 +51,7 @@ module PolyBelongsTo
     }
 
     CollectionProxy = lambda {|obj, child|
+      return nil unless obj && child
       reflects = Reflects[obj]
       proxy = ActiveModel::Naming.singular(child).to_sym
       return proxy if reflects.include? proxy
