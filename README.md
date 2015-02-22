@@ -115,7 +115,7 @@ PolyBelongsTo::Pbt::IsSingular[ obj, child ]
 PolyBelongsTo::Pbt::IsPlural[ obj, child ]
 
 # Returns the symbol for the CollectionProxy the child belongs to in relation to obj
-# NOTE: For has_one the symbol is not a CollectionProxy
+# NOTE: For has_one the symbol is not a CollectionProxy, but the instance
 PolyBelongsTo::Pbt::CollectionProxy[ obj, child ]
 
 ```
