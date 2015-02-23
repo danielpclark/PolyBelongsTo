@@ -1,4 +1,3 @@
-
 require 'test_helper'
 require 'minitest/autorun'
 
@@ -24,7 +23,6 @@ class DupTest < ActiveSupport::TestCase
   end
   
   it "builds deep copy of dup'd attributes" do
-    #skip "Prepping method. It's in the making."
     user1 = users(:steve)
     bob_prof = profiles(:bob_prof)
     contact = user1.contacts.new

@@ -118,6 +118,11 @@ PolyBelongsTo::Pbt::IsPlural[ obj, child ]
 # NOTE: For has_one the symbol is not a CollectionProxy, but the instance
 PolyBelongsTo::Pbt::CollectionProxy[ obj, child ]
 
+# Always returns a collection proxy; fakes a collection proxy for has_one.
+PolyBelongsTo::Pbt::AsCollectionProxy[ obj, child ]
+
+# Wrapper for has_one objects to be a collection proxy
+PolyBelongsTo::FakedCollection.new(obj, child)
 ```
 ##Record Duplication
 
