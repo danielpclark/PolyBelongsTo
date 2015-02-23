@@ -45,8 +45,8 @@ module PolyBelongsTo
       self
     end
 
-    def each
-      all.each
+    def each(*args, &block)
+      all.each(*args, &block)
     end
 
     def respond_to?(method_name)

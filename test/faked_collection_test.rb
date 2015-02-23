@@ -67,4 +67,9 @@ class FakedCollectionTest < ActiveSupport::TestCase
     ->{photos.sneeze}.must_raise NoMethodError
   end
 
+  it "will not initialize on has_many" do
+    steve = users(:steve)
+    ->{ PolyBelongsTo::FakedCollection.new(steve, Profile) }.must_raise RuntimeError 
+  end
+
 end
