@@ -58,5 +58,16 @@ module PolyBelongsTo
       proxy = ActiveModel::Naming.plural(child).to_sym
       reflects.include?(proxy) ? proxy : nil
     }
+  
+    AsCollectionProxy = lambda {|obj, child|
+      whom = SingularOrPlural[obj, child]
+      return nil unless whom
+      if whom == :plural
+        return eval("obj.#{PolyBelongsTo::Pbt::CollectionProxy[obj, child]}")
+      else
+        PolyBelongsTo::FakedCollection.new(obj, child)
+      end
+    }
   end
+  
 end
