@@ -180,7 +180,9 @@ it will add recognition for circular references.
 
 Feel free to fork and make pull requests.  Please bring up an issue before a pull
 request if it's a non-fix change.  Please add applicable fixtures and tests for
-any new features/implementations you add.  Thank you!
+any new features/implementations you add.
+
+Thank You!
 
 
 #License
