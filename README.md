@@ -1,5 +1,6 @@
 #PolyBelongsTo
 [![Gem Version](https://badge.fury.io/rb/poly_belongs_to.svg)](http://badge.fury.io/rb/poly_belongs_to)
+[![Code Climate](https://codeclimate.com/github/danielpclark/PolyBelongsTo/badges/gpa.svg)](https://codeclimate.com/github/danielpclark/PolyBelongsTo)
 [![Build Status](https://travis-ci.org/danielpclark/PolyBelongsTo.svg)](https://travis-ci.org/danielpclark/PolyBelongsTo)
 [![Test Coverage](https://codeclimate.com/github/danielpclark/PolyBelongsTo/badges/coverage.svg)](https://codeclimate.com/github/danielpclark/PolyBelongsTo)
 
@@ -22,7 +23,7 @@ MyOject.poly?
 User.poly?
 # => false
     
-# Polymorphic Belongs To Relation Table
+# Belongs To Relation Table
 MyObject.pbt
 # => :my_objectable
 User.pbt
@@ -36,15 +37,15 @@ MyObject.pbt_params_name(false)
 User.pbt_params_name
 # => :user
 
-# Polymorphic DB field names
+# DB column names
 MyObject.pbt_id_sym             
 # => :my_objectable_id
 MyObject.pbt_type_sym           
-# => :my_objectable_type
+# => :my_objectable_type        # nil for non polymorphic Objects
 ```
 #####On model instances
 ```ruby
-# Polymorphic Belongs To Relations ID
+# Belongs To Relations ID
 MyObject.first.pbt_id
 # => 123
     
@@ -68,7 +69,7 @@ MyObject.new.poly?
 User.first.poly?
 # => false
 
-# Polymorphic Belongs To Relation Table
+# Belongs To Relation Table
 MyObject.new.pbt
 # => :my_objectable
 User.first.pbt
@@ -80,7 +81,7 @@ MyObject.new.pbt_params_name
 User.first.pbt_params_name
 # => :user
 
-# Polymorphic DB field names
+# DB column names
 MyObject.new.pbt_id_sym
 # => :my_objectable_id
 MyObject.new.pbt_type_sym       # nil for non polymorphic Objects
@@ -178,7 +179,10 @@ it will add recognition for circular references.
 ##Contributing
 
 Feel free to fork and make pull requests.  Please bring up an issue before a pull
-request if it's a non-fix change.  Thank you!
+request if it's a non-fix change.  Please add applicable fixtures and tests for
+any new features/implementations you add.
+
+Thank You!
 
 
 #License
