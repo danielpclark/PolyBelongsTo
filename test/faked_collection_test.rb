@@ -9,6 +9,14 @@ class FakedCollectionTest < ActiveSupport::TestCase
     PolyBelongsTo::FakedCollection.new(steve_prof, Photo)
   }
 
+  it "is named correctly" do
+    photos.class.name.must_equal "PolyBelongsTo::FakedCollection" 
+  end
+
+  it "knows its superclass" do
+    PolyBelongsTo::FakedCollection.superclass.must_equal Object
+  end
+
   it ".all is an Array" do
     photos.all.is_a?(Array).must_be_same_as true
     photos.all.kind_of?(Array).must_be_same_as true
@@ -31,10 +39,18 @@ class FakedCollectionTest < ActiveSupport::TestCase
     photos.ancestors.include?(Object).must_be_same_as true
   end
 
-  it "build returns FakedCollection object" do
+  it "build kind of FakedCollection object" do
     photos.kind_of?(PolyBelongsTo::FakedCollection).must_be_same_as true
   end
 
+  it "build is a FakedCollection object" do
+    photos.is_a?(PolyBelongsTo::FakedCollection).must_be_same_as true
+  end
+
+  it "build instance of FakedCollection object" do
+    photos.instance_of?(PolyBelongsTo::FakedCollection).must_be_same_as true
+  end
+  
   it "builds appropriately" do
     photos.build({content: "cheese"})
     photos.first.content.must_equal "cheese"

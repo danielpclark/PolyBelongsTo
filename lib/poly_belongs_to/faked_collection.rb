@@ -32,6 +32,10 @@ module PolyBelongsTo
       ancestors.include? thing
     end
 
+    def is_a?(thing)
+      kind_of?(thing)
+    end
+
     def count
       size
     end
