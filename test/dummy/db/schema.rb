@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150220230146) do
+ActiveRecord::Schema.define(version: 20150301100722) do
 
   create_table "addresses", force: true do |t|
     t.integer  "addressable_id"
@@ -22,6 +22,15 @@ ActiveRecord::Schema.define(version: 20150220230146) do
   end
 
   add_index "addresses", ["addressable_id", "addressable_type"], name: "index_addresses_on_addressable_id_and_addressable_type"
+
+  create_table "cars", force: true do |t|
+    t.integer  "user_id"
+    t.string   "content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "cars", ["user_id"], name: "index_cars_on_user_id"
 
   create_table "contacts", force: true do |t|
     t.integer  "user_id"
@@ -98,6 +107,17 @@ ActiveRecord::Schema.define(version: 20150220230146) do
   end
 
   add_index "tags", ["user_id"], name: "index_tags_on_user_id"
+
+  create_table "tires", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "car_id"
+    t.string   "content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tires", ["car_id"], name: "index_tires_on_car_id"
+  add_index "tires", ["user_id"], name: "index_tires_on_user_id"
 
   create_table "users", force: true do |t|
     t.string   "content"

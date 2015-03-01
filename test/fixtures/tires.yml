@@ -1,0 +1,22 @@
+# Read about fixtures at
+# http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+low_profile1:
+  user: <%= ActiveRecord::FixtureSet.identify(:bob) %>
+  car: <%= ActiveRecord::FixtureSet.identify(:honda_civic) %> 
+  content: MyString
+
+low_profile2:
+  user: <%= ActiveRecord::FixtureSet.identify(:bob) %>
+  car: <%= ActiveRecord::FixtureSet.identify(:honda_civic) %> 
+  content: MyString
+
+low_profile3:
+  user: <%= ActiveRecord::FixtureSet.identify(:bob) %>
+  car: <%= ActiveRecord::FixtureSet.identify(:honda_civic) %> 
+  content: MyString
+
+low_profile4:
+  user: <%= ActiveRecord::FixtureSet.identify(:bob) %>
+  car: <%= ActiveRecord::FixtureSet.identify(:honda_civic) %> 
+  content: MyString

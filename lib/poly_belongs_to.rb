@@ -16,6 +16,10 @@ module PolyBelongsTo
       def self.pbt
         reflect_on_all_associations(:belongs_to).first.try(:name)
       end
+
+      def self.pbts
+        reflect_on_all_associations(:belongs_to).map(&:name)
+      end
       
       def self.poly?
         !!reflect_on_all_associations(:belongs_to).first.try {|i| i.options[:polymorphic] }
@@ -43,6 +47,10 @@ module PolyBelongsTo
       self.class.pbt
     end
 
+    def pbts
+      self.class.pbts
+    end
+    
     def poly?
       self.class.poly?
     end
@@ -66,6 +74,16 @@ module PolyBelongsTo
         end
       else
         nil
+      end
+    end
+
+    def pbt_parents
+      if poly?
+        Array[pbt_parent].compact
+      else
+        self.class.pbts.map {|i|
+          try{ eval("#{i.capitalize}").find eval("self.#{i}_id") }
+        }.compact
       end
     end
 

@@ -29,6 +29,10 @@ MyObject.pbt
 User.pbt
 # => nil 
 
+# Multiple Belongs To Relations
+Tire.pbts
+# => [:user, :car]
+
 # Params name
 MyObject.pbt_params_name
 # => :my_objectable_attributes
@@ -56,6 +60,10 @@ MyObject.first.pbt_type
 # Get Parent Object (Works on all belongs_to Objects)
 MyObject.first.pbt_parent
 # => #<User id: 123 ... >
+
+# Mutliple Parent Objects (List of one item for Polymorphic, full list otherwise.)
+Tire.first.pbt_parents
+# => [#<User id: 123 ... >, #<Car id: 234 ... >]
 ```
 
 ##Also Available
@@ -74,6 +82,10 @@ MyObject.new.pbt
 # => :my_objectable
 User.first.pbt
 # => nil
+
+# Multiple Belongs To Relations
+Tire.first.pbts
+# => [:user, :car]
 
 # Params name
 MyObject.new.pbt_params_name

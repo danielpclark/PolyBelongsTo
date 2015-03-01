@@ -1,0 +1,6 @@
+# Read about fixtures at
+# http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+honda_civic:
+  user: <%= ActiveRecord::FixtureSet.identify(:bob) %>
+  content: MyString

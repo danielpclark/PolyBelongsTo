@@ -38,6 +38,18 @@ class PolyBelongsToTest < ActiveSupport::TestCase
     Tag.pbt.must_be_same_as :user
   end
   
+  it "Tags of multiple parents" do
+    tire = tires(:low_profile1)
+    parents = tire.class.pbts
+    parents.must_be_kind_of Array
+    parents.must_include :user
+    parents.must_include :car
+    parents = tire.pbts
+    parents.must_be_kind_of Array
+    parents.must_include :user
+    parents.must_include :car
+  end
+  
   it "Phone belongs to table as :phoneable" do
     phone = phones(:bob_phone)
     phone.pbt.must_be_same_as :phoneable
@@ -163,6 +175,26 @@ class PolyBelongsToTest < ActiveSupport::TestCase
     profile = user.profiles.build
     profile.save
     profile.pbt_parent.id.must_be_same_as user.id
+  end
+
+  it "pbt_parents: can show multiple parents" do
+    user = User.new(id: 1)
+    user.cars.build
+    user.cars.first.tires.build(user_id: user.id)
+    user.save
+    parents = user.cars.first.tires.first.pbt_parents
+    parents.must_be_kind_of Array
+    parents.must_include user
+    parents.must_include user.cars.first
+    user.destroy
+  end
+
+  it "pbt_parents: one parent for polymorphic" do
+    bob_address = addresses(:bob_address)
+    parents = bob_address.pbt_parents
+    parents.must_be_kind_of Array
+    parents.size.must_equal 1
+    parents.first.must_equal profiles(:bob_prof)
   end
 
 end
