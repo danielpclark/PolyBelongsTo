@@ -4,106 +4,197 @@ require 'minitest/autorun'
 class CoreTest < ActiveSupport::TestCase
   fixtures :all
 
-  it "AttrSanitizer removes conflicting attributes" do
+  it "is a module" do
+    PolyBelongsTo::Core.must_be_kind_of Module
+  end
+
+  it "User as not polymorphic" do
     user = users(:bob)
-    PolyBelongsTo::Pbt::AttrSanitizer[user].must_equal Hash[id: nil, content: user.content].stringify_keys
-    PolyBelongsTo::Pbt::AttrSanitizer[nil ].must_equal Hash[] 
+    user.poly?.must_be_same_as false
+    User.poly?.must_be_same_as false
   end
 
-  it "BuildCmd returns build command" do
-    profile = profiles(:bob_prof)
-    "#{PolyBelongsTo::Pbt::BuildCmd[profile,Phone]}".must_equal "phones.build"
-    "#{PolyBelongsTo::Pbt::BuildCmd[profile,Photo]}".must_equal "build_photo"
-    PolyBelongsTo::Pbt::BuildCmd[nil,       Photo].must_be_nil
-    PolyBelongsTo::Pbt::BuildCmd[profile,     nil].must_be_nil
+  it "Tag as not polymorphic" do
+    tag = tags(:bob_tag)
+    tag.poly?.must_be_same_as false
+    Tag.poly?.must_be_same_as false
   end
 
-  it "Reflects retruns has_one and has_many relationships" do
-    profile = profiles(:bob_prof)
-    PolyBelongsTo::Pbt::Reflects[profile].sort.must_equal [:phones, :addresses, :photo].sort
-    PolyBelongsTo::Pbt::Reflects[nil    ].must_equal Array[]
+  it "Phone as polymorphic" do
+    phone = phones(:bob_phone)
+    phone.poly?.must_be_same_as true
+    Phone.poly?.must_be_same_as true
   end
 
-  it "ReflectsAsClasses one and many relations as classes" do
-    profile = profiles(:bob_prof)
-    PolyBelongsTo::Pbt::ReflectsAsClasses[profile].map(&:hash).sort.must_equal [Phone, Address, Photo].map(&:hash).sort
-    PolyBelongsTo::Pbt::ReflectsAsClasses[nil    ].must_equal Array[]
+  it "User belongs to table as nil" do
+    user = users(:bob)
+    user.pbt.must_be_nil
+    User.pbt.must_be_nil
   end
-
-  it "IsReflected gives boolean of child" do
-    profile = profiles(:bob_prof)
-    PolyBelongsTo::Pbt::IsReflected[profile,  Phone].must_equal true
-    PolyBelongsTo::Pbt::IsReflected[profile,Address].must_equal true
-    PolyBelongsTo::Pbt::IsReflected[profile,  Photo].must_equal true
-    PolyBelongsTo::Pbt::IsReflected[profile,   User].must_equal false
-    PolyBelongsTo::Pbt::IsReflected[nil,       User].must_equal false
-    PolyBelongsTo::Pbt::IsReflected[profile,    nil].must_equal false
-  end
-
-  it "SingularOrPlural responds for child relations" do
-    profile = profiles(:susan_prof)
-    PolyBelongsTo::Pbt::SingularOrPlural[profile,Phone].must_equal :plural
-    PolyBelongsTo::Pbt::SingularOrPlural[profile,Photo].must_equal :singular
-    PolyBelongsTo::Pbt::SingularOrPlural[profile, User].must_be_nil
-    PolyBelongsTo::Pbt::SingularOrPlural[nil,     User].must_be_nil
-    PolyBelongsTo::Pbt::SingularOrPlural[profile,  nil].must_be_nil
-  end
-
-  it "IsSingular tells child singleness" do
-    profile = profiles(:steve_prof)
-    PolyBelongsTo::Pbt::IsSingular[profile,Phone].must_be_same_as false
-    PolyBelongsTo::Pbt::IsSingular[nil,    Phone].must_be_same_as false
-    PolyBelongsTo::Pbt::IsSingular[profile,  nil].must_be_same_as false
-    PolyBelongsTo::Pbt::IsSingular[profile,Photo].must_be_same_as true
-  end
-
-  it "IsPlural tells child pluralness" do
-    profile = profiles(:bob_prof)
-    PolyBelongsTo::Pbt::IsPlural[profile,Phone].must_be_same_as true
-    PolyBelongsTo::Pbt::IsPlural[profile,Photo].must_be_same_as false
-    PolyBelongsTo::Pbt::IsPlural[nil,    Photo].must_be_same_as false
-    PolyBelongsTo::Pbt::IsPlural[profile,  nil].must_be_same_as false
-  end
-
-  it "CollectionProxy: singular or plural proxy name" do
-    profile = profiles(:steve_prof)
-    PolyBelongsTo::Pbt::CollectionProxy[profile,Phone].must_equal :phones
-    PolyBelongsTo::Pbt::CollectionProxy[profile,Photo].must_equal :photo
-    PolyBelongsTo::Pbt::CollectionProxy[profile, User].must_be_nil
-    PolyBelongsTo::Pbt::CollectionProxy[nil,     User].must_be_nil
-    PolyBelongsTo::Pbt::CollectionProxy[profile,  nil].must_be_nil
-  end
-
-  it "AsCollectionProxy: has_one emulated collectionproxy" do
-    address = profiles(:bob_prof).addresses.first
-    address_to_geo = PolyBelongsTo::Pbt::AsCollectionProxy[address, GeoLocation]
-    address_to_geo.respond_to?(:klass).must_be_same_as true
-    address_to_geo.respond_to?(:build).must_be_same_as true
-    address_to_geo.respond_to?(:each ).must_be_same_as true
-    address_to_geo.respond_to?(:all  ).must_be_same_as true
-    address_to_geo.respond_to?(:first).must_be_same_as true
-    address_to_geo.respond_to?(:last ).must_be_same_as true
-    address_to_geo.kind_of?(PolyBelongsTo::FakedCollection).must_be_same_as true
-  end
-
-  it "AsCollectionProxy: has one or zero items" do
-    address = profiles(:bob_prof).addresses.first
-    address_to_geo = PolyBelongsTo::Pbt::AsCollectionProxy[address, GeoLocation]
-    address_to_geo.count.between?(0,1).must_be_same_as true
-    address_to_geo.size.between?(0,1).must_be_same_as true
-  end
-
   
-  it "AsCollectionProxy: has_many uses AR CollectionProxy" do
-    bob = users(:bob)
-    bob_to_prof = PolyBelongsTo::Pbt::AsCollectionProxy[bob, Profile]
-    bob_to_prof.respond_to?(:klass).must_be_same_as true
-    bob_to_prof.respond_to?(:build).must_be_same_as true 
-    bob_to_prof.respond_to?(:each ).must_be_same_as true 
-    bob_to_prof.respond_to?(:all  ).must_be_same_as true 
-    bob_to_prof.respond_to?(:first).must_be_same_as true 
-    bob_to_prof.respond_to?(:last ).must_be_same_as true 
-    bob_to_prof.kind_of?(ActiveRecord::Associations::CollectionProxy).must_be_same_as true
+  it "Tag belongs to table as :user" do
+    tag = tags(:bob_tag)
+    tag.pbt.must_be_same_as :user
+    Tag.pbt.must_be_same_as :user
+  end
+  
+  it "Tags of multiple parents" do
+    tire = tires(:low_profile1)
+    parents = tire.class.pbts
+    parents.must_be_kind_of Array
+    parents.must_include :user
+    parents.must_include :car
+    parents = tire.pbts
+    parents.must_be_kind_of Array
+    parents.must_include :user
+    parents.must_include :car
+  end
+  
+  it "Phone belongs to table as :phoneable" do
+    phone = phones(:bob_phone)
+    phone.pbt.must_be_same_as :phoneable
+    Phone.pbt.must_be_same_as :phoneable
+  end
+  
+  it "User params name as :user" do
+    user = users(:bob)
+    user.pbt_params_name.must_be_same_as :user
+    User.pbt_params_name.must_be_same_as :user
+    User.pbt_params_name(true).must_be_same_as :user
+    User.pbt_params_name(false).must_be_same_as :user
+  end
+  
+  it "Tag params name as :tag" do
+    tag = tags(:bob_tag)
+    tag.pbt_params_name.must_be_same_as :tag
+    Tag.pbt_params_name.must_be_same_as :tag
+    Tag.pbt_params_name(true).must_be_same_as :tag
+    Tag.pbt_params_name(false).must_be_same_as :tag
+  end
+  
+  it "Phone params name as :phones_attributes" do
+    phone = phones(:bob_phone)
+    phone.pbt_params_name.must_be_same_as :phones_attributes
+    Phone.pbt_params_name.must_be_same_as :phones_attributes
+    Phone.pbt_params_name(true).must_be_same_as :phones_attributes
+  end
+  
+  it "Phone params name with false as :phone" do
+    phone = phones(:bob_phone)
+    phone.pbt_params_name(false).must_be_same_as :phone
+    Phone.pbt_params_name(false).must_be_same_as :phone
+  end
+  
+  it "User belongs to field id symbol as nil" do
+    user = users(:bob)
+    user.pbt_id_sym.must_be_nil
+    User.pbt_id_sym.must_be_nil
+  end
+  
+  it "Tag belongs to field id symbol as :tag_id" do
+    tag = tags(:bob_tag)
+    tag.pbt_id_sym.must_be_same_as :user_id
+    Tag.pbt_id_sym.must_be_same_as :user_id
+  end
+  
+  it "Phone belongs to field id symbol as :phoneable_id" do
+    phone = phones(:bob_phone)
+    phone.pbt_id_sym.must_be_same_as :phoneable_id
+    Phone.pbt_id_sym.must_be_same_as :phoneable_id
+  end
+  
+  it "User belongs to field type symbol as nil" do
+    user = users(:bob)
+    user.pbt_type_sym.must_be_nil
+    User.pbt_type_sym.must_be_nil
+  end
+  
+  it "Tag belongs to field type symbol as nil" do
+    tag = tags(:bob_tag)
+    tag.pbt_type_sym.must_be_nil
+    Tag.pbt_type_sym.must_be_nil
+  end
+  
+  it "Phone belongs to field type symbol as :phoneable_type" do
+    phone = phones(:bob_phone)
+    phone.pbt_type_sym.must_be_same_as :phoneable_type
+    Phone.pbt_type_sym.must_be_same_as :phoneable_type
+  end
+  
+  it "User belongs to id as nil" do
+    user = users(:bob)
+    user.pbt_id.must_be_nil
+  end
+  
+  it "Tag belongs to id as user's id" do
+    tag = tags(:bob_tag)
+    tag.pbt_id.must_be_same_as ActiveRecord::FixtureSet.identify(:bob)
+  end
+  
+  it "Phone belongs to id as user's profile id" do
+    phone = phones(:bob_phone)
+    phone.pbt_id.must_be_same_as ActiveRecord::FixtureSet.identify(:bob_prof)
+  end
+
+  it "User belongs to type as nil" do
+    user = users(:bob)
+    user.pbt_type.must_be_nil
+  end
+  
+  it "Tag belongs to type as nil" do
+    tag = tags(:bob_tag)
+    tag.pbt_type.must_be_nil
+  end
+  
+  it "Phone belongs to type as 'Profile'" do
+    phone = phones(:bob_phone)
+    phone.pbt_type.must_equal "Profile"
+  end
+
+  it "User parent returns nil" do
+    user = users(:bob)
+    user.pbt_parent.must_be_nil
+  end
+  
+  it "Tag parent returns user instance" do
+    user = users(:bob)
+    tag = user.tags.build
+    tag.pbt_parent.id.must_be_same_as user.id
+  end
+  
+  it "Phone parent returns profile" do
+    user = users(:bob)
+    profile = user.profiles.build
+    phone = profile.phones.build
+    profile.save
+    phone.pbt_parent.id.must_be_same_as profile.id
+  end
+
+  it "Profile parent returns user" do
+    user = users(:bob)
+    profile = user.profiles.build
+    profile.save
+    profile.pbt_parent.id.must_be_same_as user.id
+  end
+
+  it "pbt_parents: can show multiple parents" do
+    user = User.new(id: 1)
+    user.cars.build
+    user.cars.first.tires.build(user_id: user.id)
+    user.save
+    parents = user.cars.first.tires.first.pbt_parents
+    parents.must_be_kind_of Array
+    parents.must_include user
+    parents.must_include user.cars.first
+    user.destroy
+  end
+
+  it "pbt_parents: one parent for polymorphic" do
+    bob_address = addresses(:bob_address)
+    parents = bob_address.pbt_parents
+    parents.must_be_kind_of Array
+    parents.size.must_equal 1
+    parents.first.must_equal profiles(:bob_prof)
   end
 
 end
