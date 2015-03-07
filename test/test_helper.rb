@@ -20,7 +20,7 @@ if ActiveSupport::TestCase.respond_to?(:fixture_path=)
   ActiveSupport::TestCase.fixture_path = File.expand_path("../fixtures", __FILE__)
 end
 
-Minitest::Reporters.use! [Minitest::Reporters::SpecReporter.new]
+Minitest::Reporters.use! [StyledReporter.new]
 
 class ActiveSupport::TestCase
   ActiveRecord::Base.send(:include, PolyBelongsTo::Dup)
