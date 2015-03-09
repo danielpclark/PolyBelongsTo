@@ -1,4 +1,5 @@
 .bundle/
+.ruby-version
 *.gem
 *.swp
 Gemfile.lock
