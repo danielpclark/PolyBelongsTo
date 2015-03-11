@@ -7,6 +7,7 @@ ActiveRecord::Migrator.migrations_paths = [File.expand_path("../../test/dummy/db
 require 'rails/test_help'
 require 'minitest/rails'
 require 'minitest/reporters'
+require 'color_pound_spec_reporter'
 require 'securerandom'
 
 unless Rails.version =~ /^4.[2-9]/

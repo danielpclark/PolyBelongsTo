@@ -5,6 +5,7 @@ class CoreTest < ActiveSupport::TestCase
   fixtures :all
 
   describe PolyBelongsTo::Core do
+
     it "is a module" do
       PolyBelongsTo::Core.must_be_kind_of Module
     end

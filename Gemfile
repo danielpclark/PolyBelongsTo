@@ -16,4 +16,5 @@ group :development, :test do
             "~> #{rails_version}"
           end
   gem "rails", rails
+  gem 'color_pound_spec_reporter', '~> 0.0.2'
 end
