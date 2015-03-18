@@ -12,20 +12,20 @@ class CoreTest < ActiveSupport::TestCase
 
     it "#poly? User as not polymorphic" do
       user = users(:bob)
-      user.poly?.must_be_same_as false
-      User.poly?.must_be_same_as false
+      user.wont_be :poly?
+      User.wont_be :poly?
     end
 
     it "#poly? Tag as not polymorphic" do
       tag = tags(:bob_tag)
-      tag.poly?.must_be_same_as false
-      Tag.poly?.must_be_same_as false
+      tag.wont_be :poly?
+      Tag.wont_be :poly?
     end
 
     it "#poly? Phone as polymorphic" do
       phone = phones(:bob_phone)
-      phone.poly?.must_be_same_as true
-      Phone.poly?.must_be_same_as true
+      phone.must_be :poly?
+      Phone.must_be :poly?
     end
 
     it "#pbt User belongs to table as nil" do

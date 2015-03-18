@@ -6,13 +6,13 @@ class DupTest < ActiveSupport::TestCase
 
   describe PolyBelongsTo::Dup do
     it "has method :pbt_dup_build" do
-      User.instance_methods.include?(:pbt_dup_build).must_be_same_as true
-      User.methods.include?(:pbt_dup_build).must_be_same_as true
+      User.instance_methods.must_include(:pbt_dup_build)
+      User.methods.must_include(:pbt_dup_build)
     end
 
     it "has method :pbt_deep_dup_build" do
-      User.instance_methods.include?(:pbt_deep_dup_build).must_be_same_as true
-      User.methods.include?(:pbt_deep_dup_build).must_be_same_as true
+      User.instance_methods.must_include(:pbt_deep_dup_build)
+      User.methods.must_include(:pbt_deep_dup_build)
     end
 
     it "#pbt_dup_build builds copy from dup'd attributes" do

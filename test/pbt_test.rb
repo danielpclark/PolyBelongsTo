@@ -78,33 +78,35 @@ class PbtTest < ActiveSupport::TestCase
     it "AsCollectionProxy has_one emulated collectionproxy" do
       address = profiles(:bob_prof).addresses.first
       address_to_geo = PolyBelongsTo::Pbt::AsCollectionProxy[address, GeoLocation]
-      address_to_geo.respond_to?(:klass).must_be_same_as true
-      address_to_geo.respond_to?(:build).must_be_same_as true
-      address_to_geo.respond_to?(:each ).must_be_same_as true
-      address_to_geo.respond_to?(:all  ).must_be_same_as true
-      address_to_geo.respond_to?(:first).must_be_same_as true
-      address_to_geo.respond_to?(:last ).must_be_same_as true
-      address_to_geo.kind_of?(PolyBelongsTo::FakedCollection).must_be_same_as true
+      address_to_geo.must_respond_to(:klass)
+      address_to_geo.must_respond_to(:build)
+      address_to_geo.must_respond_to(:each )
+      address_to_geo.must_respond_to(:all  )
+      address_to_geo.must_respond_to(:first)
+      address_to_geo.must_respond_to(:last )
+      address_to_geo.must_be_kind_of(PolyBelongsTo::FakedCollection)
     end
 
     it "AsCollectionProxy has one or zero items" do
       address = profiles(:bob_prof).addresses.first
       address_to_geo = PolyBelongsTo::Pbt::AsCollectionProxy[address, GeoLocation]
       address_to_geo.count.between?(0,1).must_be_same_as true
+      [0,1].must_include address_to_geo.count
       address_to_geo.size.between?(0,1).must_be_same_as true
+      [0,1].must_include address_to_geo.size
     end
 
     
     it "AsCollectionProxy has_many uses ActiveRecord::Associations::CollectionProxy" do
       bob = users(:bob)
       bob_to_prof = PolyBelongsTo::Pbt::AsCollectionProxy[bob, Profile]
-      bob_to_prof.respond_to?(:klass).must_be_same_as true
-      bob_to_prof.respond_to?(:build).must_be_same_as true 
-      bob_to_prof.respond_to?(:each ).must_be_same_as true 
-      bob_to_prof.respond_to?(:all  ).must_be_same_as true 
-      bob_to_prof.respond_to?(:first).must_be_same_as true 
-      bob_to_prof.respond_to?(:last ).must_be_same_as true 
-      bob_to_prof.kind_of?(ActiveRecord::Associations::CollectionProxy).must_be_same_as true
+      bob_to_prof.must_respond_to(:klass)
+      bob_to_prof.must_respond_to(:build)
+      bob_to_prof.must_respond_to(:each )
+      bob_to_prof.must_respond_to(:all  )
+      bob_to_prof.must_respond_to(:first)
+      bob_to_prof.must_respond_to(:last )
+      bob_to_prof.must_be_kind_of(ActiveRecord::Associations::CollectionProxy)
     end
   end
 

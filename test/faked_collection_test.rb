@@ -21,7 +21,8 @@ class FakedCollectionTest < ActiveSupport::TestCase
 
     it "#all is an Array" do
       photos.all.is_a?(Array).must_be_same_as true
-      photos.all.kind_of?(Array).must_be_same_as true
+      photos.all.must_be_kind_of(Array)
+      photos.all.must_be_instance_of(Array)
     end
 
     it "#first is the item" do
@@ -34,15 +35,17 @@ class FakedCollectionTest < ActiveSupport::TestCase
 
     it "#count and #size counts as 1 or 0" do
       photos.count.between?(0,1).must_be_same_as true
+      [0,1].must_include photos.count
       photos.size.between?(0,1).must_be_same_as true
+      [0,1].must_include photos.size
     end
 
     it "#ancestors has ActiveRecord::Base ancestor" do
-      photos.ancestors.include?(ActiveRecord::Base).must_be_same_as true
+      photos.ancestors.must_include(ActiveRecord::Base)
     end
 
     it "build #kind_of? FakedCollection object" do
-      photos.kind_of?(PolyBelongsTo::FakedCollection).must_be_same_as true
+      photos.must_be_kind_of(PolyBelongsTo::FakedCollection)
     end
 
     it "build #is_a? FakedCollection object" do
@@ -50,7 +53,7 @@ class FakedCollectionTest < ActiveSupport::TestCase
     end
 
     it "build #instance_of? FakedCollection object" do
-      photos.instance_of?(PolyBelongsTo::FakedCollection).must_be_same_as true
+      photos.must_be_instance_of(PolyBelongsTo::FakedCollection)
     end
     
     it "#build builds appropriately" do
@@ -77,8 +80,8 @@ class FakedCollectionTest < ActiveSupport::TestCase
     end
 
     it "#respond_to? :first and :last" do
-      photos.respond_to?(:first).must_be_same_as true
-      photos.respond_to?(:last).must_be_same_as true
+      photos.must_respond_to(:first)
+      photos.must_respond_to(:last)
     end
 
     it "knows sneeze is a missing method" do
