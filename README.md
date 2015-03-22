@@ -144,17 +144,15 @@ otherwise**.  You can duplicate a record, or use a self recursive command **pbt_
 to duplicate a record and all of it's has_one/has_many children records at once.  Afterwards
 be sure to use the save method.
 
-> NOTE: This will need to be included manually.  The reason for this is because you need to
-know what's involved when using this.  It's purposefully done this way to lead to reading
-the documentation for PolyBelongsTo's duplication methods.
+> NOTE: In the next version this will automatically be included!  For now this will need to be included manually
 
 ####Known Issues
  - Carrierwave records won't duplicate.  To ensure that other records will still save and
 prevent any rollback issues use .save(validate: false) ... I'm considering possible options
 to remedy this and
 other scenarios.
- - For deep duplication you need to be very aware of the potential for infinite loops with
-your records if there are any circular references.
+ - **PROBLEM SOLVED** For deep duplication you need to be very aware of the potential for infinite loops with
+your records if there are any circular references. ~Just need to write tests to prove it.~
 
 ###How To Use
 
