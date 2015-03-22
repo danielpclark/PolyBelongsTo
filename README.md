@@ -151,8 +151,8 @@ be sure to use the save method.
 prevent any rollback issues use .save(validate: false) ... I'm considering possible options
 to remedy this and
 other scenarios.
- - **PROBLEM SOLVED** For deep duplication you need to be very aware of the potential for infinite loops with
-your records if there are any circular references. ~Just need to write tests to prove it.~
+ - **PROBLEM SOLVED** ~~For deep duplication you need to be very aware of the potential for infinite loops with
+your records if there are any circular references.~~ ~Just need to write tests to prove it.~
 
 ###How To Use
 
