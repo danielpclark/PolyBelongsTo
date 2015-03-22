@@ -5,7 +5,6 @@ $: << File.join(File.dirname(__FILE__), "/poly_belongs_to")
 require 'active_support/concern'
 require 'poly_belongs_to/version'
 require 'poly_belongs_to/core'
-require 'poly_belongs_to/config'
 require 'poly_belongs_to/singleton_set'
 require 'poly_belongs_to/dup'
 require 'poly_belongs_to/pbt'
@@ -13,11 +12,3 @@ require 'poly_belongs_to/faked_collection'
 ActiveRecord::Base.send(:include, PolyBelongsTo::Core )
 ActiveRecord::Base.send(:include, PolyBelongsTo::Dup  )
 
-module PolyBelongsTo
-  attr_reader :config
-  class << self
-    def config
-      @config ||= PbtConfig.new
-    end
-  end
-end
