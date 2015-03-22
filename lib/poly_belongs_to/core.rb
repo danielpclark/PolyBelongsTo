@@ -47,20 +47,20 @@ module PolyBelongsTo
 
     def pbt_id
       val = pbt
-      val ? eval("self.#{val}_id") : nil
+      val ? self.send("#{val}_id") : nil
     end
 
     def pbt_type
-      poly? ? eval("self.#{pbt}_type") : nil
+      poly? ? self.send("#{pbt}_type") : nil
     end
 
     def pbt_parent
       val = pbt
       if val
         if poly?
-          eval "#{pbt_type}.find(#{pbt_id})"
+          "#{pbt_type}".constantize.find(pbt_id)
         else
-          eval "#{val.capitalize.to_s}.find(#{pbt_id})"
+          "#{val.capitalize}".constantize.find(pbt_id)
         end
       else
         nil
@@ -72,7 +72,7 @@ module PolyBelongsTo
         Array[pbt_parent].compact
       else
         self.class.pbts.map {|i|
-          try{ eval("#{i.capitalize}").find eval("self.#{i}_id") }
+          try{ "#{i.capitalize}".constantize.find(self.send("#{i}_id")) }
         }.compact
       end
     end

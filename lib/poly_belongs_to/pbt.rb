@@ -9,20 +9,20 @@ module PolyBelongsTo
 
     BuildCmd = lambda {|obj, child|
       return nil unless obj && child
-      dup_name = "#{CollectionProxy[obj,child]}"
+      dup_name = CollectionProxy[obj,child]
       IsSingular[obj, child] ? "build_#{dup_name}" : IsPlural[obj, child] ? "#{dup_name}.build" : nil
     }
 
     Reflects = lambda {|obj|
       return [] unless obj
       [:has_one, :has_many].map { |has|
-        eval(obj.class.name).reflect_on_all_associations(has).map(&:name).map(&:to_sym)
+        obj.class.name.constantize.reflect_on_all_associations(has).map(&:name).map(&:to_sym)
       }.flatten
     }
 
     ReflectsAsClasses = lambda {|obj|
       Reflects[obj].map {|ref|
-        eval (eval("obj.#{ref}").try(:klass) || eval("obj.#{ref}").class).name
+        (obj.send(ref).try(:klass) || obj.send(ref).class).name.constantize
       }
     }
     
@@ -65,7 +65,7 @@ module PolyBelongsTo
       proxy = ActiveModel::Naming.singular(child).to_sym
       return PolyBelongsTo::FakedCollection.new(obj, child) if reflects.include? proxy
       proxy = ActiveModel::Naming.plural(child).to_sym
-      reflects.include?(proxy) ? eval("obj.#{PolyBelongsTo::Pbt::CollectionProxy[obj, child]}") : []
+      reflects.include?(proxy) ? obj.send(PolyBelongsTo::Pbt::CollectionProxy[obj, child]) : []
     }
   end
   

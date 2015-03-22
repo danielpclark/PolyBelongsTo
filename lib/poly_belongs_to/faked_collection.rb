@@ -4,7 +4,7 @@ module PolyBelongsTo
       raise "Not a has_one rleationship for FakedCollection" unless PolyBelongsTo::Pbt::IsSingular[obj,child]
       @obj = obj
       @child = child
-      @instance = eval("@obj.#{PolyBelongsTo::Pbt::CollectionProxy[@obj,@child]}")
+      @instance = @obj.send(PolyBelongsTo::Pbt::CollectionProxy[@obj,@child])
       self
     end
 
@@ -45,7 +45,7 @@ module PolyBelongsTo
     end
 
     def build(*args)
-      @instance = eval("@obj.#{PolyBelongsTo::Pbt::BuildCmd[@obj, @child]}(#{args.join(',')})")
+      @instance = @obj.send(PolyBelongsTo::Pbt::BuildCmd[@obj, @child], *args)
       self
     end
 
