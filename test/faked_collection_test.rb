@@ -4,7 +4,7 @@ require 'minitest/autorun'
 class FakedCollectionTest < ActiveSupport::TestCase
   fixtures :all
 
-  let(:photos){
+  let(:steve_photos){
     steve_prof = users(:steve).profiles.first
     PolyBelongsTo::FakedCollection.new(steve_prof, Photo)
   }
@@ -12,80 +12,84 @@ class FakedCollectionTest < ActiveSupport::TestCase
   describe PolyBelongsTo::FakedCollection do
 
     it "#class.name is named correctly" do
-      photos.class.name.must_equal "PolyBelongsTo::FakedCollection" 
+      steve_photos.class.name.must_equal "PolyBelongsTo::FakedCollection" 
     end
 
     it "#superclass knows its superclass" do
       PolyBelongsTo::FakedCollection.superclass.must_equal Object
     end
 
+    it "IDs the inner ited on :id" do
+      [nil, photos(:steve_photo).id].must_include steve_photos.id
+    end
+
     it "#all is an Array" do
-      photos.all.is_a?(Array).must_be_same_as true
-      photos.all.must_be_kind_of(Array)
-      photos.all.must_be_instance_of(Array)
+      steve_photos.all.is_a?(Array).must_be_same_as true
+      steve_photos.all.must_be_kind_of(Array)
+      steve_photos.all.must_be_instance_of(Array)
     end
 
     it "#first is the item" do
-      photos.first.class.name.must_equal "Photo"
+      steve_photos.first.class.name.must_equal "Photo"
     end
 
     it "#last is the item" do
-      photos.last.class.name.must_equal "Photo"
+      steve_photos.last.class.name.must_equal "Photo"
     end
 
     it "#count and #size counts as 1 or 0" do
-      photos.count.between?(0,1).must_be_same_as true
-      [0,1].must_include photos.count
-      photos.size.between?(0,1).must_be_same_as true
-      [0,1].must_include photos.size
+      steve_photos.count.between?(0,1).must_be_same_as true
+      [0,1].must_include steve_photos.count
+      steve_photos.size.between?(0,1).must_be_same_as true
+      [0,1].must_include steve_photos.size
     end
 
     it "#ancestors has ActiveRecord::Base ancestor" do
-      photos.ancestors.must_include(ActiveRecord::Base)
+      steve_photos.ancestors.must_include(ActiveRecord::Base)
     end
 
     it "build #kind_of? FakedCollection object" do
-      photos.must_be_kind_of(PolyBelongsTo::FakedCollection)
+      steve_photos.must_be_kind_of(PolyBelongsTo::FakedCollection)
     end
 
     it "build #is_a? FakedCollection object" do
-      photos.is_a?(PolyBelongsTo::FakedCollection).must_be_same_as true
+      steve_photos.is_a?(PolyBelongsTo::FakedCollection).must_be_same_as true
     end
 
     it "build #instance_of? FakedCollection object" do
-      photos.must_be_instance_of(PolyBelongsTo::FakedCollection)
+      steve_photos.must_be_instance_of(PolyBelongsTo::FakedCollection)
     end
     
     it "#build builds appropriately" do
-      photos.build({content: "cheese"})
-      photos.first.content.must_equal "cheese"
+      steve_photos.build({content: "cheese"})
+      steve_photos.first.content.must_equal "cheese"
     end
 
     it "#build returns self and not nil" do
-      res = photos.build({content: "cheese"})
+      res = steve_photos.build({content: "cheese"})
       res.wont_be_nil
-      res.class.name.must_equal photos.class.name
+      res.class.name.must_equal steve_photos.class.name
       res.first.content.must_equal "cheese"
-      photos.first.content.must_equal "cheese"
+      steve_photos.first.content.must_equal "cheese"
     end
 
     it "#each loops appropriately" do
-      photos.each do |photo|
+      steve_photos.each do |photo|
         photo.class.name.must_equal "Photo"
       end
     end
 
     it "defines #klass to point to inner items class" do
-      photos.klass.name.must_equal "Photo"
+      steve_photos.klass.name.must_equal "Photo"
     end
 
     it "#respond_to? :first and :last" do
-      photos.must_respond_to(:first)
-      photos.must_respond_to(:last)
+      steve_photos.must_respond_to(:first)
+      steve_photos.must_respond_to(:last)
     end
 
     it "knows sneeze is a missing method" do
-      ->{photos.sneeze}.must_raise NoMethodError
+      ->{steve_photos.sneeze}.must_raise NoMethodError
     end
 
     it "will not initialize on has_many" do

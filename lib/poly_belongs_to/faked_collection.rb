@@ -8,6 +8,10 @@ module PolyBelongsTo
       self
     end
 
+    def id
+      @instance.try(:id)
+    end
+
     def all
       Array[@instance].compact
     end
