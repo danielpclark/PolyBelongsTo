@@ -10,7 +10,8 @@ require 'poly_belongs_to/singleton_set'
 require 'poly_belongs_to/dup'
 require 'poly_belongs_to/pbt'
 require 'poly_belongs_to/faked_collection'
-ActiveRecord::Base.send(:include, PolyBelongsTo::Core)
+ActiveRecord::Base.send(:include, PolyBelongsTo::Core )
+ActiveRecord::Base.send(:include, PolyBelongsTo::Dup  )
 
 module PolyBelongsTo
   attr_reader :config

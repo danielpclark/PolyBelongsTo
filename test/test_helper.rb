@@ -24,6 +24,5 @@ end
 Minitest::Reporters.use! [ColorPoundSpecReporter.new]
 
 class ActiveSupport::TestCase
-  ActiveRecord::Base.send(:include, PolyBelongsTo::Dup)
   CleanAttrs = PolyBelongsTo::Pbt::AttrSanitizer  
 end
