@@ -3,6 +3,7 @@ module PolyBelongsTo
   class SingletonSet
     def initialize
       @set = Set.new
+      @flagged = Set.new
       self
     end
 
@@ -11,7 +12,10 @@ module PolyBelongsTo
     end
 
     def add?(record)
-      @set.add?( formatted_name( record ) )
+      result = @set.add?( formatted_name( record ) )
+      return result if result
+      flag(record)
+      result
     end
 
     def add(record)
@@ -20,6 +24,14 @@ module PolyBelongsTo
 
     def <<(record)
       add?(record)
+    end
+
+    def flag(record)
+      @flagged << formatted_name(record)
+    end
+
+    def flagged?(record)
+      @flagged.include?(formatted_name(record))
     end
 
     def method_missing(mthd)

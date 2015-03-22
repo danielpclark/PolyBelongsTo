@@ -24,5 +24,16 @@ class DupTest < ActiveSupport::TestCase
       the_set.<<(example)
       the_set.to_a.must_equal ["#{example.class.name}-#{example.id}"]
     end
+
+    it "flags a duplicate" do
+      the_set.<<(example)
+      the_set.<<(example).must_be_nil
+      the_set.flagged?(example).must_be_same_as true
+      the_set.instance_eval {@flagged}.to_a.must_equal ["#{example.class.name}-#{example.id}"]
+    end
+
+    it "says false for unflagged items" do
+      the_set.flagged?(example).must_be_same_as false
+    end
   end
 end

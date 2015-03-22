@@ -22,7 +22,7 @@ module PolyBelongsTo
               child.respond_to?(:build) ? child.each {|spawn|
                 builder.pbt_deep_dup_build(spawn) {singleton_record}
               } : builder.pbt_deep_dup_build(child) {singleton_record}
-            end
+          end unless singleton_record.flagged?(item_to_build_on)
         end
         item_to_build_on       
       end
