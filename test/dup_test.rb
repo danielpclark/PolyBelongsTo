@@ -67,11 +67,12 @@ class DupTest < ActiveSupport::TestCase
       alpha2 = Alpha.new( CleanAttrs[alpha] )
       CleanAttrs[alpha2].must_equal CleanAttrs[alpha]
       alpha2.pbt_deep_dup_build(beta)
+      #CleanAttrs[alpha2.betas.first].must_equal "asdf"
       #alpha2.save
       CleanAttrs[alpha2.betas.first].must_equal CleanAttrs[beta]
       CleanAttrs[alpha2.betas.first.capas.first].must_equal CleanAttrs[capa]
       CleanAttrs[alpha2.betas.first.capas.first.deltas.first].must_equal CleanAttrs[delta]
-      CleanAttrs[alpha2.betas.first.capas.first.deltas.firsti.alphas.first].must_be_nil
+      CleanAttrs[alpha2.betas.first.capas.first.deltas.first.alphas.first].wont_equal CleanAttrs[alpha]
     end
   end
 end

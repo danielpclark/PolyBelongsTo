@@ -26,6 +26,10 @@ module PolyBelongsTo
       add?(record)
     end
 
+    def include?(record)
+      @set.include?(formatted_name(record))
+    end
+
     def flag(record)
       @flagged << formatted_name(record)
     end
