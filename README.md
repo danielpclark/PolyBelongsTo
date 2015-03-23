@@ -169,7 +169,6 @@ contact.save
 
 
 # For a fully recursive copy do the same with pbt_deep_dup_build
-# Keep in mind this is vulnerable to infinite loops!
 contact.pbt_deep_dup_build( User.last.profile )
 
 # Remeber to save!
