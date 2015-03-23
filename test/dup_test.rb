@@ -28,7 +28,6 @@ class DupTest < ActiveSupport::TestCase
       bob_prof = profiles(:bob_prof)
       contact = user1.contacts.new
       contact.pbt_deep_dup_build(bob_prof)
-      contact.profile = contact.profile
       CleanAttrs[contact.profile                                                        ].
         must_equal CleanAttrs[bob_prof]
       CleanAttrs[contact.profile.addresses.first                                        ].
@@ -49,6 +48,30 @@ class DupTest < ActiveSupport::TestCase
         must_equal CleanAttrs[bob_prof.phones.last]
       CleanAttrs[contact.profile.photo                                                  ].
         must_equal CleanAttrs[bob_prof.photo]
+    end
+  end
+
+  describe "PolyBelongsTo::Dup #pbt_deep_dup_build handles circular references like a champ!" do
+    alpha = Alpha.new; alpha.save
+    beta = alpha.betas.build; beta.save
+    capa = beta.capas.build; capa.save
+    delta = capa.deltas.build; delta.save
+    alpha.update(delta_id: delta.id)
+    it "is a circle" do
+      alpha.pbt_parent.must_equal delta
+      beta.pbt_parent.must_equal alpha
+      capa.pbt_parent.must_equal beta
+      delta.pbt_parent.must_equal capa
+    end
+    it "clones without duplicating cirular reference" do
+      alpha2 = Alpha.new( CleanAttrs[alpha] )
+      CleanAttrs[alpha2].must_equal CleanAttrs[alpha]
+      alpha2.pbt_deep_dup_build(beta)
+      CleanAttrs[alpha2.betas.first].must_equal CleanAttrs[beta]
+      CleanAttrs[alpha2.betas.first.capas.first].must_equal CleanAttrs[capa]
+      CleanAttrs[alpha2.betas.first.capas.first.deltas.first].must_equal CleanAttrs[delta]
+      CleanAttrs[alpha2.betas.first.capas.first.deltas.first.alphas.first].must_equal CleanAttrs[alpha]
+      alpha2.betas.first.capas.first.deltas.first.alphas.first.betas.first.must_be_nil
     end
   end
 end
