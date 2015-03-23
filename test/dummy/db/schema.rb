@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150301100722) do
+ActiveRecord::Schema.define(version: 20150322233755) do
 
   create_table "addresses", force: true do |t|
     t.integer  "addressable_id"
@@ -22,6 +22,33 @@ ActiveRecord::Schema.define(version: 20150301100722) do
   end
 
   add_index "addresses", ["addressable_id", "addressable_type"], name: "index_addresses_on_addressable_id_and_addressable_type"
+
+  create_table "alphas", force: true do |t|
+    t.string   "content"
+    t.integer  "delta_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "alphas", ["delta_id"], name: "index_alphas_on_delta_id"
+
+  create_table "beta", force: true do |t|
+    t.string   "content"
+    t.integer  "alpha_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "beta", ["alpha_id"], name: "index_beta_on_alpha_id"
+
+  create_table "capas", force: true do |t|
+    t.string   "content"
+    t.integer  "beta_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "capas", ["beta_id"], name: "index_capas_on_beta_id"
 
   create_table "cars", force: true do |t|
     t.integer  "user_id"
@@ -40,6 +67,15 @@ ActiveRecord::Schema.define(version: 20150301100722) do
   end
 
   add_index "contacts", ["user_id"], name: "index_contacts_on_user_id"
+
+  create_table "delta", force: true do |t|
+    t.string   "content"
+    t.integer  "capa_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "delta", ["capa_id"], name: "index_delta_on_capa_id"
 
   create_table "geo_locations", force: true do |t|
     t.integer  "address_id"

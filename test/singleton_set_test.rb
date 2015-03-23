@@ -25,6 +25,11 @@ class DupTest < ActiveSupport::TestCase
       the_set.to_a.must_equal ["#{example.class.name}-#{example.id}"]
     end
 
+    it "can tell you what's included" do
+      the_set.<<(example)
+      the_set.include?(example).must_be_same_as true
+    end
+
     it "flags a duplicate" do
       the_set.<<(example)
       the_set.<<(example).must_be_nil

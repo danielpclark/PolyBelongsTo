@@ -9,7 +9,7 @@ module PolyBelongsTo
 
     BuildCmd = lambda {|obj, child|
       return nil unless obj && child
-      dup_name = CollectionProxy[obj,child]
+      dup_name = CollectionProxy[obj, child]
       IsSingular[obj, child] ? "build_#{dup_name}" : IsPlural[obj, child] ? "#{dup_name}.build" : nil
     }
 
@@ -26,8 +26,8 @@ module PolyBelongsTo
       }
     }
     
-    IsReflected = lambda {|obj,child|
-      !!SingularOrPlural[obj, child]
+    IsReflected = lambda {|obj, child|
+      !!CollectionProxy[obj, child]
     }
 
     SingularOrPlural = lambda {|obj, child|
@@ -35,7 +35,7 @@ module PolyBelongsTo
       reflects = Reflects[obj]
       if reflects.include?(ActiveModel::Naming.singular(child).to_sym)
         :singular
-      elsif reflects.include?(ActiveModel::Naming.plural(child).to_sym)
+      elsif CollectionProxy[obj, child]
         :plural
       else
         nil
@@ -52,20 +52,14 @@ module PolyBelongsTo
 
     CollectionProxy = lambda {|obj, child|
       return nil unless obj && child
-      reflects = Reflects[obj]
-      proxy = ActiveModel::Naming.singular(child).to_sym
-      return proxy if reflects.include? proxy
-      proxy = ActiveModel::Naming.plural(child).to_sym
-      reflects.include?(proxy) ? proxy : nil
+      names = [ActiveModel::Naming.singular(child).to_s, ActiveModel::Naming.plural(child).to_s].uniq
+      Reflects[obj].detect {|ref| "#{ref}"[/(?:#{ names.join('|') }).{,3}/]}
     }
   
     AsCollectionProxy = lambda {|obj, child|
       return [] unless obj && child
-      reflects = Reflects[obj]
-      proxy = ActiveModel::Naming.singular(child).to_sym
-      return PolyBelongsTo::FakedCollection.new(obj, child) if reflects.include? proxy
-      proxy = ActiveModel::Naming.plural(child).to_sym
-      reflects.include?(proxy) ? obj.send(PolyBelongsTo::Pbt::CollectionProxy[obj, child]) : []
+      return PolyBelongsTo::FakedCollection.new(obj, child) if IsSingular[obj, child]
+      !!CollectionProxy[obj, child] ? obj.send(PolyBelongsTo::Pbt::CollectionProxy[obj, child]) : []
     }
   end
   
