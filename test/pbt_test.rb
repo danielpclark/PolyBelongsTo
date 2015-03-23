@@ -43,36 +43,40 @@ class PbtTest < ActiveSupport::TestCase
 
     it "SingularOrPlural responds for child relations" do
       profile = profiles(:susan_prof)
-      PolyBelongsTo::Pbt::SingularOrPlural[profile,Phone].must_equal :plural
-      PolyBelongsTo::Pbt::SingularOrPlural[profile,Photo].must_equal :singular
-      PolyBelongsTo::Pbt::SingularOrPlural[profile, User].must_be_nil
-      PolyBelongsTo::Pbt::SingularOrPlural[nil,     User].must_be_nil
-      PolyBelongsTo::Pbt::SingularOrPlural[profile,  nil].must_be_nil
+      PolyBelongsTo::Pbt::SingularOrPlural[profile,  Phone].must_equal :plural
+      PolyBelongsTo::Pbt::SingularOrPlural[Alpha.new, Beta].must_equal :plural
+      PolyBelongsTo::Pbt::SingularOrPlural[profile,  Photo].must_equal :singular
+      PolyBelongsTo::Pbt::SingularOrPlural[profile,   User].must_be_nil
+      PolyBelongsTo::Pbt::SingularOrPlural[nil,       User].must_be_nil
+      PolyBelongsTo::Pbt::SingularOrPlural[profile,    nil].must_be_nil
     end
 
     it "IsSingular tells child singleness" do
       profile = profiles(:steve_prof)
-      PolyBelongsTo::Pbt::IsSingular[profile,Phone].must_be_same_as false
-      PolyBelongsTo::Pbt::IsSingular[nil,    Phone].must_be_same_as false
-      PolyBelongsTo::Pbt::IsSingular[profile,  nil].must_be_same_as false
-      PolyBelongsTo::Pbt::IsSingular[profile,Photo].must_be_same_as true
+      PolyBelongsTo::Pbt::IsSingular[profile,  Phone].must_be_same_as false
+      PolyBelongsTo::Pbt::IsSingular[nil,      Phone].must_be_same_as false
+      PolyBelongsTo::Pbt::IsSingular[profile,    nil].must_be_same_as false
+      PolyBelongsTo::Pbt::IsSingular[Alpha.new, Beta].must_be_same_as false
+      PolyBelongsTo::Pbt::IsSingular[profile,  Photo].must_be_same_as true
     end
 
     it "IsPlural tells child pluralness" do
       profile = profiles(:bob_prof)
-      PolyBelongsTo::Pbt::IsPlural[profile,Phone].must_be_same_as true
-      PolyBelongsTo::Pbt::IsPlural[profile,Photo].must_be_same_as false
-      PolyBelongsTo::Pbt::IsPlural[nil,    Photo].must_be_same_as false
-      PolyBelongsTo::Pbt::IsPlural[profile,  nil].must_be_same_as false
+      PolyBelongsTo::Pbt::IsPlural[profile,  Phone].must_be_same_as true
+      PolyBelongsTo::Pbt::IsPlural[Alpha.new, Beta].must_be_same_as true
+      PolyBelongsTo::Pbt::IsPlural[profile,  Photo].must_be_same_as false
+      PolyBelongsTo::Pbt::IsPlural[nil,      Photo].must_be_same_as false
+      PolyBelongsTo::Pbt::IsPlural[profile,    nil].must_be_same_as false
     end
 
     it "CollectionProxy singular or plural proxy name" do
       profile = profiles(:steve_prof)
-      PolyBelongsTo::Pbt::CollectionProxy[profile,Phone].must_equal :phones
-      PolyBelongsTo::Pbt::CollectionProxy[profile,Photo].must_equal :photo
-      PolyBelongsTo::Pbt::CollectionProxy[profile, User].must_be_nil
-      PolyBelongsTo::Pbt::CollectionProxy[nil,     User].must_be_nil
-      PolyBelongsTo::Pbt::CollectionProxy[profile,  nil].must_be_nil
+      PolyBelongsTo::Pbt::CollectionProxy[profile,  Phone].must_equal :phones
+      PolyBelongsTo::Pbt::CollectionProxy[profile,  Photo].must_equal :photo
+      PolyBelongsTo::Pbt::CollectionProxy[Alpha.new, Beta].must_equal :betas
+      PolyBelongsTo::Pbt::CollectionProxy[profile,   User].must_be_nil
+      PolyBelongsTo::Pbt::CollectionProxy[nil,       User].must_be_nil
+      PolyBelongsTo::Pbt::CollectionProxy[profile,    nil].must_be_nil
     end
 
     it "AsCollectionProxy has_one emulated collectionproxy" do
