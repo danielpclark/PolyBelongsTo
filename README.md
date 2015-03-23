@@ -144,7 +144,6 @@ otherwise**.  You can duplicate a record, or use a self recursive command **pbt_
 to duplicate a record and all of it's has_one/has_many children records at once.  Afterwards
 be sure to use the save method.
 
-> NOTE: In the next version this will automatically be included!  For now this will need to be included manually
 
 ####Known Issues
  - Carrierwave records won't duplicate.  To ensure that other records will still save and
@@ -152,15 +151,11 @@ prevent any rollback issues use .save(validate: false) ... I'm considering possi
 to remedy this and
 other scenarios.
  - **PROBLEM SOLVED** ~~For deep duplication you need to be very aware of the potential for infinite loops with
-your records if there are any circular references.~~ ~Just need to write tests to prove it.~
+your records if there are any circular references.~~ 
 
 ###How To Use
 
-Include it into ActiveRecord::Base in an initializer /config/initializers/poly_belongs_to.rb
-```ruby
-ActiveRecord::Base.send(:include, PolyBelongsTo::Dup)
-```
-Then use the dup/build methods as follows
+Use the dup/build methods as follows
 
 ```ruby
 # If you were to create a new contact for example
@@ -180,11 +175,6 @@ contact.pbt_deep_dup_build( User.last.profile )
 # Remeber to save!
 contact.save
 ```
-
-##Planning
-
-I'm in the process of planning mapping out record hierarchy.  Also with this
-it will add recognition for circular references.
 
 ##Contributing
 
