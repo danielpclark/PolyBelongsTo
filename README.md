@@ -142,7 +142,9 @@ PolyBelongsTo::Pbt::AsCollectionProxy[ obj, child ]
 PolyBelongsTo::FakedCollection.new(obj, child)
 
 # Track which DB records have already been processed
-PolyBelongsTo::SingletonSet
+# Current recommended methods to use on instance are
+#                 :add?, :include?, :flag, :flagged?
+PolyBelongsTo::SingletonSet.new
 ```
 ##Record Duplication
 
