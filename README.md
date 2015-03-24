@@ -94,6 +94,8 @@ Tire.first.pbts
 # Params name
 MyObject.new.pbt_params_name
 # => :my_objectable_attributes
+MyObject.new.pbt_params_name(false)
+# => :my_object
 User.first.pbt_params_name
 # => :user
 
