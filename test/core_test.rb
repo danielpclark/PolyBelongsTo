@@ -179,6 +179,31 @@ class CoreTest < ActiveSupport::TestCase
       profile.pbt_parent.id.must_be_same_as user.id
     end
 
+    it "#pbt_parent returns nil if no ID is set for parent relationship" do
+      alpha = Alpha.new; alpha.save
+      alpha.pbt_parent.must_be_nil
+    end
+
+    it "#pbt_top_parent climbs up belongs_to hierarchy to the top; polymorphic relationships first" do
+      alpha = Alpha.new;         alpha.save
+      beta  = alpha.betas.build; beta.save
+      capa  = beta.capas.build;  capa.save
+      delta = capa.deltas.build; delta.save
+      delta.pbt_top_parent.must_equal alpha
+    end
+
+    it "#pbt_top_parent with circular relation goes till the repeat" do
+      alpha = Alpha.new;         alpha.save
+      beta  = alpha.betas.build; beta.save
+      capa  = beta.capas.build;  capa.save
+      delta = capa.deltas.build; delta.save
+      alpha.update(delta_id: delta.id)
+      delta.pbt_top_parent.must_equal alpha
+      alpha.pbt_top_parent.must_equal beta
+      beta. pbt_top_parent.must_equal capa
+      capa. pbt_top_parent.must_equal delta
+    end
+
     it "#pbt_parents can show multiple parents" do
       user = User.new(id: 1)
       user.cars.build

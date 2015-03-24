@@ -56,7 +56,7 @@ module PolyBelongsTo
 
     def pbt_parent
       val = pbt
-      if val
+      if val && !pbt_id.nil?
         if poly?
           "#{pbt_type}".constantize.find(pbt_id)
         else
@@ -65,6 +65,17 @@ module PolyBelongsTo
       else
         nil
       end
+    end
+
+    def pbt_top_parent
+      record = self
+      return nil unless record.pbt_parent
+      no_repeat = PolyBelongsTo::SingletonSet.new
+      while !no_repeat.include?(record.pbt_parent) && !record.pbt_parent.nil?
+        no_repeat.add?(record)
+        record = record.pbt_parent
+      end
+      record
     end
 
     def pbt_parents

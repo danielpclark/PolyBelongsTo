@@ -16,11 +16,11 @@ class DupTest < ActiveSupport::TestCase
       the_set.add?(example)
       the_set.to_a.must_equal ["#{example.class.name}-#{example.id}"]
     end
-    it "adds with :add" do
+    it "adds with :add :: DEPRECATED (reverting behavior in 0.2.0)" do
       the_set.add(example)
       the_set.to_a.must_equal ["#{example.class.name}-#{example.id}"]
     end
-    it "adds with :<<" do
+    it "adds with :<<  :: DEPRECATED (reverting behavior in 0.2.0)" do
       the_set.<<(example)
       the_set.to_a.must_equal ["#{example.class.name}-#{example.id}"]
     end
