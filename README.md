@@ -61,6 +61,10 @@ MyObject.first.pbt_type
 MyObject.first.pbt_parent
 # => #<User id: 123 ... >
 
+# Get Top Hierarchical Parent Object (Works on all belongs_to Objects)
+MyObject.first.pbt_top_parent
+# => #<User id: 123 ... >
+
 # Mutliple Parent Objects (List of one item for Polymorphic, full list otherwise.)
 Tire.first.pbt_parents
 # => [#<User id: 123 ... >, #<Car id: 234 ... >]
@@ -128,14 +132,17 @@ PolyBelongsTo::Pbt::IsSingular[ obj, child ]
 PolyBelongsTo::Pbt::IsPlural[ obj, child ]
 
 # Returns the symbol for the CollectionProxy the child belongs to in relation to obj
-# NOTE: For has_one the symbol is not a CollectionProxy, but the instance
+# NOTE: For has_one the symbol is not a CollectionProxy, but represents the instance
 PolyBelongsTo::Pbt::CollectionProxy[ obj, child ]
 
-# Always returns a collection proxy; fakes a collection proxy for has_one.
+# Always returns a collection proxy; fakes a collection proxy for has_one
 PolyBelongsTo::Pbt::AsCollectionProxy[ obj, child ]
 
 # Wrapper for has_one objects to be a collection proxy
 PolyBelongsTo::FakedCollection.new(obj, child)
+
+# Track which DB records have already been processed
+PolyBelongsTo::SingletonSet
 ```
 ##Record Duplication
 
