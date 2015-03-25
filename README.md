@@ -148,6 +148,10 @@ PolyBelongsTo::FakedCollection.new(obj, child)
 #                 :add?, :include?, :flag, :flagged?
 PolyBelongsTo::SingletonSet.new
 ```
+> In methods that have more than one type of ownership the order or precedence is
+polymorphic relationships first, primary key next (or first reflection in lookup).
+
+
 ##Record Duplication
 
 **This gives you the advantage of duplicating records regardless of polymorphic associations or
