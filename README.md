@@ -4,7 +4,11 @@
 [![Build Status](https://travis-ci.org/danielpclark/PolyBelongsTo.svg)](https://travis-ci.org/danielpclark/PolyBelongsTo)
 [![Test Coverage](https://codeclimate.com/github/danielpclark/PolyBelongsTo/badges/coverage.svg)](https://codeclimate.com/github/danielpclark/PolyBelongsTo)
 
-A standard way to check belongs_to relations on any belongs_to Object and let you check your DB Objects polymorphism in a more across-the-board meta-programatically friendly way.
+**Original Purpose:** A standard way to check belongs_to relations on any belongs_to Object and let you check your DB Objects polymorphism in a more across-the-board meta-programatically friendly way.
+
+PolyBelongsTo has grown into a powerful tool for working with all kinds of ActiveRecord relationships and situations.  PBT makes handling things in AR easier to deal with in a more generic way.  There are also some hierarchal tools provided which make coding with AR relationships all the more powerful.  See anything that's missing?  Please open an issue and suggest a feature!
+
+**I'M LOOKING FOR** people with experience with extreme/complicated/dangerous database relationships to help with potential edge cases in hierarchal relations by providing insights and addiontal tests.
 
 #Installation
 
