@@ -16,7 +16,7 @@ module PolyBelongsTo
     Reflects = lambda {|obj|
       return [] unless obj
       [:has_one, :has_many].map { |has|
-        obj.class.name.constantize.reflect_on_all_associations(has).map(&:name).map(&:to_sym)
+        obj.class.name.constantize.reflect_on_all_associations(has).map {|i| i.name.to_sym }
       }.flatten
     }
 

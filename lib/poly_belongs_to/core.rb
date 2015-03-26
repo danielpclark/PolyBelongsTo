@@ -16,8 +16,8 @@ module PolyBelongsTo
       end
 
       def self.pbt_params_name(allow_as_nested = true)
-        if poly?
-          allow_as_nested ? "#{table_name}_attributes".to_sym : name.downcase.to_sym
+        if poly? && allow_as_nested
+          "#{table_name}_attributes".to_sym
         else
           name.downcase.to_sym
         end
