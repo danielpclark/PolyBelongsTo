@@ -8,8 +8,6 @@
 
 PolyBelongsTo has grown into a powerful tool for working with all kinds of ActiveRecord relationships and situations.  PBT makes handling things in AR easier to deal with in a more generic way.  There are also some hierarchal tools provided which make coding with AR relationships all the more powerful.  See anything that's missing?  Please open an issue and suggest a feature!
 
-**I'M LOOKING FOR** people with experience with extreme/complicated/dangerous database relationships to help with potential edge cases in hierarchal relations by providing insights and addiontal tests.
-
 #Installation
 
 Just include it in your Gemfile and then run bundle:
@@ -148,8 +146,6 @@ PolyBelongsTo::Pbt::AsCollectionProxy[ obj, child ]
 PolyBelongsTo::FakedCollection.new(obj, child)
 
 # Track which DB records have already been processed
-# Current recommended methods to use on instance are
-#                 :add?, :include?, :flag, :flagged?
 PolyBelongsTo::SingletonSet.new
 ```
 > In methods that have more than one type of ownership the order or precedence is
@@ -169,8 +165,6 @@ be sure to use the save method.
 prevent any rollback issues use .save(validate: false) ... I'm considering possible options
 to remedy this and
 other scenarios.
- - **PROBLEM SOLVED** ~~For deep duplication you need to be very aware of the potential for infinite loops with
-your records if there are any circular references.~~ 
 
 ###How To Use
 
