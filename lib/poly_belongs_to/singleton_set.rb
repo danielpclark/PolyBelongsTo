@@ -33,7 +33,7 @@ module PolyBelongsTo
     end
 
     def method_missing(mthd, *args, &block)
-      pre = @set.to_a
+      new_recs = args.reduce([]) {|a, i| a.push(formatted_name(i)) if i.class.ancestors.include?(ActiveRecord::Base); a}
       result = @set.send(mthd,
         *(args.map {|arg|
             arg.class.ancestors.include?(ActiveRecord::Base) ? formatted_name(arg) : arg
@@ -41,7 +41,7 @@ module PolyBelongsTo
         ),
         &block
       )
-      (@set.to_a - pre).each {|f| @flagged << f}
+      @set.to_a.select {|i| new_recs.include? i }.each {|f| @flagged << f}
       result
     end
   end  
