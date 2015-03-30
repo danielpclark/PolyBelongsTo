@@ -57,7 +57,7 @@ module PolyBelongsTo
     }
   
     AsCollectionProxy = lambda {|obj, child|
-      return [] unless obj && child
+      return PolyBelongsTo::FakedCollection.new() unless obj && child
       return PolyBelongsTo::FakedCollection.new(obj, child) if IsSingular[obj, child]
       !!CollectionProxy[obj, child] ? obj.send(PolyBelongsTo::Pbt::CollectionProxy[obj, child]) : []
     }

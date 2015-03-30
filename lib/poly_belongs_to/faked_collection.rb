@@ -1,10 +1,14 @@
 module PolyBelongsTo
   class FakedCollection
-    def initialize(obj, child)
-      raise "Not a has_one rleationship for FakedCollection" unless PolyBelongsTo::Pbt::IsSingular[obj,child]
+    def initialize(obj = nil, child = nil)
       @obj = obj
       @child = child
-      @instance = @obj.send(PolyBelongsTo::Pbt::CollectionProxy[@obj,@child])
+      if obj.nil? || child.nil?
+        @instance = nil
+      else
+        raise "Not a has_one rleationship for FakedCollection" unless PolyBelongsTo::Pbt::IsSingular[obj,child]
+        @instance = @obj.send(PolyBelongsTo::Pbt::CollectionProxy[@obj,@child])
+      end
       self
     end
 
@@ -14,6 +18,22 @@ module PolyBelongsTo
 
     def all
       Array[@instance].compact
+    end
+
+    def empty?
+      all.empty?
+    end
+
+    def present?
+      !empty?
+    end
+
+    def presence
+      all.first ? self : nil
+    end
+
+    def valid?
+      !!@instance.try(&:valid?)
     end
 
     def first
