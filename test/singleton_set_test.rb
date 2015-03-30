@@ -16,12 +16,9 @@ class DupTest < ActiveSupport::TestCase
       the_set.add?(example)
       the_set.to_a.must_equal ["#{example.class.name}-#{example.id}"]
     end
-    it "adds with :add :: DEPRECATED (reverting behavior in 0.2.0)" do
-      the_set.add(example)
-      the_set.to_a.must_equal ["#{example.class.name}-#{example.id}"]
-    end
-    it "adds with :<<  :: DEPRECATED (reverting behavior in 0.2.0)" do
-      the_set.<<(example)
+
+    it "changes ActiveRecord Objects for method_missing with #formatted_name" do
+      the_set.method_missing(:add, example)
       the_set.to_a.must_equal ["#{example.class.name}-#{example.id}"]
     end
 
@@ -32,7 +29,6 @@ class DupTest < ActiveSupport::TestCase
 
     it "flags a duplicate" do
       the_set.<<(example)
-      the_set.<<(example).must_be_nil
       the_set.flagged?(example).must_be_same_as true
       the_set.instance_eval {@flagged}.to_a.must_equal ["#{example.class.name}-#{example.id}"]
     end

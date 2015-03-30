@@ -18,18 +18,6 @@ module PolyBelongsTo
       result
     end
 
-    # <b>DEPRECATED:</b> Please use <tt>add?</tt> instead. Behavior changing in 0.2.0.
-    def add(record)
-      warn "[DEPRECATION] `add` will revert to normal behavior in 0.2.0.  Please maintain behavior with `add?` instead."
-      add?(record)
-    end
-
-    # <b>DEPRECATED:</b> Please use <tt>add?</tt> instead. Behavior changing in 0.2.0.
-    def <<(record)
-      warn "[DEPRECATION] `<<` will revert to normal behavior in 0.2.0.  Please maintain behavior with `add?` instead."
-      add?(record)
-    end
-
     def include?(record)
       return nil unless record
       @set.include?(formatted_name(record))
@@ -44,9 +32,17 @@ module PolyBelongsTo
       @flagged.include?(formatted_name(record))
     end
 
-    def method_missing(mthd)
-      # TODO Add parameter support and substiture record parameters with formatted_name(record)
-      @set.send(mthd)
+    def method_missing(mthd, *args, &block)
+      pre = @set.to_a
+      result = @set.send(mthd,
+        *(args.map {|arg|
+            arg.class.ancestors.include?(ActiveRecord::Base) ? formatted_name(arg) : arg
+          }
+        ),
+        &block
+      )
+      (@set.to_a - pre).each {|f| @flagged << f}
+      result
     end
   end  
 end
