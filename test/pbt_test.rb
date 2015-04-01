@@ -112,6 +112,12 @@ class PbtTest < ActiveSupport::TestCase
       bob_to_prof.must_respond_to(:last )
       bob_to_prof.must_be_kind_of(ActiveRecord::Associations::CollectionProxy)
     end
+
+    it "AsCollectionProxy returns empty FakedCollection when handed unrelated instances" do
+      fc = PolyBelongsTo::Pbt::AsCollectionProxy[Alpha.new, Capa]
+      fc.must_be_kind_of(PolyBelongsTo::FakedCollection)
+      fc.must_be :empty?
+    end
   end
 
 end
