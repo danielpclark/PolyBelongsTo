@@ -3,6 +3,7 @@
 [![Code Climate](https://codeclimate.com/github/danielpclark/PolyBelongsTo/badges/gpa.svg)](https://codeclimate.com/github/danielpclark/PolyBelongsTo)
 [![Build Status](https://travis-ci.org/danielpclark/PolyBelongsTo.svg)](https://travis-ci.org/danielpclark/PolyBelongsTo)
 [![Test Coverage](https://codeclimate.com/github/danielpclark/PolyBelongsTo/badges/coverage.svg)](https://codeclimate.com/github/danielpclark/PolyBelongsTo)
+[![Inline docs](http://inch-ci.org/github/danielpclark/PolyBelongsTo.svg?branch=master)](http://inch-ci.org/github/danielpclark/PolyBelongsTo)
 
 **Original Purpose:** A standard way to check belongs_to relations on any belongs_to Object and let you check your DB Objects polymorphism in a more across-the-board meta-programatically friendly way.
 
