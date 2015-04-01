@@ -1,4 +1,6 @@
 module PolyBelongsTo
+  ##
+  # PolyBelongsTo::Core are the core set of methods included on all ActiveModel & ActiveRecord instances.
   module Core
     extend ActiveSupport::Concern
 
@@ -20,7 +22,7 @@ module PolyBelongsTo
       end
 
       # Symbol for html form params
-      # @param [true, false] Allow parameter name to be nested attribute symbol
+      # @param allow_as_nested [true, false] Allow parameter name to be nested attribute symbol
       # @return [Symbol] The symbol for the form in the view
       def self.pbt_params_name(allow_as_nested = true)
         if poly? && allow_as_nested
@@ -127,7 +129,7 @@ module PolyBelongsTo
     end
 
     # Symbol for html form params
-    # @param [true, false] Allow parameter name to be nested attribute symbol
+    # @param allow_as_nested [true, false] Allow parameter name to be nested attribute symbol
     # @return [Symbol] The symbol for the form in the view
     def pbt_params_name(allow_as_nested = true)
       self.class.pbt_params_name(allow_as_nested)

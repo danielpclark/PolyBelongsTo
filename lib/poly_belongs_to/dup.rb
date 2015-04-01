@@ -1,4 +1,6 @@
 module PolyBelongsTo
+  ##
+  # PolyBelongsTo::Dup contains duplication methods which is included on all ActiveModel & ActiveRecord instances
   module Dup
     extend ActiveSupport::Concern
 
