@@ -3,6 +3,9 @@ module PolyBelongsTo
     extend ActiveSupport::Concern
 
     included do
+      # Build child object by dup'ing its attributes
+      # @param item_to_build_on [Object] Object on which to build on
+      # @param item_to_duplicate [Object] Object to duplicate as new child
       def self.pbt_dup_build(item_to_build_on, item_to_duplicate)
         singleton_record = yield if block_given? 
         if PolyBelongsTo::Pbt::IsReflected[item_to_build_on, item_to_duplicate]
@@ -12,6 +15,9 @@ module PolyBelongsTo
         end
       end
 
+      # Build child object by dup'ing its attributes. Recursive for ancestry tree.
+      # @param item_to_build_on [Object] Object on which to build on
+      # @param item_to_duplicate [Object] Object to duplicate as new child along with child ancestors
       def self.pbt_deep_dup_build(item_to_build_on, item_to_duplicate)
         singleton_record = (block_given? ? yield : PolyBelongsTo::SingletonSet.new)
         pbt_dup_build(item_to_build_on, item_to_duplicate) {singleton_record}
@@ -29,10 +35,14 @@ module PolyBelongsTo
 
    end
 
+    # Build child object by dup'ing its attributes
+    # @param item_to_duplicate [Object] Object to duplicate as new child
     def pbt_dup_build(item_to_duplicate, &block)
       self.class.pbt_dup_build(self, item_to_duplicate, &block)
     end
 
+    # Build child object by dup'ing its attributes. Recursive for ancestry tree.
+    # @param item_to_duplicate [Object] Object to duplicate as new child along with child ancestors
     def pbt_deep_dup_build(item_to_duplicate, &block)
       self.class.pbt_deep_dup_build(self, item_to_duplicate, &block)
     end
