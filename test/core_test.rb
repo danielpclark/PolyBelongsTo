@@ -244,5 +244,19 @@ class CoreTest < ActiveSupport::TestCase
       Squishy.create(Squishy.pbt_id_sym => 12345, Squishy.pbt_type_sym => "Squishable")
       Squishy.pbt_orphans.must_be :empty?
     end
+    
+    it "#pbt_mistypes returns strings of mislabled polymorphic record types" do
+      Squishy.create(Squishy.pbt_id_sym => 12345, Squishy.pbt_type_sym => "Object")
+      Squishy.create(Squishy.pbt_id_sym => 12345, Squishy.pbt_type_sym => "Class")
+      Squishy.create(Squishy.pbt_id_sym => 12345, Squishy.pbt_type_sym => "Squishable")
+      Squishy.pbt_mistypes.to_a.sort.must_equal ["Object", "Class", "Squishable"].sort
+    end
+    
+    it "#pbt_mistyped returns mislabled polymorphic record types" do
+      obj = Squishy.create(Squishy.pbt_id_sym => 12345, Squishy.pbt_type_sym => "Object")
+      obj2 = Squishy.create(Squishy.pbt_id_sym => 12345, Squishy.pbt_type_sym => "Class")
+      obj3 = Squishy.create(Squishy.pbt_id_sym => 12345, Squishy.pbt_type_sym => "Squishable")
+      Squishy.pbt_mistyped.to_a.sort.must_equal [obj, obj2, obj3].sort
+    end
  end
 end

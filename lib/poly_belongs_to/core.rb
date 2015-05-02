@@ -45,6 +45,22 @@ module PolyBelongsTo
         poly? ? "#{pbt}_type".to_sym : nil
       end
 
+      # Returns strings of the invalid class names stored in polymorphic records
+      # @return [String]
+      def self.pbt_mistypes
+        return [] unless self.poly?
+        self.pluck(self.pbt_type_sym).uniq.select {|i| 
+          begin !i.constantize.respond_to?(:pluck) rescue true end
+        }
+      end
+
+      # Returns records with invalid class names stored in polymorphic records
+      # @return [Object] ActiveRecord mistyped objects
+      def self.pbt_mistyped
+        return nil unless self.poly?
+        self.where(self.pbt_type_sym => pbt_mistypes)
+      end
+
       # Return Array of current Class records that are orphaned from parents
       # @return [Object] ActiveRecord orphan objects
       def self.pbt_orphans

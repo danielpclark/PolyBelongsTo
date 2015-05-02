@@ -57,12 +57,14 @@ class DupTest < ActiveSupport::TestCase
     capa = beta.capas.build; capa.save
     delta = capa.deltas.build; delta.save
     alpha.update(delta_id: delta.id)
+
     it "is a circle" do
       alpha.pbt_parent.must_equal delta
       beta.pbt_parent.must_equal alpha
       capa.pbt_parent.must_equal beta
       delta.pbt_parent.must_equal capa
     end
+
     it "clones without duplicating cirular reference" do
       alpha2 = Alpha.new( CleanAttrs[alpha] )
       CleanAttrs[alpha2].must_equal CleanAttrs[alpha]
@@ -73,5 +75,6 @@ class DupTest < ActiveSupport::TestCase
       CleanAttrs[alpha2.betas.first.capas.first.deltas.first.alphas.first].must_equal CleanAttrs[alpha]
       alpha2.betas.first.capas.first.deltas.first.alphas.first.betas.first.must_be_nil
     end
+    
   end
 end
