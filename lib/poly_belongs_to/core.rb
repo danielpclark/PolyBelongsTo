@@ -44,6 +44,23 @@ module PolyBelongsTo
       def self.pbt_type_sym
         poly? ? "#{pbt}_type".to_sym : nil
       end
+
+      # Return Array of current Class records that are orphaned from parents
+      # @return [Object] ActiveRecord orphan objects
+      def self.pbt_orphans
+        return nil unless self.pbts.present?
+        if self.poly?
+          # self.where(["#{self.pbt_id_sym} NOT IN (?) AND #{self.pbt_type_sym} = (?)", type.constantize.pluck(:id), type])
+          accumalitive = nil
+          self.pluck(self.pbt_type_sym).uniq.each do |type|
+            arel_part = self.arel_table[self.pbt_id_sym].not_in(type.constantize.pluck(:id)).and(self.arel_table[self.pbt_type_sym].eq(type))
+            accumalitive = accumalitive.present? ? accumalitive.or(arel_part) : arel_part
+          end
+          self.where(accumalitive)
+        else
+          self.where(["#{self.pbt_id_sym} NOT IN (?)", self.pbt.to_s.capitalize.constantize.pluck(:id)])
+        end
+      end
     end
     
     # @return [Symbol] first belongs_to relation

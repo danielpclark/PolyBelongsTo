@@ -36,6 +36,10 @@ User.pbt
 Tire.pbts
 # => [:user, :car]
 
+# Get orphaned objects for records of class type
+MyObject.pbt_orphans
+# => #<ActiveRecord::Relation []> # nil for objects that don't have a belongs_to relationship
+
 # Params name
 MyObject.pbt_params_name
 # => :my_objectable_attributes

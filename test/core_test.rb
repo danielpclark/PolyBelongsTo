@@ -223,6 +223,19 @@ class CoreTest < ActiveSupport::TestCase
       parents.size.must_equal 1
       parents.first.must_equal profiles(:bob_prof)
     end
-  end
 
+    it "#pbt_orphans returns all parentless records for current Object" do
+      obj = Squishy.create(Squishy.pbt_id_sym => 12345, Squishy.pbt_type_sym => "Phone")
+      Squishy.pbt_orphans.to_a.must_equal [obj]
+      obj2 = Squishy.create(Squishy.pbt_id_sym => 12345, Squishy.pbt_type_sym => "Address")
+      Squishy.pbt_orphans.to_a.sort.must_equal [obj, obj2].sort
+      obj3 = Beta.create(Beta.pbt_id_sym => 12345)
+      Beta.pbt_orphans.to_a.must_equal [obj3]
+    end
+
+    it "#pbt_orphans returns nil for non parent type records" do
+      User.create()
+      User.pbt_orphans.must_be_nil
+    end
+ end
 end
