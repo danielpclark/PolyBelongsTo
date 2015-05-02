@@ -38,7 +38,7 @@ Tire.pbts
 
 # Get orphaned objects for records of class type
 MyObject.pbt_orphans
-# => #<ActiveRecord::Relation []> # nil for objects that don't have a belongs_to relationship
+# => #<ActiveRecord::Relation []> # nil for objects without belongs_to
 
 # Params name
 MyObject.pbt_params_name
