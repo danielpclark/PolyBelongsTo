@@ -5,7 +5,7 @@ module PolyBelongsTo
     extend ActiveSupport::Concern
 
     included do
-      # @return [Symbol] first belongs_to relation
+      # @return [Symbol, nil] first belongs_to relation
       def self.pbt
         reflect_on_all_associations(:belongs_to).first.try(:name)
       end
@@ -105,7 +105,7 @@ module PolyBelongsTo
       end
     end
     
-    # @return [Symbol] first belongs_to relation
+    # @return [Symbol, nil] first belongs_to relation
     def pbt
       self.class.pbt
     end
@@ -135,7 +135,7 @@ module PolyBelongsTo
     end
 
     # Get the parent relation.  Polymorphic relations are prioritized first.
-    # @return [Object] ActiveRecord object instasnce
+    # @return [Object, nil] ActiveRecord object instasnce
     def pbt_parent
       val = pbt
       if val && !pbt_id.nil?
@@ -151,7 +151,7 @@ module PolyBelongsTo
 
     # Climb up each parent object in the hierarchy until the top is reached.
     #   This has a no-repeat safety built in.  Polymorphic parents have priority.
-    # @return [Object] top parent ActiveRecord object instace
+    # @return [Object, nil] top parent ActiveRecord object instace
     def pbt_top_parent
       record = self
       return nil unless record.pbt_parent
