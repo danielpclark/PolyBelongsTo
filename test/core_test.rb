@@ -258,5 +258,34 @@ class CoreTest < ActiveSupport::TestCase
       obj3 = Squishy.create(Squishy.pbt_id_sym => 12345, Squishy.pbt_type_sym => "Squishable")
       Squishy.pbt_mistyped.to_a.sort.must_equal [obj, obj2, obj3].sort
     end
+    
+    it "#pbt_valid_types returns strings of valid polymorphic record types" do
+      Squishy.create(Squishy.pbt_id_sym => 12345, Squishy.pbt_type_sym => "Object")
+      Squishy.create(Squishy.pbt_id_sym => 12345, Squishy.pbt_type_sym => "Class")
+      Squishy.create(Squishy.pbt_id_sym => 12345, Squishy.pbt_type_sym => "Squishable")
+      Squishy.create(Squishy.pbt_id_sym => 12345, Squishy.pbt_type_sym => "Phone")
+      Squishy.create(Squishy.pbt_id_sym => 12345, Squishy.pbt_type_sym => "Address")
+      Squishy.create(Squishy.pbt_id_sym => 12345, Squishy.pbt_type_sym => "GeoLocation")
+      Squishy.pbt_valid_types.sort.must_equal ["Phone", "Address", "GeoLocation"].sort
+    end
+
+    it "#pbt_poly_types returns strings of all polymorphic record types" do
+      Squishy.create(Squishy.pbt_id_sym => 12345, Squishy.pbt_type_sym => "Object")
+      Squishy.create(Squishy.pbt_id_sym => 12345, Squishy.pbt_type_sym => "Class")
+      Squishy.create(Squishy.pbt_id_sym => 12345, Squishy.pbt_type_sym => "Squishable")
+      Squishy.create(Squishy.pbt_id_sym => 12345, Squishy.pbt_type_sym => "Phone")
+      Squishy.create(Squishy.pbt_id_sym => 12345, Squishy.pbt_type_sym => "Address")
+      Squishy.create(Squishy.pbt_id_sym => 12345, Squishy.pbt_type_sym => "GeoLocation")
+      Squishy.pbt_poly_types.sort.must_equal ["Phone", "Address", "GeoLocation", "Object", "Class", "Squishable"].sort
+    end
+
+    it "keeps helper methods private" do
+      Squishy.singleton_class.private_method_defined?(:_pbt_polymorphic_orphans).must_be_same_as true
+      Squishy.singleton_class.method_defined?(:_pbt_polymorphic_orphans).must_be_same_as false 
+      Squishy.method_defined?(:_pbt_polymorphic_orphans).must_be_same_as false 
+      Squishy.singleton_class.private_method_defined?(:_pbt_nonpolymorphic_orphans).must_be_same_as true
+      Squishy.singleton_class.method_defined?(:_pbt_nonpolymorphic_orphans).must_be_same_as false 
+      Squishy.method_defined?(:_pbt_nonpolymorphic_orphans).must_be_same_as false 
+    end
  end
 end

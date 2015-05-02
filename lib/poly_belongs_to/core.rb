@@ -45,38 +45,63 @@ module PolyBelongsTo
         poly? ? "#{pbt}_type".to_sym : nil
       end
 
+      # Returns an unique array of strings of every polymorphic record type
+      # @return [Array<String>]
+      def self.pbt_poly_types
+        return [] unless poly?
+        pluck(pbt_type_sym).uniq
+      end
+
       # Returns strings of the invalid class names stored in polymorphic records
-      # @return [String]
+      # @return [Array<String>]
       def self.pbt_mistypes
-        return [] unless self.poly?
-        self.pluck(self.pbt_type_sym).uniq.select {|i| 
+        pbt_poly_types.select {|i| 
+          begin !i.constantize.respond_to?(:pluck) rescue true end
+        }
+      end
+      
+      # Returns strings of the valid class names stored in polymorphic records
+      # @return [Array<String>]
+      def self.pbt_valid_types
+        pbt_poly_types.delete_if {|i| 
           begin !i.constantize.respond_to?(:pluck) rescue true end
         }
       end
 
       # Returns records with invalid class names stored in polymorphic records
-      # @return [Object] ActiveRecord mistyped objects
+      # @return [Array<Object>, nil] ActiveRecord mistyped objects
       def self.pbt_mistyped
-        return nil unless self.poly?
-        self.where(self.pbt_type_sym => pbt_mistypes)
+        return nil unless poly?
+        where(pbt_type_sym => pbt_mistypes)
       end
 
       # Return Array of current Class records that are orphaned from parents
-      # @return [Object] ActiveRecord orphan objects
+      # @return [Array<Object>, nil] ActiveRecord orphan objects
       def self.pbt_orphans
-        return nil unless self.pbts.present?
-        if self.poly?
-          accumalitive = nil
-          self.pluck(self.pbt_type_sym).uniq.delete_if {|i| 
-            begin !i.constantize.respond_to?(:pluck) rescue true end
-          }.each do |type|
-            arel_part = self.arel_table[self.pbt_id_sym].not_in(type.constantize.pluck(:id)).and(self.arel_table[self.pbt_type_sym].eq(type))
-            accumalitive = accumalitive.present? ? accumalitive.or(arel_part) : arel_part
-          end
-          self.where(accumalitive)
-        else
-          self.where(["#{self.pbt_id_sym} NOT IN (?)", self.pbt.to_s.capitalize.constantize.pluck(:id)])
+        return nil unless pbts.present?
+        poly? ? _pbt_polymorphic_orphans : _pbt_nonpolymorphic_orphans
+      end
+      
+      private
+      # Return Array of current Class polymorphic records that are orphaned from parents
+      # @return [Array<Object>, nil] ActiveRecord orphan objects
+      def self._pbt_polymorphic_orphans
+        accumalitive = nil
+        pbt_valid_types.each do |type|
+          arel_part = arel_table[pbt_id_sym].not_in(type.constantize.pluck(:id)).and(arel_table[pbt_type_sym].eq(type))
+          accumalitive = accumalitive.present? ? accumalitive.or(arel_part) : arel_part
         end
+        where(accumalitive)
+      end
+
+      # Return Array of current Class nonpolymorphic records that are orphaned from parents
+      # @return [Array<Object>, nil] ActiveRecord orphan objects
+      def self._pbt_nonpolymorphic_orphans
+        where(["#{pbt_id_sym} NOT IN (?)", pbt.to_s.capitalize.constantize.pluck(:id)])
+      end
+      class << self
+        private :_pbt_polymorphic_orphans
+        private :_pbt_nonpolymorphic_orphans
       end
     end
     
