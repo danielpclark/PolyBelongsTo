@@ -50,9 +50,10 @@ module PolyBelongsTo
       def self.pbt_orphans
         return nil unless self.pbts.present?
         if self.poly?
-          # self.where(["#{self.pbt_id_sym} NOT IN (?) AND #{self.pbt_type_sym} = (?)", type.constantize.pluck(:id), type])
           accumalitive = nil
-          self.pluck(self.pbt_type_sym).uniq.delete_if {|i| !i.constantize.respond_to?(:pluck)}.each do |type|
+          self.pluck(self.pbt_type_sym).uniq.delete_if {|i| 
+            begin !i.constantize.respond_to?(:pluck) rescue true end
+          }.each do |type|
             arel_part = self.arel_table[self.pbt_id_sym].not_in(type.constantize.pluck(:id)).and(self.arel_table[self.pbt_type_sym].eq(type))
             accumalitive = accumalitive.present? ? accumalitive.or(arel_part) : arel_part
           end

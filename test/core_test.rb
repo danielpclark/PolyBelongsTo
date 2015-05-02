@@ -241,6 +241,7 @@ class CoreTest < ActiveSupport::TestCase
     it "#pbt_orphans ignores mislabled record types" do
       Squishy.create(Squishy.pbt_id_sym => 12345, Squishy.pbt_type_sym => "Object")
       Squishy.create(Squishy.pbt_id_sym => 12345, Squishy.pbt_type_sym => "Class")
+      Squishy.create(Squishy.pbt_id_sym => 12345, Squishy.pbt_type_sym => "Squishable")
       Squishy.pbt_orphans.must_be :empty?
     end
  end
