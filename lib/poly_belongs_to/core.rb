@@ -170,7 +170,7 @@ module PolyBelongsTo
         Array[pbt_parent].compact
       else
         self.class.pbts.map {|i|
-          try{ "#{i.capitalize}".constantize.find(self.send("#{i}_id")) }
+          try{ "#{i.capitalize}".constantize.where(id: self.send("#{i}_id")).first }
         }.compact
       end
     end
