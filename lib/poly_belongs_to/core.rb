@@ -140,9 +140,9 @@ module PolyBelongsTo
       val = pbt
       if val && !pbt_id.nil?
         if poly?
-          "#{pbt_type}".constantize.find(pbt_id)
+          "#{pbt_type}".constantize.where(id: pbt_id).first
         else
-          "#{val.capitalize}".constantize.find(pbt_id)
+          "#{val.capitalize}".constantize.where(id: pbt_id).first
         end
       else
         nil
@@ -192,6 +192,12 @@ module PolyBelongsTo
     # @return [Symbol] The symbol for the form in the view
     def pbt_params_name(allow_as_nested = true)
       self.class.pbt_params_name(allow_as_nested)
+    end
+
+    # Return true or false on whether the record is orphaned
+    # @return [Boolean
+    def orphan?
+      pbts.present? && !pbt_parent.present?
     end
   end
 end

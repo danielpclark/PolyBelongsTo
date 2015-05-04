@@ -180,8 +180,13 @@ class CoreTest < ActiveSupport::TestCase
     end
 
     it "#pbt_parent returns nil if no ID is set for parent relationship" do
-      alpha = Alpha.new; alpha.save
+      alpha = Alpha.new;         alpha.save
+      beta  = alpha.betas.build; beta.save
       alpha.pbt_parent.must_be_nil
+      beta.pbt_parent.wont_be_nil
+      beta.pbt_parent.must_equal alpha
+      squishy = Squishy.create(Squishy.pbt_id_sym => 12345, Squishy.pbt_type_sym => "Address")
+      squishy.pbt_parent.must_be_nil
     end
 
     it "#pbt_top_parent climbs up belongs_to hierarchy to the top; polymorphic relationships first" do
@@ -286,6 +291,20 @@ class CoreTest < ActiveSupport::TestCase
       Squishy.singleton_class.private_method_defined?(:_pbt_nonpolymorphic_orphans).must_be_same_as true
       Squishy.singleton_class.method_defined?(:_pbt_nonpolymorphic_orphans).must_be_same_as false 
       Squishy.method_defined?(:_pbt_nonpolymorphic_orphans).must_be_same_as false 
+    end
+
+    it "#orphan? gives boolean if record is orphaned" do
+      Squishy.create(Squishy.pbt_id_sym => 12345, Squishy.pbt_type_sym => "Phone").must_be :orphan?
+      Squishy.create(Squishy.pbt_id_sym => 12345, Squishy.pbt_type_sym => "Address").must_be :orphan?
+      User.create().wont_be :orphan?
+      user = users(:bob)
+      profile = user.profiles.build
+      phone = profile.phones.build
+      profile.save
+      profile.wont_be :orphan?
+      phone.wont_be :orphan?
+      user.wont_be :orphan?
+      Alpha.create.must_be :orphan?
     end
  end
 end
