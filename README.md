@@ -75,6 +75,10 @@ MyObject.first.pbt_top_parent
 # Mutliple Parent Objects (List of one item for Polymorphic, full list otherwise.)
 Tire.first.pbt_parents
 # => [#<User id: 123 ... >, #<Car id: 234 ... >]
+
+# Determine if object is orphaned (parent no longer exists)
+Tire.first.orphan?
+# => false
 ```
 
 ##Also Available
