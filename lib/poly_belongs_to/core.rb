@@ -49,7 +49,7 @@ module PolyBelongsTo
       # @return [Array<String>]
       def self.pbt_poly_types
         return [] unless poly?
-        pluck(pbt_type_sym).uniq
+        uniq.pluck(pbt_type_sym)
       end
 
       # Returns strings of the invalid class names stored in polymorphic records
