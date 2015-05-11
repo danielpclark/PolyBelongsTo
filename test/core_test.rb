@@ -274,6 +274,34 @@ class CoreTest < ActiveSupport::TestCase
       Squishy.pbt_valid_types.sort.must_equal ["Phone", "Address", "GeoLocation"].sort
     end
 
+    it "#pbt_valid_types returns empty Array for no valid record types" do
+      Coffee.create(Coffee.pbt_id_sym => 12345, Coffee.pbt_type_sym => "Object")
+      Coffee.create(Coffee.pbt_id_sym => 12345, Coffee.pbt_type_sym => "Class")
+      Coffee.create(Coffee.pbt_id_sym => 12345, Coffee.pbt_type_sym => "Squishable")
+      Coffee.pbt_valid_types.to_a.sort.must_be :empty?
+    end
+
+    it "I'm just curious if polymorphic can belong to itself" do
+      coffee = Coffee.create(Coffee.pbt_id_sym => 12345, Coffee.pbt_type_sym => "Coffee")
+      coffee.must_be :valid?
+      coffee.coffeeable_type.must_equal "Coffee"
+      coffee.must_be :persisted?
+    end
+    
+    it "#pbt_mistyped returns empty Array for no valid record types" do
+      Coffee.create(Coffee.pbt_id_sym => 12345, Coffee.pbt_type_sym => "Phone")
+      Coffee.create(Coffee.pbt_id_sym => 12345, Coffee.pbt_type_sym => "Address")
+      Coffee.create(Coffee.pbt_id_sym => 12345, Coffee.pbt_type_sym => "User")
+      Coffee.pbt_mistyped.to_a.sort.must_be :empty?
+    end
+
+    it "#pbt_mistypes returns empty Array if only valid polymorphic record types exist" do
+      Squishy.create(Squishy.pbt_id_sym => 12345, Squishy.pbt_type_sym => "Phone")
+      Squishy.create(Squishy.pbt_id_sym => 12345, Squishy.pbt_type_sym => "Address")
+      Squishy.create(Squishy.pbt_id_sym => 12345, Squishy.pbt_type_sym => "GeoLocation")
+      Squishy.pbt_mistypes.sort.must_be :empty?
+    end
+
     it "#pbt_poly_types returns strings of all polymorphic record types" do
       Squishy.create(Squishy.pbt_id_sym => 12345, Squishy.pbt_type_sym => "Object")
       Squishy.create(Squishy.pbt_id_sym => 12345, Squishy.pbt_type_sym => "Class")

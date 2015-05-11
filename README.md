@@ -40,6 +40,18 @@ Tire.pbts
 MyObject.pbt_orphans
 # => #<ActiveRecord::Relation []> # nil for objects without belongs_to
 
+# Get polymorphic objects for records of invalid class type(s)
+MyObject.pbt_mistyped
+# => #<ActiveRecord::Relation []> 
+
+# Get the invalid class types on polymorphic records as a Array of Strings
+MyObject.pbt_mistypes
+# => ["Object", "Class", "MyObjectable"]
+
+# Get the valid class types on polymorphic records as a Array of Strings
+MyObject.pbt_valid_types
+# => ["User", "MyObject"]
+
 # Params name
 MyObject.pbt_params_name
 # => :my_objectable_attributes
