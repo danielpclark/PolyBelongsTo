@@ -88,7 +88,7 @@ module PolyBelongsTo
       def self._pbt_polymorphic_orphans
         accumulative = nil
         pbt_valid_types.each do |type|
-          arel_part = arel_table[pbt_id_sym].not_in(type.constantize.pluck(:id)).and(arel_table[pbt_type_sym].eq(type))
+          arel_part = arel_table[pbt_id_sym].not_in(type.constantize.arel_table.project(:id)).and(arel_table[pbt_type_sym].eq(type))
           accumulative = accumulative.present? ? accumulative.or(arel_part) : arel_part
         end
         where(accumulative)
@@ -97,7 +97,7 @@ module PolyBelongsTo
       # Return Array of current Class nonpolymorphic records that are orphaned from parents
       # @return [Array<Object>] ActiveRecord orphan objects
       def self._pbt_nonpolymorphic_orphans
-        where(["#{pbt_id_sym} NOT IN (?)", pbt.to_s.capitalize.constantize.pluck(:id)])
+        where(arel_table[pbt_id_sym].not_in(pbt.to_s.capitalize.constantize.arel_table.project(:id)))
       end
       class << self
         private :_pbt_polymorphic_orphans
