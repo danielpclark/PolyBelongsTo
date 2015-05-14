@@ -35,6 +35,7 @@ class FakedCollectionTest < ActiveSupport::TestCase
       [nil, photos(:steve_photo).id].must_include steve_photos.id
       nil_steve.id.must_be_nil
       nil_photo.id.must_be_nil
+      null_object.id.must_be_nil
     end
 
     it "#all is an Array" do
@@ -105,16 +106,25 @@ class FakedCollectionTest < ActiveSupport::TestCase
       steve_photos.ancestors.must_include(ActiveRecord::Base)
     end
 
+    it "#ancestors has NilClass if empty" do
+      null_object.ancestors.must_include(NilClass)
+      nil_steve.ancestors.must_include(NilClass)
+      nil_photo.ancestors.must_include(NilClass)
+    end
+
     it "build #kind_of? FakedCollection object" do
       steve_photos.must_be_kind_of(PolyBelongsTo::FakedCollection)
+      null_object.must_be_kind_of(PolyBelongsTo::FakedCollection)
     end
 
     it "build #is_a? FakedCollection object" do
       steve_photos.is_a?(PolyBelongsTo::FakedCollection).must_be_same_as true
+      null_object.is_a?(PolyBelongsTo::FakedCollection).must_be_same_as true
     end
 
     it "build #instance_of? FakedCollection object" do
       steve_photos.must_be_instance_of(PolyBelongsTo::FakedCollection)
+      null_object.must_be_instance_of(PolyBelongsTo::FakedCollection)
     end
     
     it "#build builds appropriately" do
@@ -154,6 +164,7 @@ class FakedCollectionTest < ActiveSupport::TestCase
 
     it "has method_missing forward appropriate calls" do
       steve_photos.method_missing(:nil?).must_equal false
+      null_object.method_missing(:nil?).must_equal true
     end
 
     it "will not initialize on has_many" do
@@ -173,6 +184,12 @@ class FakedCollectionTest < ActiveSupport::TestCase
       nil_steve.must_be :empty?
       nil_steve.instance_eval {@instance}.must_be_nil
       nil_steve.wont_be :valid?
+
+      null_object.all.must_equal []
+      null_object.size.must_be_same_as 0
+      null_object.must_be :empty?
+      null_object.instance_eval {@instance}.must_be_nil
+      null_object.wont_be :valid?
     end
 
   end
