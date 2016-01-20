@@ -15,8 +15,10 @@ PolyBelongsTo has grown into a powerful tool for working with all kinds of Activ
 
 Just include it in your Gemfile and then run bundle:
 ```ruby
-gem 'poly_belongs_to'
+gem 'poly_belongs_to', '~> 0.2'
 ```
+
+**NOTICE:**  Please version this gem requirement.  Breaking changes will occur at MAJOR version releases.
 
 ##Recommended Usage
 
