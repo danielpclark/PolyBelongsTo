@@ -1,0 +1,18 @@
+bob_contact:
+  user_id:          <%= ActiveRecord::FixtureSet.identify(:bob) %>
+  contactable_id:   <%= ActiveRecord::FixtureSet.identify(:bob_address_book) %>
+  contactable_type: AddressBook
+  content:          <%= SecureRandom.hex %>
+
+#steve_contact:
+#  user_id:          <%= ActiveRecord::FixtureSet.identify(:steve) %>
+#  contactable_id:   <%= ActiveRecord::FixtureSet.identify(:steve_address_book) %>
+#  contactable_type: AddressBook
+#  content:          <%= SecureRandom.hex %>
+#
+#susan_contact:
+#  user_id:          <%= ActiveRecord::FixtureSet.identify(:susan) %>
+#  contactable_id:   <%= ActiveRecord::FixtureSet.identify(:susan_address_book) %>
+#  contactable_type: AddressBook
+#  content:          <%= SecureRandom.hex %>
+#
