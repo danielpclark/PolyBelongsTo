@@ -8,7 +8,7 @@ class MajorVersionChangesTest < ActiveSupport::TestCase
 
     let(:contact) { contacts(:bob_contact) }
 
-    case PolyBelongsTo::VERSION.split('.').join.to_i
+    case PolyBelongsTo::VERSION.split('.').take(3).join.to_i
     when ->v{ v < 100 }
       it "pre 1.0.0 first parent relation" do
         contact.pbt.must_be_same_as :user
