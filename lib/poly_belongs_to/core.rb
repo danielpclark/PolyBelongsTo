@@ -97,7 +97,7 @@ module PolyBelongsTo
       # Return Array of current Class nonpolymorphic records that are orphaned from parents
       # @return [Array<Object>] ActiveRecord orphan objects
       def self._pbt_nonpolymorphic_orphans
-        where(arel_table[pbt_id_sym].not_in(pbt.to_s.capitalize.constantize.arel_table.project(:id)))
+        where(arel_table[pbt_id_sym].not_in(pbt.to_s.camelize.constantize.arel_table.project(:id)))
       end
       class << self
         private :_pbt_polymorphic_orphans
@@ -142,7 +142,7 @@ module PolyBelongsTo
         if poly?
           "#{pbt_type}".constantize.where(id: pbt_id).first
         else
-          "#{val.capitalize}".constantize.where(id: pbt_id).first
+          "#{val}".camelize.constantize.where(id: pbt_id).first
         end
       else
         nil
@@ -170,7 +170,7 @@ module PolyBelongsTo
         Array[pbt_parent].compact
       else
         self.class.pbts.map {|i|
-          try{ "#{i.capitalize}".constantize.where(id: self.send("#{i}_id")).first }
+          try{ "#{i}".camelize.constantize.where(id: self.send("#{i}_id")).first }
         }.compact
       end
     end

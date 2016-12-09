@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160120231645) do
+ActiveRecord::Schema.define(version: 20161209115212) do
 
   create_table "address_books", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -93,6 +93,14 @@ ActiveRecord::Schema.define(version: 20160120231645) do
   end
 
   add_index "delta", ["capa_id"], name: "index_delta_on_capa_id"
+
+  create_table "events", force: :cascade do |t|
+    t.integer  "work_order_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "events", ["work_order_id"], name: "index_events_on_work_order_id"
 
   create_table "geo_locations", force: :cascade do |t|
     t.integer  "address_id"
@@ -176,6 +184,11 @@ ActiveRecord::Schema.define(version: 20160120231645) do
     t.string   "content",    limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+  end
+
+  create_table "work_orders", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end

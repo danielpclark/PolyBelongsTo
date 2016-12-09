@@ -334,5 +334,25 @@ class CoreTest < ActiveSupport::TestCase
       user.wont_be :orphan?
       Alpha.create.must_be :orphan?
     end
+
+    describe "works with camelcase realtions" do
+      it "pbt_parent snakecase to camelcase" do
+        work_order = WorkOrder.create()
+        e = Event.create(work_order: work_order)
+        _(e.pbt_parent).must_equal work_order
+      end
+
+      it "pbt_parents snakecase to camelcase" do
+        work_order = WorkOrder.create()
+        e = Event.create(work_order: work_order)
+        _(e.pbt_parents).must_include work_order
+      end
+
+      it "pbt_orphans snakecase to camelcase" do
+        e = Event.create(work_order_id: 15)
+        WorkOrder.destroy_all
+        _(Event.pbt_orphans.pluck(:work_order_id).first).must_equal e.work_order_id
+      end
+    end
  end
 end
