@@ -24,7 +24,7 @@ gem 'poly_belongs_to', '~> 0.3'
 
 **NOTICE:**  Please version this gem requirement.  Breaking changes will occur at MAJOR version releases.
 
-*Order of record relations are important pre 1.0.  Place polymorphic relations first in your model for best results and compatibility with the 1.0 release.*
+*Order of record relations are important pre 1.0.  Place polymorphic relations first in your model for best results and to ensure the same behavior will occur with the 1.0 release.*
 
 ##Recommended Usage
 
