@@ -13,7 +13,7 @@ PolyBelongsTo has grown into a powerful tool for working with all kinds of Activ
 
 **Database integrity** can be checked with a few methods to find orphaned record relations and incorrectly typed polymorphic relations.
 
-**Deep cloning** of records with associations is an added feature this gem provides.  It requires no configuration to use, youcan simply invoke: `pbt_deep_dup_build`.  This makes for much easier record duplication than the [deep_cloneable](https://github.com/moiristo/deep_cloneable) gem.
+**Deep cloning** of records with associations is an added feature this gem provides.  It requires no configuration to use, you can simply invoke: `pbt_deep_dup_build`.  This makes for much easier record duplication than the [deep_cloneable](https://github.com/moiristo/deep_cloneable) gem.
 
 #Installation
 
