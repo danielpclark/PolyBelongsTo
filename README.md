@@ -11,6 +11,10 @@
 
 PolyBelongsTo has grown into a powerful tool for working with all kinds of ActiveRecord relationships and situations.  PBT makes handling things in AR easier to deal with in a more generic way.  There are also some hierarchal tools provided which make coding with AR relationships all the more powerful.  See anything that's missing?  Please open an issue and suggest a feature!
 
+**Database integrity** can be checked with a few methods to find orphaned record relations and incorrectly typed polymorphic relations.
+
+**Deep cloning** of records with associations is an added feature this gem provides.  It requires no configuration to use, youcan simply invoke: `pbt_deep_dup_build`.  This makes for much easier record duplication than the [deep_cloneable](https://github.com/moiristo/deep_cloneable) gem.
+
 #Installation
 
 Just include it in your Gemfile and then run bundle:
@@ -19,6 +23,8 @@ gem 'poly_belongs_to', '~> 0.3'
 ```
 
 **NOTICE:**  Please version this gem requirement.  Breaking changes will occur at MAJOR version releases.
+
+*Order of record relations are important pre 1.0.  Place polymorphic relations first in your model for best results and compatibility with the 1.0 release.*
 
 ##Recommended Usage
 
