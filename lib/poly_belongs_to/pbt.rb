@@ -23,21 +23,25 @@ module PolyBelongsTo
       IsSingular[obj, child] ? "build_#{dup_name}" : IsPlural[obj, child] ? "#{dup_name}.build" : nil
     }
 
-    # Returns all has_one and has_many relationships as symbols (reflec_on_all_associations)
+    # Returns all has_one and has_many relationships as symbols (reflect_on_all_associations)
     # @param obj [Object] ActiveRecord instance to reflect on
+    # @param habtm [Object] optional boolean argument to include has_and_belongs_to_many
     # @return [Array<Symbol>]
-    Reflects = lambda {|obj|
+    Reflects = lambda {|obj, habtm = false|
       return [] unless obj
-      [:has_one, :has_many].flat_map { |has|
-        obj.class.name.constantize.reflect_on_all_associations(has).map {|i| i.name.to_sym }
+      [:has_one, :has_many].
+        tap {|array| array << :has_and_belongs_to_many if habtm }.
+        flat_map { |has|
+        obj.class.name.constantize.reflect_on_all_associations(has).map(&:name)
       }
     }
 
-    # Returns all has_one and has_many relationships as class objects (reflec_on_all_associations)
+    # Returns all has_one and has_many relationships as class objects (reflect_on_all_associations)
     # @param obj [Object] ActiveRecord instance to reflect on
+    # @param habtm [Object] optional boolean argument to include has_and_belongs_to_many
     # @return [Array<Object>]
-    ReflectsAsClasses = lambda {|obj|
-      Reflects[obj].map {|ref|
+    ReflectsAsClasses = lambda {|obj, habtm = false|
+      Reflects[obj, habtm].map {|ref|
         (obj.send(ref).try(:klass) || obj.send(ref).class).name.constantize
       }
     }

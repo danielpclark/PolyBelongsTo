@@ -19,7 +19,7 @@ class PbtTest < ActiveSupport::TestCase
       PolyBelongsTo::Pbt::BuildCmd[profile,     nil].must_be_nil
     end
 
-    it "Reflects retruns has_one and has_many relationships" do
+    it "Reflects returns has_one and has_many relationships" do
       profile = profiles(:bob_prof)
       PolyBelongsTo::Pbt::Reflects[profile].sort.must_equal [:phones, :addresses, :photo].sort
       PolyBelongsTo::Pbt::Reflects[nil    ].must_equal Array[]
@@ -29,6 +29,12 @@ class PbtTest < ActiveSupport::TestCase
       profile = profiles(:bob_prof)
       PolyBelongsTo::Pbt::ReflectsAsClasses[profile].map(&:hash).sort.must_equal [Phone, Address, Photo].map(&:hash).sort
       PolyBelongsTo::Pbt::ReflectsAsClasses[nil    ].must_equal Array[]
+    end
+
+    it "Reflects & ReflectsAsClasses accept boolean for HABTM" do
+      obj = Part.new
+      PolyBelongsTo::Pbt::Reflects[obj, :habtm].must_equal [:assemblies]
+      PolyBelongsTo::Pbt::ReflectsAsClasses[obj, :habtm].must_equal [Assembly]
     end
 
     it "IsReflected gives boolean of child" do
@@ -118,6 +124,15 @@ class PbtTest < ActiveSupport::TestCase
       fc.must_be_kind_of(PolyBelongsTo::FakedCollection)
       fc.must_be :empty?
     end
-  end
 
+    it "sanity checks Reflects & ReflectsAsClasses possible snake_case CamelCase future changes" do
+      [
+        [WorkOrder.new, :events, Event],
+        [BigCompany.new, :work_orders, WorkOrder]
+      ].each do |obj, a, b|
+        PolyBelongsTo::Pbt::Reflects[obj].must_equal [a]
+        PolyBelongsTo::Pbt::ReflectsAsClasses[obj].map(&:hash).must_equal [b].map(&:hash)
+      end
+    end
+  end
 end

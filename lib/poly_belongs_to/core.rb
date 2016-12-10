@@ -15,6 +15,21 @@ module PolyBelongsTo
         reflect_on_all_associations(:belongs_to).map(&:name)
       end
       
+      # @return [Array<Symbol>] has_one relations
+      def self.has_one_of
+        reflect_on_all_associations(:has_one).map(&:name)
+      end
+
+      # @return [Array<Symbol>] has_many relations
+      def self.has_many_of
+        reflect_on_all_associations(:has_many).map(&:name)
+      end
+
+      # @return [Array<Symbol>] has_many relations
+      def self.habtm_of
+        reflect_on_all_associations(:has_and_belongs_to_many).map(&:name)
+      end
+
       # Boolean reponse of current class being polymorphic
       # @return [true, false]
       def self.poly?

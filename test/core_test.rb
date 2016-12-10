@@ -46,6 +46,21 @@ class CoreTest < ActiveSupport::TestCase
       Phone.pbt.must_be_same_as :phoneable
     end
  
+    it "#has_one_of" do
+      Profile.has_one_of.must_equal [:photo]
+    end
+
+    it "#has_many_of" do
+      Profile.has_many_of.must_equal [:phones, :addresses]
+      HmtAssembly.has_many_of.must_equal [:manifests, :hmt_parts]
+      HmtPart.has_many_of.must_equal [:manifests, :hmt_assemblies]
+    end
+
+    it "#habtm_of" do
+      Assembly.habtm_of.must_equal [:parts]
+      Part.habtm_of.must_equal [:assemblies]
+    end
+
     it "#pbts multiple parents" do
       tire = tires(:low_profile1)
       parents = tire.class.pbts

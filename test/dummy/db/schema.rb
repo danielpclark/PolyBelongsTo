@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161209115212) do
+ActiveRecord::Schema.define(version: 20161210150343) do
 
   create_table "address_books", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -37,6 +37,19 @@ ActiveRecord::Schema.define(version: 20161209115212) do
 
   add_index "alphas", ["delta_id"], name: "index_alphas_on_delta_id"
 
+  create_table "assemblies", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "assemblies_parts", id: false, force: :cascade do |t|
+    t.integer "assembly_id", null: false
+    t.integer "part_id",     null: false
+  end
+
+  add_index "assemblies_parts", ["assembly_id", "part_id"], name: "index_assemblies_parts_on_assembly_id_and_part_id"
+  add_index "assemblies_parts", ["part_id", "assembly_id"], name: "index_assemblies_parts_on_part_id_and_assembly_id"
+
   create_table "beta", force: :cascade do |t|
     t.string   "content",    limit: 255
     t.integer  "alpha_id"
@@ -45,6 +58,11 @@ ActiveRecord::Schema.define(version: 20161209115212) do
   end
 
   add_index "beta", ["alpha_id"], name: "index_beta_on_alpha_id"
+
+  create_table "big_companies", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "capas", force: :cascade do |t|
     t.string   "content",    limit: 255
@@ -110,6 +128,21 @@ ActiveRecord::Schema.define(version: 20161209115212) do
   end
 
   add_index "geo_locations", ["address_id"], name: "index_geo_locations_on_address_id"
+
+  create_table "hmt_assemblies", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "hmt_parts", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "parts", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "phones", force: :cascade do |t|
     t.integer  "phoneable_id"
@@ -187,8 +220,11 @@ ActiveRecord::Schema.define(version: 20161209115212) do
   end
 
   create_table "work_orders", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.integer  "big_company_id"
   end
+
+  add_index "work_orders", ["big_company_id"], name: "index_work_orders_on_big_company_id"
 
 end

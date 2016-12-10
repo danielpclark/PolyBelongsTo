@@ -15,7 +15,7 @@ PolyBelongsTo has grown into a powerful tool for working with all kinds of Activ
 
 Just include it in your Gemfile and then run bundle:
 ```ruby
-gem 'poly_belongs_to', '~> 0.2'
+gem 'poly_belongs_to', '~> 0.3'
 ```
 
 **NOTICE:**  Please version this gem requirement.  Breaking changes will occur at MAJOR version releases.
@@ -39,6 +39,18 @@ User.pbt
 # Multiple Belongs To Relations
 Tire.pbts
 # => [:user, :car]
+
+# Multiple Has One Relations
+Profile.has_one_of
+# => [:photo]
+
+# Multiple Has Many Relations
+Profile.has_many_of
+# => [:phones, :addresses]
+
+# Multiple Has And Belongs To Many Relations
+Assembly.habtm_of
+# => [:parts]
 
 # Get orphaned objects for records of class type
 MyObject.pbt_orphans
@@ -143,10 +155,10 @@ PolyBelongsTo::Pbt::AttrSanitizer[ obj ]
 PolyBelongsTo::Pbt::BuildCmd[ obj, child ]
 
 # Returns has_one and has_many relationships for obj as an Array of symbols
-PolyBelongsTo::Pbt::Reflects[ obj ]
+PolyBelongsTo::Pbt::Reflects[ obj, habtm = false ]
 
 # Returns Class Ojects for each has_one and has_many child associations
-PolyBelongsTo::Pbt::ReflectsAsClasses[ obj ]
+PolyBelongsTo::Pbt::ReflectsAsClasses[ obj, habtm = false ]
 
 # Boolean of whether child object/class is a has(one/many) relationship to obj
 PolyBelongsTo::Pbt::IsReflected[ obj, child ]
