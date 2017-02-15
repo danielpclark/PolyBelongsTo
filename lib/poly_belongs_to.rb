@@ -1,5 +1,7 @@
 $: << File.join(File.dirname(__FILE__), "/poly_belongs_to")
 require 'active_support/concern'
+require 'poly_belongs_to/sorted_reflection_decorator'
+ActiveRecord::Reflection::ClassMethods.send(:include, PolyBelongsTo::SortedReflectionDecorator )
 require 'poly_belongs_to/version'
 require 'poly_belongs_to/core'
 require 'poly_belongs_to/singleton_set'
