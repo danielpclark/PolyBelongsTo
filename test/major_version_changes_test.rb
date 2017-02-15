@@ -8,8 +8,7 @@ class MajorVersionChangesTest < ActiveSupport::TestCase
 
     let(:contact) { contacts(:bob_contact) }
 
-    case PolyBelongsTo::VERSION.split('.').take(3).join.to_i
-    when ->v{ v < 100 }
+    if Gem::Dependency.new('', "< 1.0.0").match?('', PolyBelongsTo::VERSION)
       it "pre 1.0.0 first parent relation" do
         contact.pbt.must_be_same_as :user
         Contact.pbt.must_be_same_as :user
@@ -35,7 +34,7 @@ class MajorVersionChangesTest < ActiveSupport::TestCase
       it "pre 1.0.0 :pbt_parent returns first parent" do
         contact.pbt_parent.id.must_be_same_as users(:bob).id
       end
-    when ->v { v >= 100 }
+    else
       it "post 1.0.0 first polymorphic parent relation" do
         contact.pbt.must_be_same_as :contactable
         Contact.pbt.must_be_same_as :contactable
@@ -54,8 +53,8 @@ class MajorVersionChangesTest < ActiveSupport::TestCase
       end
 
       it "pre 1.0.0 :pbt_type_sym on dual ownership with non-polymorphic first" do
-        contact.pbt_id_sym.must_be_same_as :addressable_id
-        Contact.pbt_id_sym.must_be_same_as :addressable_id
+        contact.pbt_id_sym.must_be_same_as :contactable_id
+        Contact.pbt_id_sym.must_be_same_as :contactable_id
       end
 
       it "post 1.0.0 :pbt_parent gives polymorphic parent precedence" do
