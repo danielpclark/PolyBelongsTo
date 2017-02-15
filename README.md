@@ -6,6 +6,7 @@
 [![Inline docs](http://inch-ci.org/github/danielpclark/PolyBelongsTo.svg?branch=master)](http://inch-ci.org/github/danielpclark/PolyBelongsTo)
 [![Featured In Ruby Weekly #233](https://img.shields.io/badge/Featured%20In-Ruby%20Weekly%20%23233-brightgreen.svg)](http://rubyweekly.com/issues/233)
 [![Featured In Green Ruby #118](https://img.shields.io/badge/Featured%20In-Green%20Ruby%20%23118-brightgreen.svg)](http://greenruby.org/grn-118.html)
+[![SayThanks.io](https://img.shields.io/badge/SayThanks.io-%E2%98%BC-1EAEDB.svg)](https://saythanks.io/to/danielpclark)
 
 **Original Purpose:** A standard way to check belongs_to relations on any belongs_to Object and let you check your DB Objects polymorphism in a more across-the-board meta-programatically friendly way.
 
