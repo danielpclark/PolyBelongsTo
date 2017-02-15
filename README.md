@@ -19,10 +19,8 @@ PolyBelongsTo has grown into a powerful tool for working with all kinds of Activ
 
 Just include it in your Gemfile and then run bundle:
 ```ruby
-gem 'poly_belongs_to', '~> 0.3'
+gem 'poly_belongs_to', '~> 1.0'
 ```
-
-**NOTICE:**  Please version this gem requirement.  Breaking changes will occur at MAJOR version releases.
 
 *Order of record relations are important pre 1.0.  Place polymorphic relations first in your model for best results and to ensure the same behavior will occur with the 1.0 release.*
 
@@ -244,7 +242,7 @@ Thank You!
 
 The MIT License (MIT)
 
-Copyright (C) 2015-2016 by Daniel P. Clark
+Copyright (C) 2015-2017 by Daniel P. Clark
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
