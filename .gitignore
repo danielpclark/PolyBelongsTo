@@ -3,7 +3,6 @@
 .ruby-version
 *.gem
 *.swp
-Gemfile.lock
 log/*.log
 pkg/
 /doc
