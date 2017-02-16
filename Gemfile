@@ -1,7 +1,12 @@
 source 'https://rubygems.org'
 
 gemspec
-gem "codeclimate-test-reporter", group: :test, require: nil
+
+group :test do
+  gem 'simplecov'
+  gem "codeclimate-test-reporter", '~> 1.0.0'
+end
+
 group :development, :test do
   rails_version = ENV["RAILS_VERSION"] || "default"
   # if rails_version =~ /^3\./
