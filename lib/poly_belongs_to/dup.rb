@@ -34,8 +34,7 @@ module PolyBelongsTo
         end
         item_to_build_on       
       end
-
-   end
+    end
 
     # Build child object by dup'ing its attributes
     # @param item_to_duplicate [Object] Object to duplicate as new child

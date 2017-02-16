@@ -8,7 +8,7 @@ module PolyBelongsTo
     # @return [Hash] attributes
     AttrSanitizer = lambda {|obj|
       return {} unless obj
-      obj.dup.attributes.delete_if {|ky,vl|
+      obj.dup.attributes.delete_if {|ky,_|
         [:created_at, :updated_at, :deleted_at, obj.pbt_id_sym, obj.pbt_type_sym].include? ky.to_sym
       } 
     }
