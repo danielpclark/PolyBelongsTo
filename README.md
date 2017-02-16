@@ -23,8 +23,6 @@ Just include it in your Gemfile and then run bundle:
 gem 'poly_belongs_to', '~> 1.0'
 ```
 
-*Order of record relations are important pre 1.0.  Place polymorphic relations first in your model for best results and to ensure the same behavior will occur with the 1.0 release.*
-
 ##Recommended Usage
 
 #####On model class
