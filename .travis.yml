@@ -8,4 +8,7 @@ env:
   - RAILS_VERSION=4.2.1
   global:
   - secure: qXpWydxv6DHMrvGL8WH4wNRY4MTY7KV/x308Y5dHkZCrI7k9UOccvznp69KT3Z+tzYEFDXfUix5wA6pgyVcvrsQyiLSjGcyzHhxJKs1gk0gcxAkmhwHmUP9aiXWUe/mzpj7Uoc2DHwpPTpK1wQ5kV6eV+jzQLuN3nhfNr2sL8b4=
+addons:
+  code_climate:
+    repo_token: eb4024a12a427920a8f9c81d1ad5a3b3f571503f3c64f0bde04eaad3bf5c564f
 script: bundle exec rake test
