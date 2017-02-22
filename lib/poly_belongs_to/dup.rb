@@ -9,11 +9,11 @@ module PolyBelongsTo
       # @param item_to_build_on [Object] Object on which to build on
       # @param item_to_duplicate [Object] Object to duplicate as new child
       def self.pbt_dup_build(item_to_build_on, item_to_duplicate)
-        singleton_record = yield if block_given? 
+        singleton_record = yield if block_given?
         if PolyBelongsTo::Pbt::IsReflected[item_to_build_on, item_to_duplicate]
           PolyBelongsTo::Pbt::AsCollectionProxy[item_to_build_on, item_to_duplicate].
-            build PolyBelongsTo::Pbt::AttrSanitizer[item_to_duplicate] if (
-              block_given? ? singleton_record.add?(item_to_duplicate) : true)
+            build PolyBelongsTo::Pbt::AttrSanitizer[item_to_duplicate] if
+              block_given? ? singleton_record.add?(item_to_duplicate) : true
         end
       end
 
@@ -27,12 +27,16 @@ module PolyBelongsTo
           child = item_to_duplicate.send(ref)
           PolyBelongsTo::Pbt::AsCollectionProxy[item_to_build_on, item_to_duplicate].
             each do |builder|
-              child.respond_to?(:build) ? child.each {|spawn|
+            if child.respond_to?(:build)
+              child.each do |spawn|
                 builder.pbt_deep_dup_build(spawn) {singleton_record}
-              } : builder.pbt_deep_dup_build(child) {singleton_record}
-          end 
+              end
+            else
+              builder.pbt_deep_dup_build(child) {singleton_record}
+            end
+          end
         end
-        item_to_build_on       
+        item_to_build_on
       end
     end
 

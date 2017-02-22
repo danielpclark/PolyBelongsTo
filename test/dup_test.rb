@@ -22,7 +22,7 @@ class DupTest < ActiveSupport::TestCase
       contact.pbt_dup_build( susan_prof )
       CleanAttrs[contact.profile].must_equal CleanAttrs[susan_prof]
     end
-    
+
     it "#pbt_deep_dup_build builds deep copy of dup'd attributes" do
       user1 = users(:steve)
       bob_prof = profiles(:bob_prof)
@@ -75,6 +75,6 @@ class DupTest < ActiveSupport::TestCase
       CleanAttrs[alpha2.betas.first.capas.first.deltas.first.alphas.first].must_equal CleanAttrs[alpha]
       alpha2.betas.first.capas.first.deltas.first.alphas.first.betas.first.must_be_nil
     end
-    
+
   end
 end

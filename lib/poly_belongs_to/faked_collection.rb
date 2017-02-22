@@ -9,8 +9,8 @@ module PolyBelongsTo
       if obj.nil? || child.nil?
         @instance = nil
       else
-        raise "Not a has_one rleationship for FakedCollection" unless PolyBelongsTo::Pbt::IsSingular[obj,child]
-        @instance = @obj.send(PolyBelongsTo::Pbt::CollectionProxy[@obj,@child])
+        raise "Not a has_one rleationship for FakedCollection" unless PolyBelongsTo::Pbt::IsSingular[obj, child]
+        @instance = @obj.send(PolyBelongsTo::Pbt::CollectionProxy[@obj, @child])
       end
       self
     end
@@ -67,7 +67,7 @@ module PolyBelongsTo
     def ancestors
       klass.ancestors.unshift(PolyBelongsTo::FakedCollection)
     end
-    
+
     # Boolean of kind match
     # @param thing [Object] object class
     # @return [true, false]

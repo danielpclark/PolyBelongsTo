@@ -20,7 +20,7 @@ class MajorVersionChangesTest < ActiveSupport::TestCase
         Contact.pbts.must_include :contactable
         Contact.pbts.first.must_be_same_as :user
       end
-      
+
       it "pre 1.0.0 :poly? on dual ownership with non-polymorphic first" do
         contact.poly?.must_be_same_as false
         Contact.poly?.must_be_same_as false

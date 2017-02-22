@@ -1,4 +1,4 @@
-$: << File.join(File.dirname(__FILE__), "/poly_belongs_to")
+$LOAD_PATH << File.join(File.dirname(__FILE__), "/poly_belongs_to")
 require 'active_support/concern'
 require 'poly_belongs_to/sorted_reflection_decorator'
 ActiveRecord::Reflection::ClassMethods.send(:include, PolyBelongsTo::SortedReflectionDecorator )
@@ -10,8 +10,6 @@ require 'poly_belongs_to/pbt'
 require 'poly_belongs_to/faked_collection'
 ActiveRecord::Base.send(:include, PolyBelongsTo::Core )
 ActiveRecord::Base.send(:include, PolyBelongsTo::Dup  )
-
-
 
 ##
 #

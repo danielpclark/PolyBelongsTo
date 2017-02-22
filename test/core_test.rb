@@ -33,19 +33,19 @@ class CoreTest < ActiveSupport::TestCase
       user.pbt.must_be_nil
       User.pbt.must_be_nil
     end
-    
+
     it "#pbt Tag belongs to table as :user" do
       tag = tags(:bob_tag)
       tag.pbt.must_be_same_as :user
       Tag.pbt.must_be_same_as :user
-    end 
-    
+    end
+
     it "#pbt Phone belongs to table as :phoneable" do
       phone = phones(:bob_phone)
       phone.pbt.must_be_same_as :phoneable
       Phone.pbt.must_be_same_as :phoneable
     end
- 
+
     it "#has_one_of" do
       Profile.has_one_of.must_equal [:photo]
     end
@@ -72,7 +72,7 @@ class CoreTest < ActiveSupport::TestCase
       parents.must_include :user
       parents.must_include :car
     end
-   
+
     it "#pbt_params_name User params name as :user" do
       user = users(:bob)
       user.pbt_params_name.must_be_same_as :user
@@ -80,7 +80,7 @@ class CoreTest < ActiveSupport::TestCase
       User.pbt_params_name(true).must_be_same_as :user
       User.pbt_params_name(false).must_be_same_as :user
     end
-    
+
     it "#pbt_params_name Tag params name as :tag" do
       tag = tags(:bob_tag)
       tag.pbt_params_name.must_be_same_as :tag
@@ -88,66 +88,66 @@ class CoreTest < ActiveSupport::TestCase
       Tag.pbt_params_name(true).must_be_same_as :tag
       Tag.pbt_params_name(false).must_be_same_as :tag
     end
-    
+
     it "#pbt_params_name Phone params name as :phones_attributes" do
       phone = phones(:bob_phone)
       phone.pbt_params_name.must_be_same_as :phones_attributes
       Phone.pbt_params_name.must_be_same_as :phones_attributes
       Phone.pbt_params_name(true).must_be_same_as :phones_attributes
     end
-    
+
     it "#pbt_params_name Phone params name with false as :phone" do
       phone = phones(:bob_phone)
       phone.pbt_params_name(false).must_be_same_as :phone
       Phone.pbt_params_name(false).must_be_same_as :phone
     end
-    
+
     it "#pbt_id_sym User belongs to field id symbol as nil" do
       user = users(:bob)
       user.pbt_id_sym.must_be_nil
       User.pbt_id_sym.must_be_nil
     end
-    
+
     it "#pbt_id_sym Tag belongs to field id symbol as :tag_id" do
       tag = tags(:bob_tag)
       tag.pbt_id_sym.must_be_same_as :user_id
       Tag.pbt_id_sym.must_be_same_as :user_id
     end
-    
+
     it "#pbt_id_sym Phone belongs to field id symbol as :phoneable_id" do
       phone = phones(:bob_phone)
       phone.pbt_id_sym.must_be_same_as :phoneable_id
       Phone.pbt_id_sym.must_be_same_as :phoneable_id
     end
-    
+
     it "#pbt_type_sym User belongs to field type symbol as nil" do
       user = users(:bob)
       user.pbt_type_sym.must_be_nil
       User.pbt_type_sym.must_be_nil
     end
-    
+
     it "#pbt_type_sym Tag belongs to field type symbol as nil" do
       tag = tags(:bob_tag)
       tag.pbt_type_sym.must_be_nil
       Tag.pbt_type_sym.must_be_nil
     end
-    
+
     it "#pbt_type_sym Phone belongs to field type symbol as :phoneable_type" do
       phone = phones(:bob_phone)
       phone.pbt_type_sym.must_be_same_as :phoneable_type
       Phone.pbt_type_sym.must_be_same_as :phoneable_type
     end
-    
+
     it "#pbt_id User belongs to id as nil" do
       user = users(:bob)
       user.pbt_id.must_be_nil
     end
-    
+
     it "#pbt_id Tag belongs to id as user's id" do
       tag = tags(:bob_tag)
       tag.pbt_id.must_be_same_as ActiveRecord::FixtureSet.identify(:bob)
     end
-    
+
     it "#pbt_id Phone belongs to id as user's profile id" do
       phone = phones(:bob_phone)
       phone.pbt_id.must_be_same_as ActiveRecord::FixtureSet.identify(:bob_prof)
@@ -157,12 +157,12 @@ class CoreTest < ActiveSupport::TestCase
       user = users(:bob)
       user.pbt_type.must_be_nil
     end
-    
+
     it "#pbt_type Tag belongs to type as nil" do
       tag = tags(:bob_tag)
       tag.pbt_type.must_be_nil
     end
-    
+
     it "#pbt_type Phone belongs to type as 'Profile'" do
       phone = phones(:bob_phone)
       phone.pbt_type.must_equal "Profile"
@@ -172,13 +172,13 @@ class CoreTest < ActiveSupport::TestCase
       user = users(:bob)
       user.pbt_parent.must_be_nil
     end
-    
+
     it "#pbt_parent Tag parent returns user instance" do
       user = users(:bob)
       tag = user.tags.build
       tag.pbt_parent.id.must_be_same_as user.id
     end
-    
+
     it "#pbt_parent Phone parent returns profile" do
       user = users(:bob)
       profile = user.profiles.build
@@ -200,7 +200,7 @@ class CoreTest < ActiveSupport::TestCase
       alpha.pbt_parent.must_be_nil
       beta.pbt_parent.wont_be_nil
       beta.pbt_parent.must_equal alpha
-      squishy = Squishy.create(Squishy.pbt_id_sym => 12345, Squishy.pbt_type_sym => "Address")
+      squishy = Squishy.create(Squishy.pbt_id_sym => 12_345, Squishy.pbt_type_sym => "Address")
       squishy.pbt_parent.must_be_nil
     end
 
@@ -245,11 +245,11 @@ class CoreTest < ActiveSupport::TestCase
     end
 
     it "#pbt_orphans returns all parentless records for current Object" do
-      obj = Squishy.create(Squishy.pbt_id_sym => 12345, Squishy.pbt_type_sym => "Phone")
+      obj = Squishy.create(Squishy.pbt_id_sym => 12_345, Squishy.pbt_type_sym => "Phone")
       Squishy.pbt_orphans.to_a.must_equal [obj]
-      obj2 = Squishy.create(Squishy.pbt_id_sym => 12345, Squishy.pbt_type_sym => "Address")
+      obj2 = Squishy.create(Squishy.pbt_id_sym => 12_345, Squishy.pbt_type_sym => "Address")
       Squishy.pbt_orphans.to_a.sort.must_equal [obj, obj2].sort
-      obj3 = Beta.create(Beta.pbt_id_sym => 12345)
+      obj3 = Beta.create(Beta.pbt_id_sym => 12_345)
       Beta.pbt_orphans.to_a.must_equal [obj3]
     end
 
@@ -259,86 +259,86 @@ class CoreTest < ActiveSupport::TestCase
     end
 
     it "#pbt_orphans ignores mislabled record types" do
-      Squishy.create(Squishy.pbt_id_sym => 12345, Squishy.pbt_type_sym => "Object")
-      Squishy.create(Squishy.pbt_id_sym => 12345, Squishy.pbt_type_sym => "Class")
-      Squishy.create(Squishy.pbt_id_sym => 12345, Squishy.pbt_type_sym => "Squishable")
+      Squishy.create(Squishy.pbt_id_sym => 12_345, Squishy.pbt_type_sym => "Object")
+      Squishy.create(Squishy.pbt_id_sym => 12_345, Squishy.pbt_type_sym => "Class")
+      Squishy.create(Squishy.pbt_id_sym => 12_345, Squishy.pbt_type_sym => "Squishable")
       Squishy.pbt_orphans.must_be :empty?
     end
-    
+
     it "#pbt_mistypes returns strings of mislabled polymorphic record types" do
-      Squishy.create(Squishy.pbt_id_sym => 12345, Squishy.pbt_type_sym => "Object")
-      Squishy.create(Squishy.pbt_id_sym => 12345, Squishy.pbt_type_sym => "Class")
-      Squishy.create(Squishy.pbt_id_sym => 12345, Squishy.pbt_type_sym => "Squishable")
+      Squishy.create(Squishy.pbt_id_sym => 12_345, Squishy.pbt_type_sym => "Object")
+      Squishy.create(Squishy.pbt_id_sym => 12_345, Squishy.pbt_type_sym => "Class")
+      Squishy.create(Squishy.pbt_id_sym => 12_345, Squishy.pbt_type_sym => "Squishable")
       Squishy.pbt_mistypes.to_a.sort.must_equal ["Object", "Class", "Squishable"].sort
     end
-    
+
     it "#pbt_mistyped returns mislabled polymorphic record types" do
-      obj = Squishy.create(Squishy.pbt_id_sym => 12345, Squishy.pbt_type_sym => "Object")
-      obj2 = Squishy.create(Squishy.pbt_id_sym => 12345, Squishy.pbt_type_sym => "Class")
-      obj3 = Squishy.create(Squishy.pbt_id_sym => 12345, Squishy.pbt_type_sym => "Squishable")
+      obj = Squishy.create(Squishy.pbt_id_sym => 12_345, Squishy.pbt_type_sym => "Object")
+      obj2 = Squishy.create(Squishy.pbt_id_sym => 12_345, Squishy.pbt_type_sym => "Class")
+      obj3 = Squishy.create(Squishy.pbt_id_sym => 12_345, Squishy.pbt_type_sym => "Squishable")
       Squishy.pbt_mistyped.to_a.sort.must_equal [obj, obj2, obj3].sort
     end
-    
+
     it "#pbt_valid_types returns strings of valid polymorphic record types" do
-      Squishy.create(Squishy.pbt_id_sym => 12345, Squishy.pbt_type_sym => "Object")
-      Squishy.create(Squishy.pbt_id_sym => 12345, Squishy.pbt_type_sym => "Class")
-      Squishy.create(Squishy.pbt_id_sym => 12345, Squishy.pbt_type_sym => "Squishable")
-      Squishy.create(Squishy.pbt_id_sym => 12345, Squishy.pbt_type_sym => "Phone")
-      Squishy.create(Squishy.pbt_id_sym => 12345, Squishy.pbt_type_sym => "Address")
-      Squishy.create(Squishy.pbt_id_sym => 12345, Squishy.pbt_type_sym => "GeoLocation")
+      Squishy.create(Squishy.pbt_id_sym => 12_345, Squishy.pbt_type_sym => "Object")
+      Squishy.create(Squishy.pbt_id_sym => 12_345, Squishy.pbt_type_sym => "Class")
+      Squishy.create(Squishy.pbt_id_sym => 12_345, Squishy.pbt_type_sym => "Squishable")
+      Squishy.create(Squishy.pbt_id_sym => 12_345, Squishy.pbt_type_sym => "Phone")
+      Squishy.create(Squishy.pbt_id_sym => 12_345, Squishy.pbt_type_sym => "Address")
+      Squishy.create(Squishy.pbt_id_sym => 12_345, Squishy.pbt_type_sym => "GeoLocation")
       Squishy.pbt_valid_types.sort.must_equal ["Phone", "Address", "GeoLocation"].sort
     end
 
     it "#pbt_valid_types returns empty Array for no valid record types" do
-      Coffee.create(Coffee.pbt_id_sym => 12345, Coffee.pbt_type_sym => "Object")
-      Coffee.create(Coffee.pbt_id_sym => 12345, Coffee.pbt_type_sym => "Class")
-      Coffee.create(Coffee.pbt_id_sym => 12345, Coffee.pbt_type_sym => "Squishable")
+      Coffee.create(Coffee.pbt_id_sym => 12_345, Coffee.pbt_type_sym => "Object")
+      Coffee.create(Coffee.pbt_id_sym => 12_345, Coffee.pbt_type_sym => "Class")
+      Coffee.create(Coffee.pbt_id_sym => 12_345, Coffee.pbt_type_sym => "Squishable")
       Coffee.pbt_valid_types.to_a.sort.must_be :empty?
     end
 
     it "I'm just curious if polymorphic can belong to itself" do
-      coffee = Coffee.create(Coffee.pbt_id_sym => 12345, Coffee.pbt_type_sym => "Coffee")
+      coffee = Coffee.create(Coffee.pbt_id_sym => 12_345, Coffee.pbt_type_sym => "Coffee")
       coffee.must_be :valid?
       coffee.coffeeable_type.must_equal "Coffee"
       coffee.must_be :persisted?
     end
-    
+
     it "#pbt_mistyped returns empty Array for no valid record types" do
-      Coffee.create(Coffee.pbt_id_sym => 12345, Coffee.pbt_type_sym => "Phone")
-      Coffee.create(Coffee.pbt_id_sym => 12345, Coffee.pbt_type_sym => "Address")
-      Coffee.create(Coffee.pbt_id_sym => 12345, Coffee.pbt_type_sym => "User")
+      Coffee.create(Coffee.pbt_id_sym => 12_345, Coffee.pbt_type_sym => "Phone")
+      Coffee.create(Coffee.pbt_id_sym => 12_345, Coffee.pbt_type_sym => "Address")
+      Coffee.create(Coffee.pbt_id_sym => 12_345, Coffee.pbt_type_sym => "User")
       Coffee.pbt_mistyped.to_a.sort.must_be :empty?
     end
 
     it "#pbt_mistypes returns empty Array if only valid polymorphic record types exist" do
-      Squishy.create(Squishy.pbt_id_sym => 12345, Squishy.pbt_type_sym => "Phone")
-      Squishy.create(Squishy.pbt_id_sym => 12345, Squishy.pbt_type_sym => "Address")
-      Squishy.create(Squishy.pbt_id_sym => 12345, Squishy.pbt_type_sym => "GeoLocation")
+      Squishy.create(Squishy.pbt_id_sym => 12_345, Squishy.pbt_type_sym => "Phone")
+      Squishy.create(Squishy.pbt_id_sym => 12_345, Squishy.pbt_type_sym => "Address")
+      Squishy.create(Squishy.pbt_id_sym => 12_345, Squishy.pbt_type_sym => "GeoLocation")
       Squishy.pbt_mistypes.sort.must_be :empty?
     end
 
     it "#pbt_poly_types returns strings of all polymorphic record types" do
-      Squishy.create(Squishy.pbt_id_sym => 12345, Squishy.pbt_type_sym => "Object")
-      Squishy.create(Squishy.pbt_id_sym => 12345, Squishy.pbt_type_sym => "Class")
-      Squishy.create(Squishy.pbt_id_sym => 12345, Squishy.pbt_type_sym => "Squishable")
-      Squishy.create(Squishy.pbt_id_sym => 12345, Squishy.pbt_type_sym => "Phone")
-      Squishy.create(Squishy.pbt_id_sym => 12345, Squishy.pbt_type_sym => "Address")
-      Squishy.create(Squishy.pbt_id_sym => 12345, Squishy.pbt_type_sym => "GeoLocation")
+      Squishy.create(Squishy.pbt_id_sym => 12_345, Squishy.pbt_type_sym => "Object")
+      Squishy.create(Squishy.pbt_id_sym => 12_345, Squishy.pbt_type_sym => "Class")
+      Squishy.create(Squishy.pbt_id_sym => 12_345, Squishy.pbt_type_sym => "Squishable")
+      Squishy.create(Squishy.pbt_id_sym => 12_345, Squishy.pbt_type_sym => "Phone")
+      Squishy.create(Squishy.pbt_id_sym => 12_345, Squishy.pbt_type_sym => "Address")
+      Squishy.create(Squishy.pbt_id_sym => 12_345, Squishy.pbt_type_sym => "GeoLocation")
       Squishy.pbt_poly_types.sort.must_equal ["Phone", "Address", "GeoLocation", "Object", "Class", "Squishable"].sort
     end
 
     it "keeps helper methods private" do
       Squishy.singleton_class.private_method_defined?(:_pbt_polymorphic_orphans).must_be_same_as true
-      Squishy.singleton_class.method_defined?(:_pbt_polymorphic_orphans).must_be_same_as false 
-      Squishy.method_defined?(:_pbt_polymorphic_orphans).must_be_same_as false 
+      Squishy.singleton_class.method_defined?(:_pbt_polymorphic_orphans).must_be_same_as false
+      Squishy.method_defined?(:_pbt_polymorphic_orphans).must_be_same_as false
       Squishy.singleton_class.private_method_defined?(:_pbt_nonpolymorphic_orphans).must_be_same_as true
-      Squishy.singleton_class.method_defined?(:_pbt_nonpolymorphic_orphans).must_be_same_as false 
-      Squishy.method_defined?(:_pbt_nonpolymorphic_orphans).must_be_same_as false 
+      Squishy.singleton_class.method_defined?(:_pbt_nonpolymorphic_orphans).must_be_same_as false
+      Squishy.method_defined?(:_pbt_nonpolymorphic_orphans).must_be_same_as false
     end
 
     it "#orphan? gives boolean if record is orphaned" do
-      Squishy.create(Squishy.pbt_id_sym => 12345, Squishy.pbt_type_sym => "Phone").must_be :orphan?
-      Squishy.create(Squishy.pbt_id_sym => 12345, Squishy.pbt_type_sym => "Address").must_be :orphan?
+      Squishy.create(Squishy.pbt_id_sym => 12_345, Squishy.pbt_type_sym => "Phone").must_be :orphan?
+      Squishy.create(Squishy.pbt_id_sym => 12_345, Squishy.pbt_type_sym => "Address").must_be :orphan?
       User.create().wont_be :orphan?
       user = users(:bob)
       profile = user.profiles.build
@@ -369,5 +369,5 @@ class CoreTest < ActiveSupport::TestCase
         _(Event.pbt_orphans.pluck(:work_order_id).first).must_equal e.work_order_id
       end
     end
- end
+  end
 end

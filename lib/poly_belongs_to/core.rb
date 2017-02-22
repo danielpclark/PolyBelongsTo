@@ -14,7 +14,7 @@ module PolyBelongsTo
       def self.pbts
         reflect_on_all_associations(:belongs_to).map(&:name)
       end
-      
+
       # @return [Array<Symbol>] has_one relations
       def self.has_one_of
         reflect_on_all_associations(:has_one).map(&:name)
@@ -70,17 +70,25 @@ module PolyBelongsTo
       # Returns strings of the invalid class names stored in polymorphic records
       # @return [Array<String>]
       def self.pbt_mistypes
-        pbt_poly_types.select {|i| 
-          begin !i.constantize.respond_to?(:pluck) rescue true end
-        }
+        pbt_poly_types.select do |i|
+          begin
+            !i.constantize.respond_to?(:pluck)
+          rescue
+            true
+          end
+        end
       end
-      
+
       # Returns strings of the valid class names stored in polymorphic records
       # @return [Array<String>]
       def self.pbt_valid_types
-        pbt_poly_types.delete_if {|i| 
-          begin !i.constantize.respond_to?(:pluck) rescue true end
-        }
+        pbt_poly_types.delete_if do |i|
+          begin
+            !i.constantize.respond_to?(:pluck)
+          rescue
+            true
+          end
+        end
       end
 
       # Returns records with invalid class names stored in polymorphic records
@@ -96,7 +104,7 @@ module PolyBelongsTo
         return nil unless pbts.present?
         poly? ? _pbt_polymorphic_orphans : _pbt_nonpolymorphic_orphans
       end
-      
+
       private
       # Return Array of current Class polymorphic records that are orphaned from parents
       # @return [Array<Object>] ActiveRecord orphan objects
@@ -119,7 +127,7 @@ module PolyBelongsTo
         private :_pbt_nonpolymorphic_orphans
       end
     end
-    
+
     # @return [Symbol, nil] first belongs_to relation
     def pbt
       self.class.pbt
@@ -129,7 +137,7 @@ module PolyBelongsTo
     def pbts
       self.class.pbts
     end
-    
+
     # Boolean reponse of current class being polymorphic
     # @return [true, false]
     def poly?
@@ -140,13 +148,13 @@ module PolyBelongsTo
     # @return [Integer, nil]
     def pbt_id
       val = pbt
-      val ? self.send("#{val}_id") : nil
+      val ? send("#{val}_id") : nil
     end
 
     # Value of polymorphic relation type.  nil if not polymorphic.
     # @return [String, nil]
     def pbt_type
-      poly? ? self.send("#{pbt}_type") : nil
+      poly? ? send("#{pbt}_type") : nil
     end
 
     # Get the parent relation.  Polymorphic relations are prioritized first.
@@ -159,8 +167,6 @@ module PolyBelongsTo
         else
           "#{val}".camelize.constantize.where(id: pbt_id).first
         end
-      else
-        nil
       end
     end
 
@@ -184,9 +190,9 @@ module PolyBelongsTo
       if poly?
         Array[pbt_parent].compact
       else
-        self.class.pbts.map {|i|
-          try{ "#{i}".camelize.constantize.where(id: self.send("#{i}_id")).first }
-        }.compact
+        self.class.pbts.map do |i|
+          try{ "#{i}".camelize.constantize.where(id: send("#{i}_id")).first }
+        end.compact
       end
     end
 

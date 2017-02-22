@@ -5,9 +5,9 @@ class DupTest < ActiveSupport::TestCase
   fixtures :all
 
   describe PolyBelongsTo::SingletonSet do
-    let (:example) { users(:bob) }
-    let (:the_set) { PolyBelongsTo::SingletonSet.new }
-    
+    let(:example){ users(:bob) }
+    let(:the_set){ PolyBelongsTo::SingletonSet.new }
+
     it "formats name with #formatted_name" do
       the_set.formatted_name(example).must_equal "#{example.class.name}-#{example.id}"
     end

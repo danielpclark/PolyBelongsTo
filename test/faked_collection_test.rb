@@ -4,27 +4,27 @@ require 'minitest/autorun'
 class FakedCollectionTest < ActiveSupport::TestCase
   fixtures :all
 
-  let(:steve_photos){
+  let(:steve_photos) do
     steve_prof = users(:steve).profiles.first
     PolyBelongsTo::FakedCollection.new(steve_prof, Photo)
-  }
- 
-  let(:null_object){
+  end
+
+  let(:null_object) do
     PolyBelongsTo::FakedCollection.new()
-  }
+  end
 
-  let(:nil_steve){
+  let(:nil_steve) do
     PolyBelongsTo::FakedCollection.new(users(:steve), nil)
-  }
+  end
 
-  let(:nil_photo){
+  let(:nil_photo) do
     PolyBelongsTo::FakedCollection.new(nil, Photo)
-  }
+  end
 
   describe PolyBelongsTo::FakedCollection do
 
     it "#class.name is named correctly" do
-      steve_photos.class.name.must_equal "PolyBelongsTo::FakedCollection" 
+      steve_photos.class.name.must_equal "PolyBelongsTo::FakedCollection"
     end
 
     it "#superclass knows its superclass" do
@@ -90,13 +90,13 @@ class FakedCollectionTest < ActiveSupport::TestCase
     end
 
     it "#count and #size counts as 1 or 0" do
-      steve_photos.count.between?(0,1).must_be_same_as true
-      [0,1].must_include steve_photos.count
+      steve_photos.count.between?(0, 1).must_be_same_as true
+      [0, 1].must_include steve_photos.count
       null_object.count.must_be_same_as 0
       nil_steve.count.must_be_same_as   0
       nil_photo.count.must_be_same_as   0
-      steve_photos.size.between?(0,1).must_be_same_as true
-      [0,1].must_include steve_photos.size
+      steve_photos.size.between?(0, 1).must_be_same_as true
+      [0, 1].must_include steve_photos.size
       null_object.size.must_be_same_as  0
       nil_steve.size.must_be_same_as    0
       nil_photo.size.must_be_same_as    0
@@ -126,7 +126,7 @@ class FakedCollectionTest < ActiveSupport::TestCase
       steve_photos.must_be_instance_of(PolyBelongsTo::FakedCollection)
       null_object.must_be_instance_of(PolyBelongsTo::FakedCollection)
     end
-    
+
     it "#build builds appropriately" do
       steve_photos.build({content: "cheese"})
       steve_photos.first.content.must_equal "cheese"
@@ -169,7 +169,7 @@ class FakedCollectionTest < ActiveSupport::TestCase
 
     it "will not initialize on has_many" do
       steve = users(:steve)
-      ->{ PolyBelongsTo::FakedCollection.new(steve, Profile) }.must_raise RuntimeError 
+      ->{ PolyBelongsTo::FakedCollection.new(steve, Profile) }.must_raise RuntimeError
     end
 
     it "takes nil Objects and returns an empty FakedCollection" do
@@ -178,7 +178,7 @@ class FakedCollectionTest < ActiveSupport::TestCase
       nil_photo.size.must_be_same_as 0
       nil_photo.instance_eval {@instance}.must_be_nil
       nil_photo.wont_be :valid?
-      
+
       nil_steve.all.must_equal []
       nil_steve.size.must_be_same_as 0
       nil_steve.must_be :empty?
