@@ -1,4 +1,4 @@
-#PolyBelongsTo
+# PolyBelongsTo
 
 [![Gem Version](https://badge.fury.io/rb/poly_belongs_to.svg)](http://badge.fury.io/rb/poly_belongs_to)
 [![Code Climate](https://codeclimate.com/github/danielpclark/PolyBelongsTo/badges/gpa.svg)](https://codeclimate.com/github/danielpclark/PolyBelongsTo)
@@ -17,16 +17,16 @@ PolyBelongsTo has grown into a powerful tool for working with all kinds of Activ
 
 **Deep cloning** of records with associations is an added feature this gem provides.  It requires no configuration to use, you can simply invoke: `pbt_deep_dup_build`.  This makes for much easier record duplication than the [deep_cloneable](https://github.com/moiristo/deep_cloneable) gem.
 
-#Installation
+# Installation
 
 Just include it in your Gemfile and then run bundle:
 ```ruby
 gem 'poly_belongs_to', '~> 1.0'
 ```
 
-##Recommended Usage
+## Recommended Usage
 
-#####On model class
+##### On model class
 ```ruby
 # Is Polymorphic?
 MyOject.poly?
@@ -86,7 +86,7 @@ MyObject.pbt_id_sym
 MyObject.pbt_type_sym           
 # => :my_objectable_type        # nil for non polymorphic Objects
 ```
-#####On model instances
+##### On model instances
 ```ruby
 # Belongs To Relations ID
 MyObject.first.pbt_id
@@ -113,7 +113,7 @@ Tire.first.orphan?
 # => false
 ```
 
-##Also Available
+## Also Available
 ```ruby
 # --- Model Instances ---
 # NOTE: touches db if object isn't already instantiated
@@ -149,7 +149,7 @@ MyObject.new.pbt_type_sym       # nil for non polymorphic Objects
 # => :my_objectable_type
 ```
 
-##Internal Methods Available
+## Internal Methods Available
 
 ```ruby
 # For cleaning attributes for use with build
@@ -193,7 +193,7 @@ PolyBelongsTo::SingletonSet.new
 polymorphic relationships first, primary key next (or first reflection in lookup).
 
 
-##Record Duplication
+## Record Duplication
 
 **This gives you the advantage of duplicating records regardless of polymorphic associations or
 otherwise**.  You can duplicate a record, or use a self recursive command **pbt_deep_dup_build**
@@ -201,13 +201,13 @@ to duplicate a record and all of it's has_one/has_many children records at once.
 be sure to use the save method.
 
 
-####Known Issues
+#### Known Issues
  - Carrierwave records won't duplicate.  To ensure that other records will still save and
 prevent any rollback issues use .save(validate: false) ... I'm considering possible options
 to remedy this and
 other scenarios.
 
-###How To Use
+### How To Use
 
 Use the dup/build methods as follows
 
@@ -229,7 +229,7 @@ contact.pbt_deep_dup_build( User.last.profile )
 contact.save
 ```
 
-##Contributing
+## Contributing
 
 Feel free to fork and make pull requests.  Please bring up an issue before a pull
 request if it's a non-fix change.  Please add applicable fixtures and tests for
@@ -238,7 +238,7 @@ any new features/implementations you add.
 Thank You!
 
 
-#License
+# License
 
 The MIT License (MIT)
 
